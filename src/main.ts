@@ -16,5 +16,8 @@ export interface Model {
   player: Player
 }
 
-class Component {
+export interface Msg {
+}
+
+class Component implements Model {
 }

@@ -1,7 +1,7 @@
 import { Transformer } from 'transformers'
 
 export interface BoolFlag {
-  transformer(): Transformer | undefined;
+  transformer: Transformer | undefined;
 }
 
 export namespace BoolFlag {

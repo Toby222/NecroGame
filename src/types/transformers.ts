@@ -3,14 +3,14 @@ import { Model } from '../main'
 import { Action } from 'action'
 
 export interface Transformation {
-  resource: Resource
-  delta: number
+  // resource: Resource
+  // delta: number
 
   apply_transformation(model: Model): void
 }
 
 export namespace Transformation {
-  export class Generate {
+  export class Generate implements Transformation {
     private resource: Resource
     private delta: number
 
@@ -24,7 +24,7 @@ export namespace Transformation {
     }
   }
 
-  export class Consume {
+  export class Consume implements Transformation {
     private resource: Resource
     private delta: number
 
@@ -42,7 +42,7 @@ export namespace Transformation {
 // Each transformer should have a corresponding BoolFlag
 export interface Transformer {
   effects: Transformation[]
-  apply_tranformer(): void
+  apply_transformer(model: Model): void
 }
 
 export namespace Transformer {
@@ -51,7 +51,7 @@ export namespace Transformer {
       new Transformation.Consume(Resource.Oxygen, 10)
     ]
 
-    private apply_transformer (model: Model) {
+    apply_transformer (model: Model) {
       for (const effect of this.effects) {
         effect.apply_transformation(model)
       }
@@ -64,7 +64,7 @@ export namespace Transformer {
       new Transformation.Consume(Resource.Oxygen, 1)
     ]
 
-    private apply_transformer (model: Model) {
+    apply_transformer (model: Model) {
       for (const effect of this.effects) {
         effect.apply_transformation(model)
       }
@@ -74,8 +74,8 @@ export namespace Transformer {
 
 export function apply_transformers (model: Model) {
   for (const flag in model.bool_flags) {
-    if (model.bool_flags[flag] && flag.transformer !== undefined) {
-      flag.transformer.apply_transformer()
+    if (model.bool_flags[flag]?.transformer !== undefined) {
+      model.bool_flags[flag].transformer.apply_transformer()
     }
   }
 }
