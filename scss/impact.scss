@@ -1,0 +1,101 @@
+.impact {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+
+    .container {
+        border: solid 1px #000;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+
+        >.title {
+            border-bottom: solid 1px #000;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        >.scroller {
+            overflow: auto;
+        }
+    }
+
+    .header {
+        border-bottom: solid 1px #000;
+        flex: 0;
+        font-size: 72px;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .body {
+        display: flex;
+        flex: 1;
+        flex-direction: row;
+
+        .time {
+            flex: 0;
+            border-bottom: solid 1px #000;
+            font-size: 14px;
+        }
+
+    }
+
+    .container-resources {
+        flex: 0 0 256px;
+        order: 0;
+
+        .resource {
+            border: dashed 1px #000;
+            display: flex;
+            flex: 0;
+            flex-direction: row;
+        }
+
+        .resource-title {
+            display: flex;
+            flex: 2;
+            font-weight: bold;
+            width: 50%;
+        }
+
+        .resource-amt {
+            display: flex;
+            flex: 1;
+            font-style: italic;
+            padding-left: 8px;
+        }
+
+        .resource-delta {
+            display: flex;
+            flex: 1;
+            font-style: italic;
+            padding-left: 2px;
+        }
+    }
+
+    .container-control {
+        flex: 0 0 256px;
+
+        .control-button {
+            flex: 1;
+        }
+    }
+
+    .container-map {
+        flex: 1 0 256px;
+        order: 1;
+    }
+
+    .container-messages {
+        flex: 0 0 192px;
+
+        .message-time {
+            border-bottom: solid 1px #000;
+            flex: 0;
+            font-weight: bold;
+            text-align: center;
+        }
+    }
+}
