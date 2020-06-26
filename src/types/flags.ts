@@ -1,17 +1,19 @@
-import { Transformer } from 'transformers'
+import { Transformer } from './transformers'
 
 export interface BoolFlag {
   transformer: Transformer | undefined;
 }
 
-export namespace BoolFlag {
-  export const OxygenMonitor = new class OxygenMonitor implements BoolFlag {
+export class BoolFlag {
+  static OxygenMonitor = new class OxygenMonitor implements BoolFlag {
     transformer = undefined
   }()
-  export const LeakyTank = new class LeakyTank implements BoolFlag {
+
+  static LeakyTank = new class LeakyTank implements BoolFlag {
     transformer = new Transformer.LeakyTank()
   }()
-  export const PowerRegen = new class PowerRegen implements BoolFlag {
+
+  static PowerRegen = new class PowerRegen implements BoolFlag {
     transformer = new Transformer.PowerRegen()
   }()
 }

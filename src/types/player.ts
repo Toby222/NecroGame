@@ -1,12 +1,12 @@
-import { TileID } from 'tiles'
+import { TileID } from './tiles'
 
 export class Player {
-  current_tile: TileID
+  currentTile: TileID
 
   name: string
 
   constructor () {
-    this.current_tile = 0
+    this.currentTile = 0
     this.name = 'Spiff'
   }
 }

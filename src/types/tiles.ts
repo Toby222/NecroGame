@@ -1,4 +1,4 @@
-import { Buttons } from 'buttons'
+import { Buttons } from './buttons'
 
 export class Tile {
   name: string
@@ -7,8 +7,7 @@ export class Tile {
 
   buttons: Buttons
 
-  constructor (name: string = 'Wasteland', art: string = '........',
-    buttons: Buttons = []) {
+  constructor (name: string = 'Wasteland', art: string = '........', buttons: Buttons = []) {
     this.name = name
     this.art = art
     this.buttons = buttons
@@ -22,7 +21,7 @@ export class Tile {
 export type TileID = number
 export type Tiles = Map<TileID, Tile>
 
-export function defined_tiles (id: TileID): Tile | undefined {
+export function definedTiles (id: TileID): Tile | undefined {
   switch (id) {
     case 0:
       return new Tile('Ship', '..::^::..', [0])

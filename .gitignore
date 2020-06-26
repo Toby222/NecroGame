@@ -1,5 +1,9 @@
 .now
 node_modules
+public/
+!public/*.html
+!public/*.ico
+!public/*.css
 
 # Environment Variables
 .env

@@ -1,9 +1,9 @@
 export interface Resource {}
 
-export namespace Resource {
-  export const Chutzpah = new class Chutzpah implements Resource {}()
-  export const Oxygen = new class Oxygen implements Resource {}()
-  export const Power = new class Power implements Resource {}()
+export class Resource {
+  static Chutzpah = new class Chutzpah implements Resource {}()
+  static Oxygen = new class Oxygen implements Resource {}()
+  static Power = new class Power implements Resource {}()
 }
 
-export type Resources = Map<Resource, [number, number]>;
+export declare type Resources = Map<Resource, [number, number]>;

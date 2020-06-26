@@ -1,16 +1,13 @@
-import { Resource } from 'resource'
-import { Model } from '../main'
-import { Action } from 'action'
+import { Resource } from './resource'
+import { Model } from '../impact'
+import { Action } from './actions'
 
 export interface Transformation {
-  // resource: Resource
-  // delta: number
-
-  apply_transformation(model: Model): void
+  ApplyTransformation(model: Model): void
 }
 
-export namespace Transformation {
-  export class Generate implements Transformation {
+export class Transformation {
+  static Generate = class Generate implements Transformation {
     private resource: Resource
     private delta: number
 
@@ -19,12 +16,12 @@ export namespace Transformation {
       this.delta = delta
     }
 
-    apply_transformation (model: Model) {
+    ApplyTransformation (model: Model) {
       new Action.AddResourceValue(this.resource, this.delta).perform(model)
     }
   }
 
-  export class Consume implements Transformation {
+  static Consume = class Consume implements Transformation {
     private resource: Resource
     private delta: number
 
@@ -33,7 +30,7 @@ export namespace Transformation {
       this.delta = delta
     }
 
-    apply_transformation (model: Model) {
+    ApplyTransformation (model: Model) {
       new Action.AddResourceValue(this.resource, -this.delta).perform(model)
     }
   }
@@ -42,40 +39,40 @@ export namespace Transformation {
 // Each transformer should have a corresponding BoolFlag
 export interface Transformer {
   effects: Transformation[]
-  apply_transformer(model: Model): void
+  applyTransformers(model: Model): void
 }
 
-export namespace Transformer {
-  export class LeakyTank implements Transformer {
+export class Transformer {
+  static LeakyTank = class LeakyTank implements Transformer {
     effects = [
       new Transformation.Consume(Resource.Oxygen, 10)
     ]
 
-    apply_transformer (model: Model) {
+    applyTransformers (model: Model) {
       for (const effect of this.effects) {
-        effect.apply_transformation(model)
+        effect.ApplyTransformation(model)
       }
     }
   }
 
-  export class PowerRegen implements Transformer {
+  static PowerRegen = class PowerRegen implements Transformer {
     effects = [
       new Transformation.Generate(Resource.Power, 2),
       new Transformation.Consume(Resource.Oxygen, 1)
     ]
 
-    apply_transformer (model: Model) {
+    applyTransformers (model: Model) {
       for (const effect of this.effects) {
-        effect.apply_transformation(model)
+        effect.ApplyTransformation(model)
       }
     }
   }
 }
 
-export function apply_transformers (model: Model) {
-  for (const flag in model.bool_flags) {
-    if (model.bool_flags[flag]?.transformer !== undefined) {
-      model.bool_flags[flag].transformer.apply_transformer()
+export function applyTransformers (model: Model) {
+  for (const [flag] of model.boolFlags) {
+    if (flag.transformer !== undefined) {
+      flag.transformer.applyTransformers(model)
     }
   }
 }
