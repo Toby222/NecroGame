@@ -1,4 +1,7 @@
 import { Player } from '../types/player'
+import { definedTiles } from '../types/tiles'
+
+import MapContainer from '../components/map_container'
 
 import * as React from 'react'
 
@@ -21,6 +24,7 @@ export class PlayerContainer extends React.Component<PlayerContainerProps> {
       <div className="scroller">
         {`Name: ${this.player.name}, Current tile: ${this.player.currentTile}`}
       </div>
+      <MapContainer tile={definedTiles(this.player.currentTile)}/>
     </div>
   }
 }
