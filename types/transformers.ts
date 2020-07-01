@@ -1,5 +1,5 @@
 import { Resource } from './resource'
-import { Model } from '../impact'
+import { Model } from '../pages/impact'
 import { Action } from './actions'
 
 export interface Transformation {

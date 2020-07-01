@@ -1,3 +1,5 @@
+.vercel
+.next
 .now
 node_modules
 public/
@@ -8,4 +10,3 @@ public/
 # Environment Variables
 .env
 .env.build
-.vercel

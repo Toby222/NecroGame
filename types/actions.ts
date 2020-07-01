@@ -1,8 +1,8 @@
+import { Model, Msg } from '../pages/impact'
 import { TileID, definedTiles } from './tiles'
 import { Button, ButtonID } from './buttons'
 import { BoolFlag } from './flags'
 import { Resource } from './resource'
-import { Model, Msg } from '../impact'
 import { Time } from './time'
 import { Message } from './messages'
 

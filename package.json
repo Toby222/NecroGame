@@ -1,18 +1,11 @@
 {
   "scripts": {
-    "test": "webpack",
-    "build": "npm run build-scss && npm run build-ts",
-    "build-ts": "babel src --out-dir public --extensions .ts,.tsx",
-    "build-scss": "sass scss/impact.scss public/impact.css",
-    "tsc": "tsc --jsx react-native"
+    "dev": "next",
+    "build": "next build",
+    "build-scss": "sass scss/impact.scss public/impact.css"
   },
   "devDependencies": {
-    "@babel/cli": "^7.10.3",
-    "@babel/core": "^7.10.3",
-    "@babel/plugin-proposal-class-properties": "^7.10.1",
-    "@babel/plugin-transform-react-jsx": "^7.10.3",
-    "@babel/preset-env": "^7.10.3",
-    "@babel/preset-typescript": "^7.10.1",
+    "@types/node": "^14.0.14",
     "@types/react": "^16.9.41",
     "@types/react-dom": "^16.9.8",
     "@typescript-eslint/eslint-plugin": "^3.4.0",
@@ -23,10 +16,12 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
     "sass": "^1.26.9",
     "typescript": "^3.9.5"
   },
-  "dependencies": {}
+  "dependencies": {
+    "next": "latest",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  }
 }

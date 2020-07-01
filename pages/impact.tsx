@@ -1,17 +1,21 @@
-import { Player } from './types/player'
-import { Buttons } from './types/buttons'
-import { TileID, Tile, Tiles } from './types/tiles'
-import { BoolFlag, BoolFlags } from './types/flags'
-import { Resource, Resources } from './types/resource'
-import { Time } from './types/time'
-import { Message } from './types/messages'
-import { applyTimeactions, Action } from './types/actions'
-import { applyTransformers } from './types/transformers'
+import { Player } from '../types/player'
+import { Buttons } from '../types/buttons'
+import { TileID, Tile, Tiles } from '../types/tiles'
+import { BoolFlag, BoolFlags } from '../types/flags'
+import { Resource, Resources } from '../types/resource'
+import { Time } from '../types/time'
+import { Message } from '../types/messages'
+import { applyTimeactions, Action } from '../types/actions'
+import { applyTransformers } from '../types/transformers'
+
+import { ControlContainer } from '../components/control_container'
+
+import Head from 'next/head'
+import Link from 'next/link'
 
 import * as React from 'react'
-import * as ReactDom from 'react-dom'
 
-class Model extends React.Component {
+export class Model extends React.Component {
   time: Time
   resourceValues: Resources
   messages: Message[]
@@ -30,7 +34,8 @@ class Model extends React.Component {
     this.tiles = new Map<TileID, Tile>() // new Tiles()
     this.buttons = []
     this.player = new Player()
-    new Action.AddTile(0).perform(this)
+    const t = new Action.AddTile(0)
+    t.perform(this)
   }
 
   // ?
@@ -51,31 +56,35 @@ class Model extends React.Component {
     }
     return false
   }
-  // <ResourceContainer: resources=&self.resource_values/>
-  // <ControlContainer: buttons=&self.buttons, onsignal=|msg| msg/>
-  // <PlayerContainer: player=&self.player/>
-  // <MessagesContainer: messages=&self.messages/>
 
   render () {
     return (
-      <>
-        <div className="impact">
+      <div className="impact">
+        <Head>
+          <meta charSet="utf-8" />
+          <meta httpEquiv="X-UA-Compatible" content="IE=edge"/>
+          <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+          <meta name="description" content="Survive the crash!"/>
+          <meta name="author" content="Toby, deciduously"/>
+          <link rel="stylesheet" type="text/css" href="impact.css"/>
+        </Head>
+        <main>
           <div className="header">{'IMPACT'}</div>
           <div className="body">
             <span className="time">{`Time: ${this.time}`}</span>
+            <ControlContainer buttons={this.buttons} onsignal={(msg:Msg)=>msg}/>
           </div>
-        </div>
-
+        </main>
         <footer>
-          <a href="http://deciduously.com">{'deciduously.com'}</a>{ ' - ' }<a href="https://github.com/deciduously/impact">{'source'}</a>
+          <a href="http://deciduously.com">{'deciduously.com'}</a>{' - '}<a href="https://github.com/deciduously/impact">{'source'}</a>
         </footer>
-      </>
+      </div>
     )
   }
 }
 
-class Msg {
-  static Tick = class Tick {}
+export class Msg {
+  static Tick = class Tick { }
 
   static PerformAction = class PerformAction {
     action: Action
@@ -93,6 +102,3 @@ class Msg {
     }
   }
 }
-
-
-ReactDom.render(<Model />, document.body)
