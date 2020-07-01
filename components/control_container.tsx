@@ -22,7 +22,7 @@ export class ControlContainer extends React.Component<ControlContainerProps> {
   }
 
   render () {
-    function viewButton (bid: ButtonID, container: ControlContainer) {
+    function renderButton (bid: ButtonID, container: ControlContainer) {
       const button = Button.byIndex(bid)
       if (button === undefined) { return <></> }
 
@@ -37,8 +37,10 @@ export class ControlContainer extends React.Component<ControlContainerProps> {
     return <div className="container container-control">
       <div className="title">{this.title}</div>
       <div className="scroller">
-        {this.buttons.map(button => viewButton(button, this))}
+        {this.buttons.map(button => renderButton(button, this))}
       </div>
     </div>
   }
 }
+
+export default ControlContainer

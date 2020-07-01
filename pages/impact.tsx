@@ -8,7 +8,8 @@ import { Message } from '../types/messages'
 import { applyTimeactions, Action } from '../types/actions'
 import { applyTransformers } from '../types/transformers'
 
-import { ControlContainer } from '../components/control_container'
+import ControlContainer from '../components/control_container'
+import ResourceContainer from '../components/resource_container'
 
 import Head from 'next/head'
 import Link from 'next/link'
@@ -40,7 +41,6 @@ export class Model extends React.Component {
 
   // ?
   update (msg: Msg) {
-    console.log('MAIN UPDATE', msg, msg instanceof Msg.PerformAction, msg instanceof Msg.Tick)
     if (msg instanceof Msg.Tick) {
       this.time.increment()
       applyTransformers(this)
@@ -71,6 +71,7 @@ export class Model extends React.Component {
           <div className="header">{'IMPACT'}</div>
           <div className="body">
             <span className="time">{`Time: ${this.time}`}</span>
+            <ResourceContainer resources={this.resourceValues}/>
             <ControlContainer buttons={this.buttons} onsignal={(msg: Msg)=>this.update(msg)}/>
           </div>
         </main>
