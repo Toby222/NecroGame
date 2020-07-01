@@ -11,6 +11,7 @@ import { applyTransformers } from '../types/transformers'
 import ControlContainer from '../components/control_container'
 import ResourceContainer from '../components/resource_container'
 import PlayerContainer from '../components/player_container'
+import MessagesContainer from '../components/messages_container'
 
 import Head from 'next/head'
 import Link from 'next/link'
@@ -41,6 +42,7 @@ export class Model extends React.Component {
   }
 
   update (msg: Msg) {
+    console.log("MESSAGES:",this.messages)
     if (msg instanceof Msg.Tick) {
       this.time.increment()
       applyTransformers(this)
@@ -57,7 +59,8 @@ export class Model extends React.Component {
   }
 
   render () {
-    return (
+    console.debug("IMPACT RENDER", this.buttons)
+    let t = (
       <div className="impact">
         <Head>
           <meta charSet="utf-8" />
@@ -72,15 +75,18 @@ export class Model extends React.Component {
           <div className="body">
             <span className="time">{`Time: ${this.time}`}</span>
             <ResourceContainer resources={this.resourceValues}/>
-            <ControlContainer buttons={this.buttons} onsignal={(msg: Msg)=>this.update(msg)}/>
+            <ControlContainer buttons={this.buttons} onsignal={(msg: Msg) => this.update(msg)}/>
             <PlayerContainer player={this.player}/>
           </div>
+          <MessagesContainer messages={this.messages}/>
         </main>
         <footer>
           <a href="http://deciduously.com">{'deciduously.com'}</a>{' - '}<a href="https://github.com/toman222/Impact">{'source'}</a>
         </footer>
       </div>
     )
+    console.debug(t)
+    return t
   }
 }
 

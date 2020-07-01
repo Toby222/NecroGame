@@ -10,18 +10,22 @@ export class MapContainer extends React.Component<MapContainerProps> {
   title: string = 'Map'
   tile: Tile
 
-  constructor(props: MapContainerProps) {
+  constructor (props: MapContainerProps) {
     super(props)
 
     this.tile = props.tile
   }
 
-  render() {
+  shouldComponentUpdate (nextProps: Readonly<{}>, nextState: Readonly<{}>, nextContext: any): boolean {
+    return true
+  }
+
+  render () {
     return <div className="container container-map">
       <div className="title">{this.title}</div>
       <div className="scroller">
-      <div className="tile-title">{this.tile.toString()}</div>
-      <div className="tile-art">{this.tile.art}</div>
+        <div className="tile-title">{this.tile.toString()}</div>
+        <div className="tile-art">{this.tile.art}</div>
       </div>
     </div>
   }

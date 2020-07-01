@@ -21,7 +21,12 @@ export class ControlContainer extends React.Component<ControlContainerProps> {
     this.onsignal = props.onsignal
   }
 
+  shouldComponentUpdate (nextProps: Readonly<{}>, nextState: Readonly<{}>, nextContext: any): boolean {
+    return true
+  }
+
   render () {
+    console.debug("CONTROLCONTAINER RENDER", this.buttons)
     function renderButton (bid: ButtonID, container: ControlContainer) {
       const button = Button.byIndex(bid)
       if (button === undefined) { return <></> }

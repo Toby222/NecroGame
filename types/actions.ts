@@ -128,7 +128,7 @@ export class Action {
     perform (model: Model) {
       if (Button.byIndex(this.bid) !== undefined) {
         model.buttons = model.buttons.filter((button: ButtonID) => {
-          return button === this.bid
+          return button !== this.bid
         })
       }
     }
@@ -177,14 +177,14 @@ export class TimeAction {
   }
 }
 
-export function applyTimeactions (model: Model) {
-  const timeactions = [
-    new TimeAction(1, new Action.EnableButton(1)),
-    new TimeAction(15, new Action.AddMessage("It's been 15 SECONDS"))
-  ]
+const timeactions = [
+  new TimeAction(1, new Action.EnableButton(1)),
+  new TimeAction(15, new Action.AddMessage("It's been 15 SECONDS"))
+]
 
+export function applyTimeactions (model: Model) {
   for (const timeAction of timeactions) {
-    if (timeAction.time === model.time) {
+    if (timeAction.time.seconds === model.time.seconds) {
       timeAction.action.perform(model)
     }
   }
