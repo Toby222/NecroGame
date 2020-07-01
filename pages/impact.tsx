@@ -30,8 +30,8 @@ export class Model extends React.Component {
     this.time = new Time()
     this.resourceValues = new Map<Resource, [number, number]>() // new Resources()
     this.messages = []
-    this.boolFlags = new Map<BoolFlag, boolean>() // new BoolFlags()
-    this.tiles = new Map<TileID, Tile>() // new Tiles()
+    this.boolFlags = new BoolFlags()
+    this.tiles = new Tiles()
     this.buttons = []
     this.player = new Player()
     const t = new Action.AddTile(0)
@@ -39,12 +39,12 @@ export class Model extends React.Component {
   }
 
   // ?
-  update (msg: Msg): boolean {
+  update (msg: Msg) {
+    console.log('MAIN UPDATE', msg, msg instanceof Msg.PerformAction, msg instanceof Msg.Tick)
     if (msg instanceof Msg.Tick) {
       this.time.increment()
       applyTransformers(this)
       applyTimeactions(this)
-      return true
     } else if (msg instanceof Msg.PerformAction) {
       msg.action.perform(this)
       this.update(new Msg.Tick())
@@ -52,9 +52,8 @@ export class Model extends React.Component {
       for (const message of msg.messages) {
         this.update(message)
       }
-      return true
     }
-    return false
+    this.forceUpdate()
   }
 
   render () {
@@ -72,11 +71,11 @@ export class Model extends React.Component {
           <div className="header">{'IMPACT'}</div>
           <div className="body">
             <span className="time">{`Time: ${this.time}`}</span>
-            <ControlContainer buttons={this.buttons} onsignal={(msg:Msg)=>msg}/>
+            <ControlContainer buttons={this.buttons} onsignal={(msg: Msg)=>this.update(msg)}/>
           </div>
         </main>
         <footer>
-          <a href="http://deciduously.com">{'deciduously.com'}</a>{' - '}<a href="https://github.com/deciduously/impact">{'source'}</a>
+          <a href="http://deciduously.com">{'deciduously.com'}</a>{' - '}<a href="https://github.com/toman222/Impact">{'source'}</a>
         </footer>
       </div>
     )

@@ -11,6 +11,6 @@ export class Time {
 
   toString () {
     const s = this.seconds
-    return `${Math.floor(s / (60 * 60 * 24))}d${Math.floor(s / (60 * 60))}h${Math.floor(s / 60)}m${s % 60}`
+    return `${Math.floor(s / (60 * 60 * 24))}d${Math.floor(s / (60 * 60))}h${Math.floor(s / 60)}m${s % 60}s`
   }
 }

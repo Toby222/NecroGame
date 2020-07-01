@@ -18,4 +18,4 @@ export class BoolFlag {
   }()
 }
 
-export type BoolFlags = Map<BoolFlag, boolean>;
+export class BoolFlags {constructor () { return new Map<BoolFlag, boolean>() }}
