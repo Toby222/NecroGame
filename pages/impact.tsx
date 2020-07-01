@@ -10,6 +10,7 @@ import { applyTransformers } from '../types/transformers'
 
 import ControlContainer from '../components/control_container'
 import ResourceContainer from '../components/resource_container'
+import PlayerContainer from '../components/player_container'
 
 import Head from 'next/head'
 import Link from 'next/link'
@@ -39,7 +40,6 @@ export class Model extends React.Component {
     t.perform(this)
   }
 
-  // ?
   update (msg: Msg) {
     if (msg instanceof Msg.Tick) {
       this.time.increment()
@@ -73,6 +73,7 @@ export class Model extends React.Component {
             <span className="time">{`Time: ${this.time}`}</span>
             <ResourceContainer resources={this.resourceValues}/>
             <ControlContainer buttons={this.buttons} onsignal={(msg: Msg)=>this.update(msg)}/>
+            <PlayerContainer player={this.player}/>
           </div>
         </main>
         <footer>
