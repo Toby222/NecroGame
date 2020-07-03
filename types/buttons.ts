@@ -2,93 +2,98 @@ import { Action } from './actions'
 import { BoolFlag } from './flags'
 import { Resource } from './resource'
 
-export type ButtonID = number;
-
 export interface Button {
-  actions: Action[];
+  actions: Action[]
 }
 
 export class Button {
-  static Wait = class Wait implements Button {
+  static Wait = new class Wait implements Button {
     toString () { return 'Wait 1 Second' }
     actions = [
       new Action.Noop()
     ]
-  }
+  }()
 
-  static ActivateOxygen = class ActivateOxygen implements Button {
+  static ActivateOxygen = new class ActivateOxygen implements Button {
     toString () { return 'Activate Oxygen' }
-    actions = [
+    actions: Action[] = [
       new Action.SetBoolFlag(BoolFlag.OxygenMonitor),
       new Action.SetResourceValue(Resource.Oxygen, 1000),
       new Action.SetBoolFlag(BoolFlag.LeakyTank),
       new Action.AddMessage('Oxygen Monitor Up'),
       new Action.AddMessage('Losing 10 Oxygen per second - tank leaky'),
-      new Action.DisableButton(1),
       new Action.EnableButton(2),
-      new Action.EnableButton(5)
+      new Action.EnableButton(5),
+      new Action.DisableButton(this)
     ]
-  }
+  }()
 
-  static OpenToolbox = class OpenToolbox implements Button {
+  static OpenToolbox = new class OpenToolbox implements Button {
     toString () { return 'Search Toolbox' }
-    actions = [
+    actions: Action[] = [
       new Action.AddMessage('You unceremoniously dump the toolbox contents all over the ship'),
       new Action.EnableButton(3),
       new Action.EnableButton(4),
-      new Action.DisableButton(2)
+      new Action.DisableButton(this)
     ]
-  }
+  }()
 
-  static ApplyTape = class ApplyTape implements Button {
+  static ApplyTape = new class ApplyTape implements Button {
     toString () { return 'Apply Scotch Tape to Tank' }
-    actions = [
+    actions: Action[] = [
       new Action.ClearBoolFlag(BoolFlag.LeakyTank),
       new Action.AddMessage('Leak stopped - for now.'),
-      new Action.DisableButton(3)
+      new Action.DisableButton(this)
     ]
-  }
+  }()
 
-  static FiddleControls = class FiddleControls implements Button {
+  static FiddleControls = new class FiddleControls implements Button {
     toString () { return 'Mess with the control panel' }
-    actions =[
+    actions: Action[] = [
       new Action.SetResourceValue(Resource.Power, 1),
       new Action.SetBoolFlag(BoolFlag.PowerRegen),
       new Action.AddMessage('You hear a loud bang from the bottom of the ship'),
       new Action.AddMessage('Your fuel cells are on and recharging from your excess oxygen'),
-      new Action.DisableButton(4)
+      new Action.DisableButton(this)
     ]
-  }
+  }()
 
-  static OpenDoor = class OpenDoor implements Button {
+  static OpenDoor = new class OpenDoor implements Button {
     toString () { return 'Open Airlock' }
-    actions=[
+    actions: Action[] = [
       new Action.AddMessage('You push the airlock open and immediately DIE.'),
       new Action.AddMessage('Just kidding - everything is fine.'),
       new Action.SetResourceValue(Resource.Chutzpah, 50),
       new Action.AddTile(1),
-      new Action.DisableButton(5)
+      new Action.DisableButton(this)
     ]
-  }
+  }()
 
-  static byIndex (idx: ButtonID): Button | undefined {
-    switch (idx) {
+  static buttons = new Map<string, Button>([
+    ['Wait', Button.Wait],
+    ['ActivateOxygen', Button.ActivateOxygen],
+    ['OpenToolbox', Button.OpenToolbox],
+    ['ApplyTape', Button.ApplyTape],
+    ['FiddleControls', Button.FiddleControls],
+    ['OpenDoor', Button.OpenDoor]
+  ])
+
+  static byId (id: number): Button | undefined {
+    switch (id) {
       case 0:
-        return new Button.Wait()
+        return Button.Wait
       case 1:
-        return new Button.ActivateOxygen()
+        return Button.ActivateOxygen
       case 2:
-        return new Button.OpenToolbox()
+        return Button.OpenToolbox
       case 3:
-        return new Button.ApplyTape()
+        return Button.ApplyTape
       case 4:
-        return new Button.FiddleControls()
+        return Button.FiddleControls
       case 5:
-        return new Button.OpenDoor()
+        return Button.OpenDoor
       default:
-        return undefined
+        throw new Error('Invalid ID passed to Button.byId')
     }
   }
 }
-
-export class Buttons extends Array<ButtonID> {}

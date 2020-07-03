@@ -1,17 +1,18 @@
 import { msgFromActions } from '../types/actions'
-import { Button, ButtonID, Buttons } from '../types/buttons'
+import { Button } from '../types/buttons'
 import { Msg } from './model'
 
 import * as React from 'react'
 
 interface ControlContainerProps extends React.Props<ControlContainer> {
-  buttons: Buttons
+  buttons: Button[]
   onsignal?: (msg: Msg) => void
 }
 
 export class ControlContainer extends React.Component<ControlContainerProps> {
+  private static bId: number = 0
   title: string = 'Control'
-  buttons: Buttons
+  buttons: Button[]
   onsignal?: (msg: Msg) => void
 
   constructor (props: ControlContainerProps) {
@@ -26,16 +27,16 @@ export class ControlContainer extends React.Component<ControlContainerProps> {
   }
 
   render () {
-    console.debug(`rendering controls with buttons ${this.buttons}`)
-    function renderButton (bid: ButtonID, container: ControlContainer) {
-      const button = Button.byIndex(bid)
-      if (button === undefined) { return <></> }
+    console.debug(`rendering controlContainer with buttons ${this.buttons}`)
+    function renderButton (button: Button, container: ControlContainer) {
+      // const button = Button.byIndex(bid)
+      if (button?.actions === undefined) { return <span key={ControlContainer.bId++} /> }
 
       const msg = msgFromActions(button.actions)
       const onsignal = container.onsignal !== undefined ? container.onsignal : () => {}
 
       return (
-        <span key={bid} className='control-button'>
+        <span key={ControlContainer.bId++} className='control-button'>
           <button onClick={() => onsignal(msg)}>{button.toString()}</button>
         </span>
       )

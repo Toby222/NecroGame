@@ -2,6 +2,13 @@
 
 Copied from ![here](https://raw.githubusercontent.com/deciduously/impact/master/README.md)
 
+## Current WIPs
+
+* This README
+* Button Enabling doesn't properly work?
+* Resource delta doesn't update correctly
+* Cleaning up random `console.debug`s
+
 # impact
 An incremental game skeleton. Very much WIP.
 

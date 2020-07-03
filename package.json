@@ -4,7 +4,8 @@
     "build": "next build",
     "start": "next start",
     "build-scss": "sass scss/impact.scss public/impact.css",
-    "lint": "standardx **/*.{ts,tsx}"
+    "lint": "standardx **/*.{ts,tsx}",
+    "test": "npm run lint"
   },
   "devDependencies": {
     "@types/node": "^14.0.14",
@@ -28,7 +29,19 @@
   "eslintConfig": {
     "rules": {
       "no-unused-vars": "off",
-      "@typescript-eslint/no-unused-vars": ["error", {"args": "all", "argsIgnorePattern": "^_", "varsIgnorePattern": "^_"}]
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          "args": "all",
+          "argsIgnorePattern": "^_",
+          "varsIgnorePattern": "^_"
+        }
+      ]
+    },
+    "settings": {
+      "react": {
+        "version": "detect"
+      }
     }
   }
 }

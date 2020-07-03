@@ -1,5 +1,5 @@
 import { Player } from '../types/player'
-import { Buttons } from '../types/buttons'
+import { Button } from '../types/buttons'
 import { Tiles } from '../types/tiles'
 import { BoolFlags } from '../types/flags'
 import { Resource, Resources } from '../types/resource'
@@ -23,7 +23,7 @@ export class Model extends React.Component {
   messages: Message[]
   boolFlags: BoolFlags
   tiles: Tiles
-  buttons: Buttons
+  buttons: Button[]
   player: Player
 
   constructor (props: React.Props<Model>) {
@@ -34,7 +34,7 @@ export class Model extends React.Component {
     this.messages = []
     this.boolFlags = new BoolFlags()
     this.tiles = new Tiles()
-    this.buttons = new Buttons()
+    this.buttons = []
     this.player = new Player()
     const t = new Action.AddTile(0)
     t.perform(this)
@@ -79,7 +79,9 @@ export class Model extends React.Component {
           <MessagesContainer messages={this.messages} />
         </main>
         <footer>
-          <a href='http://deciduously.com'>deciduously.com</a>{' - '}<a href='https://github.com/toman222/Impact'>source</a>
+          <a href='http://deciduously.com'>deciduously.com</a>
+          {' - '}
+          <a href='https://github.com/toman222/Impact'>source</a>
         </footer>
       </div>
     )

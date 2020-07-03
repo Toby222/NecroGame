@@ -1,13 +1,13 @@
 import { Model, Msg } from '../components/model'
 import { TileID, definedTiles } from './tiles'
-import { Button, ButtonID } from './buttons'
+import { Button } from './buttons'
 import { BoolFlag } from './flags'
 import { Resource } from './resource'
 import { Time } from './time'
 import { Message } from './messages'
 
 export interface Action {
-  perform(model: Model, ...params: any[]): void
+  perform(model: Model): void
 }
 
 export class Action {
@@ -90,7 +90,7 @@ export class Action {
     perform (model: Model) {
       const val = model.resourceValues.get(this.resource)
       if (val !== undefined) {
-        val[1] += this.delta
+        model.resourceValues.set(this.resource, [val[0], val[1] + this.delta])
       }
     }
   }
@@ -107,30 +107,30 @@ export class Action {
   }
 
   static EnableButton = class EnableButton implements Action {
-    private bid: ButtonID
-    constructor (bid :ButtonID) {
-      this.bid = bid
+    private buttonId: number
+    constructor (buttonId: number) {
+      this.buttonId = buttonId
     }
 
     perform (model: Model) {
-      if (Button.byIndex(this.bid) !== undefined) {
-        model.buttons.push(this.bid)
-      }
+      console.debug(`Enabling button ${this.buttonId}`)
+      const button = Button.byId(this.buttonId)
+      if (button === undefined) throw new Error('Invalid id for EnableButton action')
+      model.buttons.push(button)
     }
   }
 
   static DisableButton = class DisableButton implements Action {
-    private bid: ButtonID
-    constructor (bid: ButtonID) {
-      this.bid = bid
+    private button: Button
+    constructor (button: Button) {
+      this.button = button
     }
 
     perform (model: Model) {
-      if (Button.byIndex(this.bid) !== undefined) {
-        model.buttons = model.buttons.filter((button: ButtonID) => {
-          return button !== this.bid
-        })
-      }
+      console.debug(`Disabling button ${this.button}`)
+      /* eslint-disable-next-line eqeqeq */
+      const toDelete = model.buttons.findIndex((btn) => btn == this.button)
+      if (toDelete >= 0) { model.buttons.splice(toDelete) }
     }
   }
 
