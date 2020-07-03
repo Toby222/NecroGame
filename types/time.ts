@@ -5,6 +5,10 @@ export class Time {
     this.seconds = seconds
   }
 
+  clone(): Time {
+    return new Time(this.seconds)
+  }
+
   increment () {
     this.seconds++
   }

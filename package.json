@@ -2,6 +2,7 @@
   "scripts": {
     "dev": "next",
     "build": "next build",
+    "start": "next start",
     "build-scss": "sass scss/impact.scss public/impact.css"
   },
   "devDependencies": {

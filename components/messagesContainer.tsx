@@ -22,7 +22,6 @@ export class MessagesContainer extends React.Component<MessagesContainerProps> {
   }
 
   render () {
-    console.log(MessagesContainer.mId)
     function renderMessage (message: Message) {
       return <li key={MessagesContainer.mId++} className="message">
         <span className="message-time">{message.time.toString()}</span>

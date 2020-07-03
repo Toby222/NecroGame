@@ -19,7 +19,7 @@ export class Tile {
 }
 
 export type TileID = number
-export class Tiles { constructor () { return new Map<TileID, Tile>() } }
+export class Tiles extends Map<TileID, Tile> { }
 
 export function definedTiles (id: TileID): Tile | undefined {
   switch (id) {

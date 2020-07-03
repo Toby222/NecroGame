@@ -8,10 +8,10 @@ import { Message } from '../types/messages'
 import { applyTimeactions, Action } from '../types/actions'
 import { applyTransformers } from '../types/transformers'
 
-import ControlContainer from '../components/control_container'
-import ResourceContainer from '../components/resource_container'
-import PlayerContainer from '../components/player_container'
-import MessagesContainer from '../components/messages_container'
+import ControlContainer from './controlContainer'
+import ResourceContainer from './resourceContainer'
+import PlayerContainer from './playerContainer'
+import MessagesContainer from './messagesContainer'
 
 import Head from 'next/head'
 import Link from 'next/link'
@@ -35,14 +35,13 @@ export class Model extends React.Component {
     this.messages = []
     this.boolFlags = new BoolFlags()
     this.tiles = new Tiles()
-    this.buttons = []
+    this.buttons = new Buttons()
     this.player = new Player()
     const t = new Action.AddTile(0)
     t.perform(this)
   }
 
   update (msg: Msg) {
-    console.log("MESSAGES:",this.messages)
     if (msg instanceof Msg.Tick) {
       this.time.increment()
       applyTransformers(this)
@@ -59,8 +58,8 @@ export class Model extends React.Component {
   }
 
   render () {
-    console.debug("IMPACT RENDER", this.buttons)
-    let t = (
+    console.debug(`rendering model with buttons ${this.buttons}`)
+    return (
       <div className="impact">
         <Head>
           <meta charSet="utf-8" />
@@ -85,8 +84,6 @@ export class Model extends React.Component {
         </footer>
       </div>
     )
-    console.debug(t)
-    return t
   }
 }
 

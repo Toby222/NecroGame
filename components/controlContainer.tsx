@@ -1,6 +1,6 @@
 import { msgFromActions } from '../types/actions'
 import { Button, ButtonID, Buttons } from '../types/buttons'
-import { Msg } from '../pages/impact'
+import { Msg } from './model'
 
 import * as React from 'react'
 
@@ -26,7 +26,7 @@ export class ControlContainer extends React.Component<ControlContainerProps> {
   }
 
   render () {
-    console.debug("CONTROLCONTAINER RENDER", this.buttons)
+    console.debug(`rendering controls with buttons ${this.buttons}`)
     function renderButton (bid: ButtonID, container: ControlContainer) {
       const button = Button.byIndex(bid)
       if (button === undefined) { return <></> }

@@ -91,4 +91,4 @@ export class Button {
   }
 }
 
-export type Buttons = ButtonID[]
+export class Buttons extends Array<ButtonID> {}

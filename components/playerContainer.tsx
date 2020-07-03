@@ -1,7 +1,7 @@
 import { Player } from '../types/player'
 import { definedTiles } from '../types/tiles'
 
-import MapContainer from '../components/map_container'
+import MapContainer from '../components/mapContainer'
 
 import * as React from 'react'
 

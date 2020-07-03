@@ -1,4 +1,4 @@
-import { Model, Msg } from '../pages/impact'
+import { Model, Msg } from '../components/model'
 import { TileID, definedTiles } from './tiles'
 import { Button, ButtonID } from './buttons'
 import { BoolFlag } from './flags'
