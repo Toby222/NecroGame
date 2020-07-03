@@ -4,7 +4,6 @@ Copied from [here](https://github.com/deciduously/impact/)
 
 ## Current WIPs
 
-* This README
 * Button Enabling doesn't properly work?
 * Resource delta doesn't update correctly
 * Cleaning up random `console.debug`s
