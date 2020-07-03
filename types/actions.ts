@@ -59,7 +59,13 @@ export class Action {
     }
 
     perform (model: Model) {
-      model.resourceValues.set(this.resource, [this.amount, 0])
+      if (model.resourceValues.includes(this.resource)) {
+        throw new Error('Resource may only be set once')
+      }
+      this.resource.amount = this.amount
+      this.resource.delta = 0
+
+      model.resourceValues.push(this.resource)
     }
   }
 
@@ -71,11 +77,8 @@ export class Action {
       this.delta = delta
     }
 
-    perform (model: Model) {
-      const val = model.resourceValues.get(this.resource)
-      if (val !== undefined) {
-        val[0] += this.delta
-      }
+    perform (_model: Model) {
+      this.resource.amount += this.delta
     }
   }
 
@@ -87,11 +90,8 @@ export class Action {
       this.delta = delta
     }
 
-    perform (model: Model) {
-      const resourceValues = model.resourceValues.get(this.resource)
-      if (resourceValues !== undefined) {
-        model.resourceValues.set(this.resource, [resourceValues[0], resourceValues[1] + this.delta])
-      }
+    perform (_model: Model) {
+      this.resource.delta += this.delta
     }
   }
 
@@ -113,9 +113,8 @@ export class Action {
     }
 
     perform (model: Model) {
-      console.debug(`Enabling button ${this.buttonId}`)
       const button = Button.byId(this.buttonId)
-      if (button === undefined) throw new Error('Invalid id for EnableButton action')
+      if (button === undefined) { throw new Error('Invalid id for EnableButton action') }
       model.buttons.push(button)
     }
   }
@@ -127,10 +126,11 @@ export class Action {
     }
 
     perform (model: Model) {
-      console.debug(`Disabling button ${this.button}`)
       /* eslint-disable-next-line eqeqeq */
       const toDelete = model.buttons.findIndex((btn) => btn == this.button)
-      if (toDelete >= 0) { model.buttons.splice(toDelete) }
+      if (toDelete >= 0) {
+        model.buttons.splice(toDelete, 1)
+      }
     }
   }
 

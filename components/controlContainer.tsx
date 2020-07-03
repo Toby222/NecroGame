@@ -27,10 +27,10 @@ export class ControlContainer extends React.Component<ControlContainerProps> {
   }
 
   render () {
-    console.debug(`rendering controlContainer with buttons ${this.buttons}`)
     function renderButton (button: Button, container: ControlContainer) {
-      // const button = Button.byIndex(bid)
-      if (button?.actions === undefined) { return <span key={ControlContainer.bId++} /> }
+      if (button?.actions === undefined) {
+        return <span key={ControlContainer.bId++} />
+      }
 
       const msg = msgFromActions(button.actions)
       const onsignal = container.onsignal !== undefined ? container.onsignal : () => {}

@@ -1,15 +1,15 @@
-import { Resource, Resources } from '../types/resource'
+import { Resource } from '../types/resource'
 
 import * as React from 'react'
 
 interface ResourceContainerProps extends React.Props<ResourceContainer> {
-  resources: Resources
+  resources: Resource[]
 }
 
 export class ResourceContainer extends React.Component<ResourceContainerProps> {
   private static rId: number = 0
   title: string = 'Resources'
-  resources: Resources
+  resources: Resource[]
 
   constructor (props: ResourceContainerProps) {
     super(props)
@@ -22,12 +22,12 @@ export class ResourceContainer extends React.Component<ResourceContainerProps> {
   }
 
   render () {
-    function renderResource (resource: Resource, [amt, delta]: [number, number]) {
+    function renderResource (resource: Resource) {
       return (
         <div key={ResourceContainer.rId} className='resource'>
           <span className='resource-title'>{resource.toString()}</span>
-          <span className='resource-amt'>{amt}</span>
-          <span className='resource-delta'>{`${delta}/sec`}</span>
+          <span className='resource-amt'>{resource.amount}</span>
+          <span className='resource-delta'>{`${resource.delta}/sec`}</span>
         </div>
       )
     }
@@ -35,7 +35,7 @@ export class ResourceContainer extends React.Component<ResourceContainerProps> {
       <div className='container container-resources'>
         <div className='title'>{this.title}</div>
         <div className='scroller'>
-          {Array.from(this.resources.entries(), ([res, [amt, delta]], _i) => renderResource(res, [amt, delta]))}
+          {Array.from(this.resources.entries(), ([_idx, res]) => renderResource(res))}
         </div>
       </div>
     )

@@ -2,7 +2,7 @@ import { Player } from '../types/player'
 import { Button } from '../types/buttons'
 import { Tiles } from '../types/tiles'
 import { BoolFlags } from '../types/flags'
-import { Resource, Resources } from '../types/resource'
+import { Resource } from '../types/resource'
 import { Time } from '../types/time'
 import { Message } from '../types/messages'
 import { applyTimeactions, Action } from '../types/actions'
@@ -18,46 +18,38 @@ import Head from 'next/head'
 import * as React from 'react'
 
 export class Model extends React.Component {
-  time: Time
-  resourceValues: Resources
-  messages: Message[]
-  boolFlags: BoolFlags
-  tiles: Tiles
-  buttons: Button[]
-  player: Player
+  boolFlags: BoolFlags = new BoolFlags()
+  buttons: Button[] = []
+  messages: Message[] = []
+  player: Player = new Player()
+  resourceValues: Resource[] = []
+  tiles: Tiles = new Tiles()
+  time: Time = new Time()
 
   constructor (props: React.Props<Model>) {
     super(props)
 
-    this.time = new Time()
-    this.resourceValues = new Resources()
-    this.messages = []
-    this.boolFlags = new BoolFlags()
-    this.tiles = new Tiles()
-    this.buttons = []
-    this.player = new Player()
-    const t = new Action.AddTile(0)
-    t.perform(this)
+    new Action.AddTile(0).perform(this)
   }
 
-  update (msg: Msg) {
+  processMsg (msg: Msg) {
     if (msg instanceof Msg.Tick) {
       this.time.increment()
       applyTransformers(this)
       applyTimeactions(this)
     } else if (msg instanceof Msg.PerformAction) {
       msg.action.perform(this)
-      this.update(new Msg.Tick())
+      this.processMsg(new Msg.Tick())
     } else if (msg instanceof Msg.Bulk) {
       for (const message of msg.messages) {
-        this.update(message)
+        this.processMsg(message)
       }
     }
     this.forceUpdate()
   }
 
   render () {
-    console.debug(`rendering model with buttons ${this.buttons}`)
+    console.debug('rendering model with buttons:', this.buttons)
     return (
       <div className='impact'>
         <Head>
@@ -74,7 +66,7 @@ export class Model extends React.Component {
           <div className='body'>
             <span className='time'>{`Time: ${this.time}`}</span>
             <ResourceContainer resources={this.resourceValues} />
-            <ControlContainer buttons={this.buttons} onsignal={(msg: Msg) => this.update(msg)} />
+            <ControlContainer onsignal={(msg: Msg) => this.processMsg(msg)} buttons={this.buttons} />
             <PlayerContainer player={this.player} />
           </div>
           <MessagesContainer messages={this.messages} />
