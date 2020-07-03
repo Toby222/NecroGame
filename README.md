@@ -5,6 +5,7 @@ Copied from [here](https://github.com/deciduously/impact/)
 ## Current WIPs
 
 * Resource delta doesn't update correctly
+* https://github.com/deciduously/impact/issues
 
 The game is incremental, but not in real time.
 For now, one second passes each time an action happens, which is not ideal... Bulk actions will take way too long.
