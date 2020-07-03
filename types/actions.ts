@@ -12,7 +12,7 @@ export interface Action {
 
 export class Action {
   static Noop = class Noop implements Action {
-    perform (model: Model) {}
+    perform (_model: Model) {}
   }
 
   static SetBoolFlag = class SetBoolFlag implements Action {

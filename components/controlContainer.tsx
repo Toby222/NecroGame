@@ -21,7 +21,7 @@ export class ControlContainer extends React.Component<ControlContainerProps> {
     this.onsignal = props.onsignal
   }
 
-  shouldComponentUpdate (nextProps: Readonly<{}>, nextState: Readonly<{}>, nextContext: any): boolean {
+  shouldComponentUpdate (_nextProps: Readonly<{}>, _nextState: Readonly<{}>, _nextContext: any): boolean {
     return true
   }
 
@@ -34,17 +34,21 @@ export class ControlContainer extends React.Component<ControlContainerProps> {
       const msg = msgFromActions(button.actions)
       const onsignal = container.onsignal !== undefined ? container.onsignal : () => {}
 
-      return <span key={bid} className="control-button">
-        <button onClick={() => onsignal(msg)}>{button.toString()}</button>
-      </span>
+      return (
+        <span key={bid} className='control-button'>
+          <button onClick={() => onsignal(msg)}>{button.toString()}</button>
+        </span>
+      )
     }
 
-    return <div className="container container-control">
-      <div className="title">{this.title}</div>
-      <div className="scroller">
-        {this.buttons.map(button => renderButton(button, this))}
+    return (
+      <div className='container container-control'>
+        <div className='title'>{this.title}</div>
+        <div className='scroller'>
+          {this.buttons.map(button => renderButton(button, this))}
+        </div>
       </div>
-    </div>
+    )
   }
 }
 

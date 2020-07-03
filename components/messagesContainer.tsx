@@ -7,7 +7,6 @@ interface MessagesContainerProps extends React.Props<MessagesContainer> {
 }
 
 export class MessagesContainer extends React.Component<MessagesContainerProps> {
-  private static mId: number = 0
   title: string = 'Messages'
   messages: Message[]
 
@@ -17,23 +16,27 @@ export class MessagesContainer extends React.Component<MessagesContainerProps> {
     this.messages = props.messages
   }
 
-  shouldComponentUpdate (nextProps: Readonly<{}>, nextState: Readonly<{}>, nextContext: any): boolean {
+  shouldComponentUpdate (_nextProps: Readonly<{}>, _nextState: Readonly<{}>, _nextContext: any): boolean {
     return true
   }
 
   render () {
-    function renderMessage (message: Message) {
-      return <li key={MessagesContainer.mId++} className="message">
-        <span className="message-time">{message.time.toString()}</span>
-        {` ${message.content}`}
-      </li>
+    function renderMessage (mId: number, message: Message) {
+      return (
+        <li key={mId} className='message'>
+          <span className='message-time'>{message.time.toString()}</span>
+          {` ${message.content}`}
+        </li>
+      )
     }
-    return <div className="container container-messages">
-      <div className="title">{this.title}</div>
-      <div className="scroller">
-        <ul>{Array.from(this.messages.entries(), ([id, msg], i) => renderMessage(msg))}</ul>
+    return (
+      <div className='container container-messages'>
+        <div className='title'>{this.title}</div>
+        <div className='scroller'>
+          <ul>{Array.from(this.messages.entries(), ([id, msg], _i) => renderMessage(id, msg))}</ul>
+        </div>
       </div>
-    </div>
+    )
   }
 }
 export default MessagesContainer

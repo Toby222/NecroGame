@@ -17,24 +17,28 @@ export class ResourceContainer extends React.Component<ResourceContainerProps> {
     this.resources = props.resources
   }
 
-  shouldComponentUpdate (nextProps: Readonly<{}>, nextState: Readonly<{}>, nextContext: any): boolean {
+  shouldComponentUpdate (_nextProps: Readonly<{}>, _nextState: Readonly<{}>, _nextContext: any): boolean {
     return true
   }
 
   render () {
     function renderResource (resource: Resource, [amt, delta]: [number, number]) {
-      return <div key={ResourceContainer.rId} className="resource">
-        <span className="resource-title">{resource.toString()}</span>
-        <span className="resource-amt">{amt}</span>
-        <span className="resource-delta">{`${delta}/sec`}</span>
-      </div>
+      return (
+        <div key={ResourceContainer.rId} className='resource'>
+          <span className='resource-title'>{resource.toString()}</span>
+          <span className='resource-amt'>{amt}</span>
+          <span className='resource-delta'>{`${delta}/sec`}</span>
+        </div>
+      )
     }
-    return <div className="container container-resources">
-      <div className="title">{this.title}</div>
-      <div className="scroller">
-        {Array.from(this.resources.entries(), (v, i) => renderResource(...v))}
+    return (
+      <div className='container container-resources'>
+        <div className='title'>{this.title}</div>
+        <div className='scroller'>
+          {Array.from(this.resources.entries(), ([res, [amt, delta]], _i) => renderResource(res, [amt, delta]))}
+        </div>
       </div>
-    </div>
+    )
   }
 }
 export default ResourceContainer

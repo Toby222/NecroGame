@@ -16,18 +16,20 @@ export class MapContainer extends React.Component<MapContainerProps> {
     this.tile = props.tile
   }
 
-  shouldComponentUpdate (nextProps: Readonly<{}>, nextState: Readonly<{}>, nextContext: any): boolean {
+  shouldComponentUpdate (_nextProps: Readonly<{}>, _nextState: Readonly<{}>, _nextContext: any): boolean {
     return true
   }
 
   render () {
-    return <div className="container container-map">
-      <div className="title">{this.title}</div>
-      <div className="scroller">
-        <div className="tile-title">{this.tile.toString()}</div>
-        <div className="tile-art">{this.tile.art}</div>
+    return (
+      <div className='container container-map'>
+        <div className='title'>{this.title}</div>
+        <div className='scroller'>
+          <div className='tile-title'>{this.tile.toString()}</div>
+          <div className='tile-art'>{this.tile.art}</div>
+        </div>
       </div>
-    </div>
+    )
   }
 }
 export default MapContainer

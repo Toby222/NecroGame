@@ -18,7 +18,7 @@ export class PlayerContainer extends React.Component<PlayerContainerProps> {
     this.player = props.player
   }
 
-  shouldComponentUpdate (nextProps: Readonly<{}>, nextState: Readonly<{}>, nextContext: any): boolean {
+  shouldComponentUpdate (_nextProps: Readonly<{}>, _nextState: Readonly<{}>, _nextContext: any): boolean {
     return true
   }
 
@@ -27,13 +27,15 @@ export class PlayerContainer extends React.Component<PlayerContainerProps> {
     if (tile === undefined) {
       return <></>
     }
-    return <div className="container container-Player">
-      <div className="title">{this.player.name}</div>
-      <div className="scroller">
-        {`Name: ${this.player.name}, Current tile: ${this.player.currentTile}`}
+    return (
+      <div className='container container-Player'>
+        <div className='title'>{this.player.name}</div>
+        <div className='scroller'>
+          {`Name: ${this.player.name}, Current tile: ${this.player.currentTile}`}
+        </div>
+        <MapContainer tile={tile} />
       </div>
-      <MapContainer tile={tile}/>
-    </div>
+    )
   }
 }
 export default PlayerContainer
