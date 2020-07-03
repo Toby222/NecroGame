@@ -49,7 +49,6 @@ export class Model extends React.Component {
   }
 
   render () {
-    console.debug('rendering model with buttons:', this.buttons)
     return (
       <div className='impact'>
         <Head>
