@@ -1,27 +1,39 @@
-# Custom Build Example
+# TODO: Modify this
 
-This directory is a brief example of using a Custom Build script that can be deployed with Vercel and zero configuration.
+Copied from ![here](https://raw.githubusercontent.com/deciduously/impact/master/README.md)
 
-## Deploy Your Own
+# impact
+An incremental game skeleton. Very much WIP.
 
-Deploy your own Custom Built project with Vercel.
+It's incremental, but not realtime.  For now, a second passes each time an Action happens, which is not ideal...bulk actions will take way too long.  Eventually I will fine tune this so that each action has a duration, meaning adding messages to the console won't clog it up.
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/vercel/vercel/tree/master/examples/custom-build)
+![screenhot](https://i.imgur.com/siTfdFc.png).
 
-_Live Example: https://custom-build.now-examples.now.sh_
+Play the first thrilling 30 seconds [here](http://deciduously.com/impact).
 
-### How We Created This Example
+## Requirements
 
-To get started deploying a Custom Built project with Vercel, you can use the [Vercel CLI](https://vercel.com/download) to initialize the project:
+* [Rust](https://www.rust-lang.org/en-US/) 2018 with the `wasm32-unknown-unknown` target.
+* [cargo-web](https://github.com/koute/cargo-web)
+* [NPM/Node](https://nodejs.org/en/download/)
 
-```shell
-$ vercel init custom-build
-```
+You can use stable rust and Emscripten/asmjs but do you really *want* to?
 
-### Deploying From Your Terminal
+## Usage
 
-You can deploy your new Custom Built project with a single command from your terminal using [Vercel CLI](https://vercel.com/download):
+* `yarn clean` - Clean build artifacts.
+* `yarn dev` - Start a development server on `localhost:8000` and watch for changes to either Rust or SCSS.
+* `yarn prod` - Build a production bundle at `release/` and serve on `localhost:8080`.
 
-```shell
-$ vercel
-```
+Note - the `wasm32-unknown-unknown` target does not currently support debug builds, so the dev server runs a release build of the rust code.  For now, the only difference with with the production build is the JS minifier (negligible gain) and lack of hot reloading.
+
+## Crates
+
+* [stdweb](https://github.com/koute/stdweb) - DOM manipulation
+* [yew](https://github.com/DenisKolodin/yew) - Client-side Rust->Wasm framework.  A little Elm-ish, a litte React-ish, a lot experimental
+
+## Acknowledgements
+
+Many thinks to [OvermindDL1](https://github.com/overminddl1)'s [blog series](http://blog.overminddl1.com/tags/overbots/).  A lot of this is similar to his OCaml structure where applicable, and going through that tutorial gave me the idea and structure to even attempt this.  The SCSS scripts and flexbox setup are his until I tackle my own.  While I decided not to go with realtime incremental for this project the basic engine is very similar to his Overbots structure at least at this point in development, but, you know, in `yew`.  His [`bucklescript-tea`](https://github.com/OvermindDL1/bucklescript-tea) is also an amazing project and you should check it out!
+
+Also of course the [yew examples](https://github.com/DenisKolodin/yew/tree/master/examples) were invaluable in overcoming the humps.  I'm still not positive I'm getting the event pattern down proper but time will tell!
