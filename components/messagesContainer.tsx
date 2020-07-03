@@ -33,7 +33,7 @@ export class MessagesContainer extends React.Component<MessagesContainerProps> {
       <div className='container container-messages'>
         <div className='title'>{this.title}</div>
         <div className='scroller'>
-          <ul>{Array.from(this.messages.entries(), ([id, msg], _i) => renderMessage(id, msg))}</ul>
+          <ul>{Array.from(this.messages.entries(), ([idx, msg], _i) => renderMessage(idx, msg))}</ul>
         </div>
       </div>
     )

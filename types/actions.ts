@@ -34,6 +34,9 @@ export class Action {
   }
 
   static ClearBoolFlag = class ClearBoolFlag implements Action {
+    // remove delta
+    // TODO: POTENTIAL BUG
+    // you should check if it's already false or not
     private flag: BoolFlag
     constructor (flag: BoolFlag) {
       this.flag = flag
@@ -41,11 +44,10 @@ export class Action {
 
     perform (model: Model) {
       model.boolFlags.set(this.flag, false)
-      if (this.flag.transformer === undefined) {
-        return
-      }
-      for (const effect of this.flag.transformer.effects) {
-        effect.ApplyTransformation(model)
+      if (this.flag.transformer !== undefined) {
+        for (const effect of this.flag.transformer.effects) {
+          effect.ApplyTransformation(model)
+        }
       }
     }
   }
@@ -70,8 +72,10 @@ export class Action {
   }
 
   static AddResourceValue = class AddResourceValue implements Action {
+    // TODO add min/maxes, and check here
     private resource: Resource
     private delta: number
+
     constructor (resource: Resource, delta: number) {
       this.resource = resource
       this.delta = delta
@@ -85,6 +89,7 @@ export class Action {
   static AddResourceDelta = class AddResourceDelta implements Action {
     private resource: Resource
     private delta: number
+
     constructor (resource: Resource, delta: number) {
       this.resource = resource
       this.delta = delta

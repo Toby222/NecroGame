@@ -7,7 +7,6 @@ interface ResourceContainerProps extends React.Props<ResourceContainer> {
 }
 
 export class ResourceContainer extends React.Component<ResourceContainerProps> {
-  private static rId: number = 0
   title: string = 'Resources'
   resources: Resource[]
 
@@ -22,12 +21,12 @@ export class ResourceContainer extends React.Component<ResourceContainerProps> {
   }
 
   render () {
-    function renderResource (resource: Resource) {
+    function renderResource (rId: number, resource: Resource) {
       return (
-        <div key={ResourceContainer.rId} className='resource'>
-          <span className='resource-title'>{resource.toString()}</span>
+        <div key={rId} className='resource'>
+          <span className='resource-title'>{resource.name}</span>
           <span className='resource-amt'>{resource.amount}</span>
-          <span className='resource-delta'>{`${resource.delta}/sec`}</span>
+          <span className='resource-delta'>{resource.delta}/sec</span>
         </div>
       )
     }
@@ -35,7 +34,7 @@ export class ResourceContainer extends React.Component<ResourceContainerProps> {
       <div className='container container-resources'>
         <div className='title'>{this.title}</div>
         <div className='scroller'>
-          {Array.from(this.resources.entries(), ([_idx, res]) => renderResource(res))}
+          {Array.from(this.resources.entries(), ([idx, res]) => renderResource(idx, res))}
         </div>
       </div>
     )
