@@ -88,9 +88,9 @@ export class Action {
     }
 
     perform (model: Model) {
-      const val = model.resourceValues.get(this.resource)
-      if (val !== undefined) {
-        model.resourceValues.set(this.resource, [val[0], val[1] + this.delta])
+      const resourceValues = model.resourceValues.get(this.resource)
+      if (resourceValues !== undefined) {
+        model.resourceValues.set(this.resource, [resourceValues[0], resourceValues[1] + this.delta])
       }
     }
   }

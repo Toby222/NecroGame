@@ -30,7 +30,7 @@ export class Model extends React.Component {
     super(props)
 
     this.time = new Time()
-    this.resourceValues = new Map<Resource, [number, number]>() // new Resources()
+    this.resourceValues = new Resources()
     this.messages = []
     this.boolFlags = new BoolFlags()
     this.tiles = new Tiles()
