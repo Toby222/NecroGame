@@ -102,7 +102,7 @@ export class Action {
     }
 
     perform (model: Model) {
-      model.messages.push(new Message(this.message, model.time))
+      model.messages.unshift(new Message(this.message, model.time))
     }
   }
 
