@@ -69,15 +69,6 @@ export class Button {
     ]
   }()
 
-  static buttons = new Map<string, Button>([
-    ['Wait', Button.Wait],
-    ['ActivateOxygen', Button.ActivateOxygen],
-    ['OpenToolbox', Button.OpenToolbox],
-    ['ApplyTape', Button.ApplyTape],
-    ['FiddleControls', Button.FiddleControls],
-    ['OpenDoor', Button.OpenDoor]
-  ])
-
   static byId (id: number): Button | undefined {
     switch (id) {
       case 0:

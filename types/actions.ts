@@ -3,7 +3,6 @@ import { TileID, definedTiles } from './tiles'
 import { Button } from './buttons'
 import { BoolFlag } from './flags'
 import { Resource } from './resource'
-import { Time } from './time'
 import { Message } from './messages'
 
 export interface Action {
@@ -29,6 +28,7 @@ export class Action {
       }
       for (const effect of this.flag.transformer.effects) {
         effect.ApplyTransformation(model)
+        effect.ApplyDeltaTransformation(model)
       }
     }
   }
@@ -46,6 +46,7 @@ export class Action {
       model.boolFlags.set(this.flag, false)
       if (this.flag.transformer !== undefined) {
         for (const effect of this.flag.transformer.effects) {
+          effect.ApplyDeltaTransformation(model)
           effect.ApplyTransformation(model)
         }
       }
@@ -173,11 +174,11 @@ export function msgFromActions (actions: Action[]): Msg {
 }
 
 export class TimeAction {
-  time: Time
+  time: number
   action: Action
 
   constructor (ticks: number, action: Action) {
-    this.time = new Time(ticks)
+    this.time = ticks
     this.action = action
   }
 }
@@ -188,9 +189,10 @@ const timeactions = [
 ]
 
 export function applyTimeactions (model: Model) {
-  for (const timeAction of timeactions) {
-    if (timeAction.time.seconds === model.time.seconds) {
-      timeAction.action.perform(model)
+  for (const timeaction of timeactions) {
+    if (timeaction.time <= model.time.seconds) {
+      timeaction.action.perform(model)
+      timeactions.splice(timeactions.indexOf(timeaction))
     }
   }
 }

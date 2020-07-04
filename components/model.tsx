@@ -37,6 +37,7 @@ export class Model extends React.Component {
       this.time.increment()
       applyTransformers(this)
       applyTimeactions(this)
+      this.forceUpdate()
     } else if (msg instanceof Msg.PerformAction) {
       msg.action.perform(this)
       this.processMsg(new Msg.Tick())
@@ -45,7 +46,6 @@ export class Model extends React.Component {
         this.processMsg(message)
       }
     }
-    this.forceUpdate()
   }
 
   render () {
@@ -57,8 +57,8 @@ export class Model extends React.Component {
           <meta name='viewport' content='width=device-width, initial-scale=1.0' />
           <meta name='description' content='Survive the crash!' />
           <meta name='author' content='Toby, deciduously' />
-          <title>IMPACT</title>
           <link rel='stylesheet' type='text/css' href='impact.css' />
+          <title>IMPACT</title>
         </Head>
         <main>
           <div className='header'>IMPACT</div>

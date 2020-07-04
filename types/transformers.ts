@@ -4,6 +4,7 @@ import { Action } from './actions'
 
 export interface Transformation {
   ApplyTransformation(model: Model): void
+  ApplyDeltaTransformation (model: Model): void
 }
 
 export class Transformation {
@@ -19,6 +20,10 @@ export class Transformation {
     ApplyTransformation (model: Model) {
       new Action.AddResourceValue(this.resource, this.delta).perform(model)
     }
+
+    ApplyDeltaTransformation (model: Model) {
+      new Action.AddResourceDelta(this.resource, this.delta).perform(model)
+    }
   }
 
   static Consume = class Consume implements Transformation {
@@ -32,6 +37,10 @@ export class Transformation {
 
     ApplyTransformation (model: Model) {
       new Action.AddResourceValue(this.resource, -this.delta).perform(model)
+    }
+
+    ApplyDeltaTransformation (model: Model) {
+      new Action.AddResourceDelta(this.resource, -this.delta).perform(model)
     }
   }
 }
