@@ -1,5 +1,6 @@
 ## Current WIPs
 
+* "Apply Scotchtape" gives negative Oxygen delta visually, doesn't actually change delta
 * https://github.com/deciduously/impact/issues
 
 The game is incremental, but not in real time.
