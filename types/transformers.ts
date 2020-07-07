@@ -79,8 +79,8 @@ export class Transformer {
 }
 
 export function applyTransformers (model: Model) {
-  for (const [flag] of model.boolFlags) {
-    if (flag.transformer !== undefined) {
+  for (const [flag, enabled] of model.boolFlags) {
+    if (enabled && flag.transformer !== undefined) {
       flag.transformer.applyTransformers(model)
     }
   }

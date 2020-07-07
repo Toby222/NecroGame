@@ -71,6 +71,7 @@ export interface Msg {
 export class Msg {
   static Tick = class Tick implements Msg {
     act (model: Model) {
+      console.log('[DEBUG] Ticked. Model:', model)
       model.time.increment()
       applyTransformers(model)
       applyTimeactions(model)
