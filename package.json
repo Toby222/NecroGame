@@ -1,7 +1,7 @@
 {
   "scripts": {
     "dev": "next",
-    "build": "next build",
+    "build": "npm run build-scss && next build",
     "start": "next start",
     "build-scss": "sass scss/impact.scss public/impact.css",
     "lint": "standardx **/*.{ts,tsx}",
