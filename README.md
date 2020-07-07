@@ -1,6 +1,5 @@
 # Current WIPs
 
-* "Apply Scotchtape" gives negative Oxygen delta visually, doesn't actually change delta
 * Update screenshot
 * https://github.com/deciduously/impact/issues
 

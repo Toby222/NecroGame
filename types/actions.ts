@@ -34,20 +34,20 @@ export class Action {
   }
 
   static ClearBoolFlag = class ClearBoolFlag implements Action {
-    // remove delta
-    // TODO: POTENTIAL BUG
-    // you should check if it's already false or not
     private flag: BoolFlag
     constructor (flag: BoolFlag) {
       this.flag = flag
     }
 
     perform (model: Model) {
+      if(model.boolFlags.get(this.flag) === false) {
+        throw new Exception('Disabled flags cannot be disabled again.')
+      }
       model.boolFlags.set(this.flag, false)
       if (this.flag.transformer !== undefined) {
         for (const effect of this.flag.transformer.effects) {
-          effect.ApplyDeltaTransformation(model)
-          effect.ApplyTransformation(model)
+          effect.ApplyTransformation(model, true)
+          effect.ApplyDeltaTransformation(model, true)
         }
       }
     }

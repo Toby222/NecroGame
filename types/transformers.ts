@@ -3,7 +3,7 @@ import { Model } from '../components/model'
 import { Action } from './actions'
 
 export interface Transformation {
-  ApplyTransformation(model: Model): void
+  ApplyTransformation (model: Model): void
   ApplyDeltaTransformation (model: Model): void
 }
 
@@ -17,12 +17,14 @@ export class Transformation {
       this.delta = delta
     }
 
-    ApplyTransformation (model: Model) {
-      new Action.AddResourceValue(this.resource, this.delta).perform(model)
+    ApplyTransformation (model: Model, inverse: boolean = false) {
+      const delta = inverse ? -this.delta : this.delta
+      new Action.AddResourceValue(this.resource, delta).perform(model)
     }
 
-    ApplyDeltaTransformation (model: Model) {
-      new Action.AddResourceDelta(this.resource, this.delta).perform(model)
+    ApplyDeltaTransformation (model: Model, inverse: boolean = false) {
+      const delta = inverse ? -this.delta : this.delta
+      new Action.AddResourceDelta(this.resource, delta).perform(model)
     }
   }
 
@@ -35,12 +37,14 @@ export class Transformation {
       this.delta = delta
     }
 
-    ApplyTransformation (model: Model) {
-      new Action.AddResourceValue(this.resource, -this.delta).perform(model)
+    ApplyTransformation (model: Model, inverse: boolean = false) {
+      const delta = inverse ? this.delta : -this.delta
+      new Action.AddResourceValue(this.resource, delta).perform(model)
     }
 
-    ApplyDeltaTransformation (model: Model) {
-      new Action.AddResourceDelta(this.resource, -this.delta).perform(model)
+    ApplyDeltaTransformation (model: Model, inverse: boolean = false) {
+      const delta = inverse ? this.delta : -this.delta
+      new Action.AddResourceDelta(this.resource, delta).perform(model)
     }
   }
 }
