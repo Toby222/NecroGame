@@ -1,4 +1,4 @@
-## Current WIPs
+# Current WIPs
 
 * "Apply Scotchtape" gives negative Oxygen delta visually, doesn't actually change delta
 * Update screenshot
