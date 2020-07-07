@@ -192,7 +192,7 @@ export function applyTimeactions (model: Model) {
   for (const timeaction of timeactions) {
     if (timeaction.time <= model.time.seconds) {
       timeaction.action.perform(model)
-      timeactions.splice(timeactions.indexOf(timeaction))
+      timeactions.splice(timeactions.indexOf(timeaction), 1)
     }
   }
 }

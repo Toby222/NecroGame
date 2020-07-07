@@ -32,22 +32,6 @@ export class Model extends React.Component {
     new Action.AddTile(0).perform(this)
   }
 
-  processMsg (msg: Msg) {
-    if (msg instanceof Msg.Tick) {
-      this.time.increment()
-      applyTransformers(this)
-      applyTimeactions(this)
-      this.forceUpdate()
-    } else if (msg instanceof Msg.PerformAction) {
-      msg.action.perform(this)
-      this.processMsg(new Msg.Tick())
-    } else if (msg instanceof Msg.Bulk) {
-      for (const message of msg.messages) {
-        this.processMsg(message)
-      }
-    }
-  }
-
   render () {
     return (
       <div className='impact'>
@@ -65,7 +49,7 @@ export class Model extends React.Component {
           <div className='body'>
             <span className='time'>{`Time: ${this.time}`}</span>
             <ResourceContainer resources={this.resourceValues} />
-            <ControlContainer onsignal={(msg: Msg) => this.processMsg(msg)} buttons={this.buttons} />
+            <ControlContainer buttons={this.buttons} onsignal={(msg: Msg) => msg.act(this)} />
             <PlayerContainer player={this.player} />
           </div>
           <MessagesContainer messages={this.messages} />
@@ -80,14 +64,30 @@ export class Model extends React.Component {
   }
 }
 
+export interface Msg {
+  act(model: Model): void
+}
+
 export class Msg {
-  static Tick = class Tick { }
+  static Tick = class Tick implements Msg {
+    act (model: Model) {
+      model.time.increment()
+      applyTransformers(model)
+      applyTimeactions(model)
+      model.forceUpdate()
+    }
+  }
 
   static PerformAction = class PerformAction {
     action: Action
 
     constructor (action: Action) {
       this.action = action
+    }
+
+    act (model: Model) {
+      this.action.perform(model)
+      new Msg.Tick().act(model)
     }
   }
 
@@ -96,6 +96,12 @@ export class Msg {
 
     constructor (messages: Msg[]) {
       this.messages = messages
+    }
+
+    act (model: Model) {
+      for (const msg of this.messages) {
+        msg.act(model)
+      }
     }
   }
 }
