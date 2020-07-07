@@ -41,7 +41,7 @@ export class Action {
 
     perform (model: Model) {
       if(model.boolFlags.get(this.flag) === false) {
-        throw new Exception('Disabled flags cannot be disabled again.')
+        throw new Error('Disabled flags cannot be disabled again.')
       }
       model.boolFlags.set(this.flag, false)
       if (this.flag.transformer !== undefined) {

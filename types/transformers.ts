@@ -3,8 +3,8 @@ import { Model } from '../components/model'
 import { Action } from './actions'
 
 export interface Transformation {
-  ApplyTransformation (model: Model): void
-  ApplyDeltaTransformation (model: Model): void
+  ApplyTransformation (model: Model, inverse?: boolean): void
+  ApplyDeltaTransformation (model: Model, inverse?: boolean): void
 }
 
 export class Transformation {
