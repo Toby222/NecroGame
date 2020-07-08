@@ -88,7 +88,7 @@ export class Button {
       new Action.EnableButton(6),
       new Action.DisableButton(this)
     ]
-  }
+  }()
 
   static byId (id: number): Button | undefined {
     switch (id) {

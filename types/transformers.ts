@@ -82,12 +82,17 @@ export class Transformer {
   }
 
   static TimeFreeze = class TimeFreeze implements Transformer {
+    private timePoint?: number
+
     effects = [
       new Transformation.Consume(Resource.Power, 1)
     ]
 
     apply (model: Model) {
-      model.time.seconds -= 1
+      if(this.timePoint === undefined) {
+        this.timePoint = model.time.seconds
+      }
+      model.time.seconds = this.timePoint
     }
   }
 }
