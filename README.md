@@ -33,6 +33,7 @@ Developed with the help of vercel, and its command line tool.
 * [Next.js](https://nextjs.org/) - React framework
 * [Sass](https://sass-lang.com/) - CSS, but better
 * [typescript](https://www.typescriptlang.org/) - JS, but typesafe
+* ["Fira Code" font family](https://fonts.google.com/specimen/Fira+Code) - Console font
 
 ## Acknowledgements
 

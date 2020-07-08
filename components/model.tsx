@@ -42,6 +42,7 @@ export class Model extends React.Component {
           <meta name='viewport' content='width=device-width, initial-scale=1.0' />
           <meta name='description' content='Survive the crash!' />
           <meta name='author' content='Toby, deciduously' />
+          <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Fira+Code' />
           <link rel='stylesheet' type='text/css' href='impact.css' />
           <title>IMPACT</title>
         </Head>
