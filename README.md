@@ -1,6 +1,5 @@
 # Current WIPs
 
-* Update screenshot
 * https://github.com/deciduously/impact/issues
 
 The game is incremental, but not in real time.
@@ -11,7 +10,7 @@ Eventually I will fine tune this so that each action has a duration, meaning add
 # Impact
 An incremental game skeleton. Very much WIP.
 
-![screenshot](https://i.imgur.com/siTfdFc.png).
+![screenshot](/screenshots/image1.png?raw=true)
 
 Play the first thrilling 30 seconds [here](https://impact.tobot.tech/).
 

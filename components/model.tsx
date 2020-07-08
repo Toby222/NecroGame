@@ -55,8 +55,6 @@ export class Model extends React.Component {
           <MessagesContainer messages={this.messages} />
         </main>
         <footer>
-          <a href='http://deciduously.com'>deciduously.com</a>
-          {' - '}
           <a href='https://github.com/toman222/Impact'>source</a>
         </footer>
       </div>
