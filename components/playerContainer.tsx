@@ -23,17 +23,12 @@ export class PlayerContainer extends React.Component<PlayerContainerProps> {
   }
 
   render () {
-    const tile = definedTiles(this.player.currentTile)
-    if (tile === undefined) {
-      return <></>
-    }
     return (
-      <div className='container container-Player'>
+      <div className='container container-player'>
         <div className='title'>{this.player.name}</div>
         <div className='scroller'>
-          {`Name: ${this.player.name}, Current tile: ${this.player.currentTile}`}
+          {`Name: ${this.player.name}`}<br/>{`Current tile: ${this.player.currentTile}`}
         </div>
-        <MapContainer tile={tile} />
       </div>
     )
   }

@@ -7,11 +7,13 @@ import { Time } from '../types/time'
 import { Message } from '../types/messages'
 import { applyTimeactions, Action } from '../types/actions'
 import { applyTransformers } from '../types/transformers'
+import { definedTiles } from '../types/tiles'
 
 import ControlContainer from './controlContainer'
 import ResourceContainer from './resourceContainer'
 import PlayerContainer from './playerContainer'
 import MessagesContainer from './messagesContainer'
+import MapContainer from './mapContainer'
 
 import Head from 'next/head'
 
@@ -50,7 +52,10 @@ export class Model extends React.Component {
           <div className='body'>
             <ResourceContainer resources={this.resourceValues} />
             <ControlContainer buttons={this.buttons} onsignal={(msg: Msg) => msg.act(this)} />
-            <PlayerContainer player={this.player} />
+            <div className='content'>
+              <PlayerContainer player={this.player} />
+              <MapContainer tile={this.player.currentTile} />
+            </div>
           </div>
           <MessagesContainer messages={this.messages} />
         </main>
