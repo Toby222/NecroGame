@@ -55,6 +55,12 @@ export class Model extends React.Component {
             <div className='content'>
               <PlayerContainer player={this.player} />
               <MapContainer tile={this.player.currentTile} />
+              <MapContainer tile={this.player.currentTile} />
+              <MapContainer tile={this.player.currentTile} />
+              <MapContainer tile={this.player.currentTile} />
+              <MapContainer tile={this.player.currentTile} />
+              <MapContainer tile={this.player.currentTile} />
+              <MapContainer tile={this.player.currentTile} />
             </div>
           </div>
           <MessagesContainer messages={this.messages} />
