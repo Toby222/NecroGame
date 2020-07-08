@@ -22,6 +22,6 @@ export class Time {
     const hours = String(Math.floor(this.seconds / (60 * 60))).padStart(2, '0')
     const minutes = String(Math.floor(this.seconds / 60)).padStart(2, '0')
     const seconds = String(this.seconds % 60).padStart(2, '0')
-    return `${days}d${hours}h${minutes}m${seconds}s`
+    return `${days}d ${hours}h ${minutes}m ${seconds}s`
   }
 }

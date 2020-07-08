@@ -46,8 +46,8 @@ export class Model extends React.Component {
         </Head>
         <main>
           <div className='header'>IMPACT</div>
+          <span className='time'>{`Time: ${this.time}`}</span>
           <div className='body'>
-            <span className='time'>{`Time: ${this.time}`}</span>
             <ResourceContainer resources={this.resourceValues} />
             <ControlContainer buttons={this.buttons} onsignal={(msg: Msg) => msg.act(this)} />
             <PlayerContainer player={this.player} />
