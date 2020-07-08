@@ -75,7 +75,7 @@ export class Msg {
   static Tick = class Tick implements Msg {
     act (model: Model) {
       console.log('[DEBUG] Ticked. Model:', model)
-      model.time.increment()
+      model.time.seconds++
       applyTransformers(model)
       applyTimeactions(model)
       model.forceUpdate()

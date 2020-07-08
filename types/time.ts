@@ -9,10 +9,6 @@ export class Time {
     return new Time(this.seconds)
   }
 
-  increment () {
-    this.seconds++
-  }
-
   valueOf () {
     return this.seconds
   }

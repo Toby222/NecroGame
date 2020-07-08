@@ -52,7 +52,7 @@ export class Transformation {
 // Each transformer should have a corresponding BoolFlag
 export interface Transformer {
   effects: Transformation[]
-  applyTransformers(model: Model): void
+  apply (model: Model): void
 }
 
 export class Transformer {
@@ -61,7 +61,7 @@ export class Transformer {
       new Transformation.Consume(Resource.Oxygen, 10)
     ]
 
-    applyTransformers (model: Model) {
+    apply (model: Model) {
       for (const effect of this.effects) {
         effect.ApplyTransformation(model)
       }
@@ -74,10 +74,18 @@ export class Transformer {
       new Transformation.Consume(Resource.Oxygen, 1)
     ]
 
-    applyTransformers (model: Model) {
+    apply (model: Model) {
       for (const effect of this.effects) {
         effect.ApplyTransformation(model)
       }
+    }
+  }
+
+  static TimeFreeze = class TimeFreeze implements Transformer {
+    effects = []
+
+    apply (model: Model) {
+      model.time.seconds -= 1
     }
   }
 }
@@ -85,7 +93,7 @@ export class Transformer {
 export function applyTransformers (model: Model) {
   for (const [flag, enabled] of model.boolFlags) {
     if (enabled && flag.transformer !== undefined) {
-      flag.transformer.applyTransformers(model)
+      flag.transformer.apply(model)
     }
   }
 }

@@ -54,6 +54,7 @@ export class Button {
       new Action.SetBoolFlag(BoolFlag.PowerRegen),
       new Action.AddMessage('You hear a loud bang from the bottom of the ship'),
       new Action.AddMessage('Your fuel cells are on and recharging from your excess oxygen'),
+      new Action.EnableButton(6),
       new Action.DisableButton(this)
     ]
   }()
@@ -73,6 +74,7 @@ export class Button {
     toString () { return 'Enable TimeFreeze' }
     actions: Action[] = [
       new Action.AddMessage('The Time Freezer starts humming.'),
+      new Action.SetBoolFlag(BoolFlag.TimeFreeze),
       new Action.EnableButton(7),
       new Action.DisableButton(this)
     ]
@@ -82,9 +84,9 @@ export class Button {
     toString () { return 'Disable TimeFreeze' }
     actions: Action[] = [
       new Action.AddMessage('The Time Freezer goes quiet'),
-      new Action.EnableButton(7),
+      new Action.ClearBoolFlag(BoolFlag.TimeFreeze),
+      new Action.EnableButton(6),
       new Action.DisableButton(this)
-
     ]
   }
 
