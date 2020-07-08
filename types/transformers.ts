@@ -82,7 +82,9 @@ export class Transformer {
   }
 
   static TimeFreeze = class TimeFreeze implements Transformer {
-    effects = []
+    effects = [
+      new Transformation.Consume(Resource.Power, 1)
+    ]
 
     apply (model: Model) {
       model.time.seconds -= 1
