@@ -69,6 +69,25 @@ export class Button {
     ]
   }()
 
+  static FreezeTime = new class FreezeTime implements Button {
+    toString () { return 'Enable TimeFreeze' }
+    actions: Action[] = [
+      new Action.AddMessage('The Time Freezer starts humming.'),
+      new Action.EnableButton(7),
+      new Action.DisableButton(this)
+    ]
+  }()
+
+  static UnfreezeTime = new class UnfreezeTime implements Button {
+    toString () { return 'Disable TimeFreeze' }
+    actions: Action[] = [
+      new Action.AddMessage('The Time Freezer goes quiet'),
+      new Action.EnableButton(7),
+      new Action.DisableButton(this)
+
+    ]
+  }
+
   static byId (id: number): Button | undefined {
     switch (id) {
       case 0:
@@ -83,6 +102,10 @@ export class Button {
         return Button.FiddleControls
       case 5:
         return Button.OpenDoor
+      case 6:
+        return Button.FreezeTime
+      case 7:
+        return Button.UnfreezeTime
       default:
         throw new Error('Invalid ID passed to Button.byId')
     }
