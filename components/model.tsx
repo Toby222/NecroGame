@@ -7,7 +7,6 @@ import { Time } from '../types/time'
 import { Message } from '../types/messages'
 import { applyTimeactions, Action } from '../types/actions'
 import { applyTransformers } from '../types/transformers'
-import { definedTiles } from '../types/tiles'
 
 import ControlContainer from './controlContainer'
 import ResourceContainer from './resourceContainer'

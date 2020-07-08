@@ -1,4 +1,4 @@
-import { Tile, TileID, definedTiles } from './tiles'
+import { TileID, definedTiles } from './tiles'
 
 export class Player {
   currentTileID: TileID
@@ -10,7 +10,7 @@ export class Player {
     this.name = 'Spiff'
   }
 
-  get currentTile() {
+  get currentTile () {
     const tile = definedTiles(this.currentTileID)
     if (tile === undefined) {
       throw new Error('Player is in undefined Tile')
