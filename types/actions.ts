@@ -1,9 +1,10 @@
-import { Model, Msg } from '../components/model'
-import { TileID, definedTiles } from './tiles'
+import { definedTiles } from './tiles'
 import { Button } from './buttons'
 import { BoolFlag } from './flags'
 import { Resource } from './resource'
 import { Message } from './messages'
+
+import { Model, Msg } from '../components/model'
 
 export interface Action {
   perform(model: Model): void
@@ -27,8 +28,8 @@ export class Action {
         return
       }
       for (const effect of this.flag.transformer.effects) {
-        effect.ApplyTransformation(model)
-        effect.ApplyDeltaTransformation(model)
+        effect.apply(model)
+        effect.applyDelta(model)
       }
     }
   }
@@ -46,8 +47,8 @@ export class Action {
       model.boolFlags.delete(this.flag)
       if (this.flag.transformer !== undefined) {
         for (const effect of this.flag.transformer.effects) {
-          effect.ApplyTransformation(model, true)
-          effect.ApplyDeltaTransformation(model, true)
+          effect.apply(model, true)
+          effect.applyDelta(model, true)
         }
       }
     }
@@ -141,8 +142,8 @@ export class Action {
   }
 
   static AddTile = class AddTile implements Action {
-    private tid: TileID
-    constructor (tid: TileID) {
+    private tid: number
+    constructor (tid: number) {
       this.tid = tid
     }
 

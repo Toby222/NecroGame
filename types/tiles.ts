@@ -16,10 +16,7 @@ export class Tile {
   }
 }
 
-export type TileID = number
-export class Tiles extends Map<TileID, Tile> { }
-
-export function definedTiles (id: TileID): Tile | undefined {
+export function definedTiles (id: number): Tile | undefined {
   switch (id) {
     case 0:
       return new Tile('Ship', '..::^::..', [Button.Wait])

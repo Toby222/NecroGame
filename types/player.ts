@@ -1,7 +1,7 @@
-import { TileID, definedTiles } from './tiles'
+import { definedTiles } from './tiles'
 
 export class Player {
-  currentTileID: TileID
+  currentTileID: number
 
   name: string
 

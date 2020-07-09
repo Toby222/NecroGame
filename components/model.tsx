@@ -1,12 +1,11 @@
 import { Player } from '../types/player'
 import { Button } from '../types/buttons'
-import { Tiles } from '../types/tiles'
-import { BoolFlags } from '../types/flags'
+import { Tile } from '../types/tiles'
+import { BoolFlag } from '../types/flags'
 import { Resource } from '../types/resource'
 import { Time } from '../types/time'
 import { Message } from '../types/messages'
 import { applyTimeactions, Action } from '../types/actions'
-import { applyTransformers } from '../types/transformers'
 
 import ControlContainer from './controlContainer'
 import ResourceContainer from './resourceContainer'
@@ -19,12 +18,12 @@ import Head from 'next/head'
 import * as React from 'react'
 
 export class Model extends React.Component {
-  boolFlags: BoolFlags = new BoolFlags()
+  boolFlags: Map<BoolFlag, boolean> = new Map<BoolFlag, boolean>()
   buttons: Button[] = []
   messages: Message[] = []
   player: Player = new Player()
   resourceValues: Resource[] = []
-  tiles: Tiles = new Tiles()
+  tiles: Map<number, Tile> = new Map<number, Tile>()
   time: Time = new Time()
 
   constructor (props: React.Props<Model>) {
@@ -52,7 +51,7 @@ export class Model extends React.Component {
           <div className='body'>
             <ResourceContainer resources={this.resourceValues} />
             <ControlContainer buttons={this.buttons} onsignal={(msg: Msg) => msg.act(this)} />
-            <div className='content'>
+            <div>
               <PlayerContainer player={this.player} />
               <MapContainer tile={this.player.currentTile} />
             </div>
@@ -76,7 +75,11 @@ export class Msg {
     act (model: Model) {
       console.log('[DEBUG] Ticked. Model:', model)
       model.time.seconds++
-      applyTransformers(model)
+      for (const [flag, enabled] of model.boolFlags) {
+        if (enabled && flag.transformer !== undefined) {
+          flag.transformer.apply(model)
+        }
+      }
       applyTimeactions(model)
       model.forceUpdate()
     }
