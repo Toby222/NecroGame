@@ -12,6 +12,8 @@ Eventually I will fine tune this so that each action has a duration, meaning add
 
 
 # Impact
+![Code quality check](https://github.com/toman222/Impact/workflows/Code%20quality%20check/badge.svg)
+
 An incremental game skeleton. Very much WIP.
 
 ![screenshot](/screenshots/image1.png?raw=true)
