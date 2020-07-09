@@ -25,7 +25,7 @@ export class MessagesContainer extends React.Component<MessagesContainerProps> {
       return (
         <li key={mId} className='message'>
           <span className='message-time'>{message.time.toString()}</span>
-          {` ${message.content}`}
+          {message.content}
         </li>
       )
     }
@@ -33,7 +33,7 @@ export class MessagesContainer extends React.Component<MessagesContainerProps> {
       <div className='container container-messages'>
         <div className='title'>{this.title}</div>
         <div className='scroller'>
-          <ul>{Array.from(this.messages.slice(0, 15).entries(), ([idx, msg]) => renderMessage(idx, msg))}</ul>
+          <ul>{this.messages.slice(0, 15).map((msg, idx) => renderMessage(idx, msg))}</ul>
         </div>
       </div>
     )
