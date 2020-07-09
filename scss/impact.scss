@@ -5,6 +5,12 @@
     height: 100%;
     width: 100%;
 
+    footer {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+    }
+
     .container {
         border: solid 1px #000;
         display: flex;
