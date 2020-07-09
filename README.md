@@ -1,9 +1,5 @@
 # Current WIPs
 
-* Restructure Flags and Transformers
-    * Transformers should be members of Flags
-    * Transformations should be members of Transformers
-* Improve Button enabling and disabling to work with references instead of "IDs"
 * https://github.com/deciduously/impact/issues
 
 The game is incremental, but not in real time.

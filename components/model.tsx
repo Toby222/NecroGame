@@ -5,7 +5,7 @@ import { BoolFlag } from '../types/flags'
 import { Resource } from '../types/resource'
 import { Time } from '../types/time'
 import { Message } from '../types/messages'
-import { applyTimeactions, Action } from '../types/actions'
+import { Action } from '../types/actions'
 
 import ControlContainer from './controlContainer'
 import ResourceContainer from './resourceContainer'
@@ -112,6 +112,37 @@ export class Msg {
       for (const msg of this.messages) {
         msg.act(model)
       }
+    }
+  }
+}
+
+class TimeAction {
+  time: number
+  action: Action
+
+  constructor (ticks: number, action: Action) {
+    this.time = ticks
+    this.action = action
+  }
+
+  trigger (model: Model): boolean {
+    if (this.time <= model.time.seconds) {
+      this.action.perform(model)
+      return true
+    }
+    return false
+  }
+}
+
+const timeactions = [
+  new TimeAction(1, new Action.EnableButton(Button.ActivateOxygen)),
+  new TimeAction(15, new Action.AddMessage("It's been 15 SECONDS"))
+]
+
+function applyTimeactions (model: Model) {
+  for (const timeaction of timeactions) {
+    if (timeaction.trigger(model)) {
+      timeactions.splice(timeactions.indexOf(timeaction), 1)
     }
   }
 }

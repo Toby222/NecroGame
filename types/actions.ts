@@ -113,15 +113,16 @@ export class Action {
   }
 
   static EnableButton = class EnableButton implements Action {
-    private buttonId: number
-    constructor (buttonId: number) {
-      this.buttonId = buttonId
+    private button: Button
+    constructor (button: Button) {
+      this.button = button
     }
 
     perform (model: Model) {
-      const button = Button.byId(this.buttonId)
-      if (button === undefined) { throw new Error('Invalid id for EnableButton action') }
-      model.buttons.push(button)
+      if (this.button === undefined) {
+        throw new Error('Invalid id for EnableButton action')
+      }
+      model.buttons.push(this.button)
     }
   }
 
@@ -132,8 +133,7 @@ export class Action {
     }
 
     perform (model: Model) {
-      /* eslint-disable-next-line eqeqeq */
-      const toDelete = model.buttons.findIndex((btn) => btn == this.button)
+      const toDelete = model.buttons.indexOf(this.button)
       if (toDelete >= 0) {
         model.buttons.splice(toDelete, 1)
       }
@@ -171,28 +171,4 @@ export function msgFromActions (actions: Action[]): Msg {
     messages.push(new Msg.PerformAction(action))
   }
   return new Msg.Bulk(messages)
-}
-
-export class TimeAction {
-  time: number
-  action: Action
-
-  constructor (ticks: number, action: Action) {
-    this.time = ticks
-    this.action = action
-  }
-}
-
-const timeactions = [
-  new TimeAction(1, new Action.EnableButton(1)),
-  new TimeAction(15, new Action.AddMessage("It's been 15 SECONDS"))
-]
-
-export function applyTimeactions (model: Model) {
-  for (const timeaction of timeactions) {
-    if (timeaction.time <= model.time.seconds) {
-      timeaction.action.perform(model)
-      timeactions.splice(timeactions.indexOf(timeaction), 1)
-    }
-  }
 }
