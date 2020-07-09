@@ -89,10 +89,7 @@ export class Transformer {
     ]
 
     apply (model: Model) {
-      if (this.timePoint === undefined) {
-        this.timePoint = model.time.seconds
-      }
-      model.time.seconds = this.timePoint
+      model.time.seconds--
     }
   }
 }
