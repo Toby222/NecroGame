@@ -23,7 +23,7 @@ export class Button {
     get actions () {
       if (this.actionsCache === undefined) {
         this.actionsCache = [
-          new Action.Noop()
+          new Action.Wait(1)
         ]
       }
       return this.actionsCache
@@ -51,7 +51,8 @@ export class Button {
           new Action.AddMessage('Losing 10 Oxygen per second - tank leaky'),
           new Action.EnableButton(Button.OpenToolbox),
           new Action.EnableButton(Button.OpenDoor),
-          new Action.DisableButton(this)
+          new Action.DisableButton(this),
+          new Action.Wait(1)
         ]
       }
       return this.actionsCache
@@ -75,7 +76,8 @@ export class Button {
           new Action.AddMessage('You unceremoniously dump the toolbox contents all over the ship'),
           new Action.EnableButton(Button.ApplyTape),
           new Action.EnableButton(Button.FiddleControls),
-          new Action.DisableButton(this)
+          new Action.DisableButton(this),
+          new Action.Wait(1)
         ]
       }
       return this.actionsCache
@@ -97,8 +99,9 @@ export class Button {
       if (this.actionsCache === undefined) {
         this.actionsCache = [
           new Action.ClearBoolFlag(BoolFlag.LeakyTank),
-          new Action.AddMessage('Leak stopped - for now.'),
-          new Action.DisableButton(this)
+          new Action.DisableButton(this),
+          new Action.Wait(1),
+          new Action.AddMessage('Leak stopped - for now.')
         ]
       }
       return this.actionsCache
@@ -121,10 +124,11 @@ export class Button {
         this.actionsCache = [
           new Action.SetResourceValue(Resource.Power, 1),
           new Action.SetBoolFlag(BoolFlag.PowerRegen),
-          new Action.AddMessage('You hear a loud bang from the bottom of the ship'),
-          new Action.AddMessage('Your fuel cells are on and recharging from your excess oxygen'),
           new Action.EnableButton(Button.FreezeTime),
-          new Action.DisableButton(this)
+          new Action.DisableButton(this),
+          new Action.Wait(1),
+          new Action.AddMessage('You hear a loud bang from the bottom of the ship'),
+          new Action.AddMessage('Your fuel cells are on and recharging from your excess oxygen')
         ]
       }
       return this.actionsCache
@@ -170,10 +174,11 @@ export class Button {
     get actions (): Action[] {
       if (this.actionsCache === undefined) {
         this.actionsCache = [
-          new Action.AddMessage('The Time Freezer starts humming.'),
           new Action.SetBoolFlag(BoolFlag.TimeFreeze),
           new Action.EnableButton(Button.UnfreezeTime),
-          new Action.DisableButton(this)
+          new Action.DisableButton(this),
+          new Action.Wait(60),
+          new Action.AddMessage('After a minute of fiddling, the Time Freezer starts humming.')
         ]
       }
       return this.actionsCache

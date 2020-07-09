@@ -72,9 +72,14 @@ export interface Msg {
 
 export class Msg {
   static Tick = class Tick implements Msg {
+    private ticks: number
+    constructor (ticks: number) {
+      this.ticks = ticks
+    }
+
     act (model: Model) {
       console.log('[DEBUG] Ticked. Model:', model)
-      model.time.seconds++
+      model.time.seconds += this.ticks
       for (const [flag, enabled] of model.boolFlags) {
         if (enabled && flag.transformer !== undefined) {
           for (const transformation of flag.transformer.transformations) {
@@ -97,7 +102,7 @@ export class Msg {
 
     act (model: Model) {
       this.action.perform(model)
-      new Msg.Tick().act(model)
+      new Msg.Tick(this.action.timeCost).act(model)
     }
   }
 
