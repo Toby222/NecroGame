@@ -5,7 +5,7 @@
     "start": "next start",
     "build-scss": "sass scss/impact.scss public/impact.css",
     "lint": "standardx **/*.{ts,tsx}",
-    "test": "npm run lint"
+    "test": "tsc && npm run lint"
   },
   "devDependencies": {
     "@types/node": "^14.0.14",
