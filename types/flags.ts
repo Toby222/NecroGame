@@ -4,7 +4,7 @@ import { Transformation } from './transformations'
 import { Model } from '../components/model'
 
 export interface Transformer {
-  effects: Transformation[]
+  transformations: Transformation[]
   apply (model: Model): void
 }
 
@@ -19,43 +19,32 @@ export class BoolFlag {
 
   static LeakyTank = new class LeakyTank implements BoolFlag {
     transformer = new class LeakyTank implements Transformer {
-      effects = [
+      transformations = [
         new Transformation.Consume(Resource.Oxygen, 10)
       ]
 
-      apply (model: Model) {
-        for (const effect of this.effects) {
-          effect.apply(model)
-        }
-      }
+      apply (_model: Model) { }
     }()
   }()
 
   static PowerRegen = new class PowerRegen implements BoolFlag {
     transformer = new class PowerRegen implements Transformer {
-      effects = [
+      transformations = [
         new Transformation.Generate(Resource.Power, 2),
         new Transformation.Consume(Resource.Oxygen, 1)
       ]
 
-      apply (model: Model) {
-        for (const effect of this.effects) {
-          effect.apply(model)
-        }
-      }
+      apply (_model: Model) { }
     }()
   }()
 
   static TimeFreeze = new class TimeFreeze implements BoolFlag {
     transformer = new class TimeFreeze implements Transformer {
-      effects = [
+      transformations = [
         new Transformation.Consume(Resource.Power, 1)
       ]
 
       apply (model: Model) {
-        for (const effect of this.effects) {
-          effect.apply(model)
-        }
         model.time.seconds--
       }
     }()

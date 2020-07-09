@@ -77,6 +77,9 @@ export class Msg {
       model.time.seconds++
       for (const [flag, enabled] of model.boolFlags) {
         if (enabled && flag.transformer !== undefined) {
+          for (const transformation of flag.transformer.transformations) {
+            transformation.apply(model)
+          }
           flag.transformer.apply(model)
         }
       }

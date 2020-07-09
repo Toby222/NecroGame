@@ -24,12 +24,11 @@ export class Action {
     perform (model: Model) {
       model.boolFlags.set(this.flag, true)
       // apply delta
-      if (this.flag.transformer === undefined) {
-        return
-      }
-      for (const effect of this.flag.transformer.effects) {
-        effect.apply(model)
-        effect.applyDelta(model)
+      if (this.flag.transformer !== undefined) {
+        for (const effect of this.flag.transformer.transformations) {
+          effect.apply(model)
+          effect.applyDelta(model)
+        }
       }
     }
   }
@@ -46,7 +45,7 @@ export class Action {
       }
       model.boolFlags.delete(this.flag)
       if (this.flag.transformer !== undefined) {
-        for (const effect of this.flag.transformer.effects) {
+        for (const effect of this.flag.transformer.transformations) {
           effect.apply(model, true)
           effect.applyDelta(model, true)
         }
