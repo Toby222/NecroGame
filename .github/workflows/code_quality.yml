@@ -1,4 +1,4 @@
-name: Check code quality
+name: Code quality check
 on:
   push:
   pull_request:
