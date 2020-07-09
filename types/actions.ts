@@ -43,7 +43,7 @@ export class Action {
       if (model.boolFlags.get(this.flag) === false) {
         throw new Error('Disabled flags cannot be disabled again.')
       }
-      model.boolFlags.set(this.flag, false)
+      model.boolFlags.delete(this.flag)
       if (this.flag.transformer !== undefined) {
         for (const effect of this.flag.transformer.effects) {
           effect.ApplyTransformation(model, true)

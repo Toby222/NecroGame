@@ -54,6 +54,7 @@ export class Button {
       new Action.SetBoolFlag(BoolFlag.PowerRegen),
       new Action.AddMessage('You hear a loud bang from the bottom of the ship'),
       new Action.AddMessage('Your fuel cells are on and recharging from your excess oxygen'),
+      new Action.EnableButton(6),
       new Action.DisableButton(this)
     ]
   }()
@@ -65,6 +66,26 @@ export class Button {
       new Action.AddMessage('Just kidding - everything is fine.'),
       new Action.SetResourceValue(Resource.Chutzpah, 50),
       new Action.AddTile(1),
+      new Action.DisableButton(this)
+    ]
+  }()
+
+  static FreezeTime = new class FreezeTime implements Button {
+    toString () { return 'Enable TimeFreeze' }
+    actions: Action[] = [
+      new Action.AddMessage('The Time Freezer starts humming.'),
+      new Action.SetBoolFlag(BoolFlag.TimeFreeze),
+      new Action.EnableButton(7),
+      new Action.DisableButton(this)
+    ]
+  }()
+
+  static UnfreezeTime = new class UnfreezeTime implements Button {
+    toString () { return 'Disable TimeFreeze' }
+    actions: Action[] = [
+      new Action.AddMessage('The Time Freezer goes quiet'),
+      new Action.ClearBoolFlag(BoolFlag.TimeFreeze),
+      new Action.EnableButton(6),
       new Action.DisableButton(this)
     ]
   }()
@@ -83,6 +104,10 @@ export class Button {
         return Button.FiddleControls
       case 5:
         return Button.OpenDoor
+      case 6:
+        return Button.FreezeTime
+      case 7:
+        return Button.UnfreezeTime
       default:
         throw new Error('Invalid ID passed to Button.byId')
     }

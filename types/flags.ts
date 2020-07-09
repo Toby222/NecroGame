@@ -16,6 +16,10 @@ export class BoolFlag {
   static PowerRegen = new class PowerRegen implements BoolFlag {
     transformer = new Transformer.PowerRegen()
   }()
+
+  static TimeFreeze = new class TimeFreeze implements BoolFlag {
+    transformer = new Transformer.TimeFreeze()
+  }()
 }
 
 export class BoolFlags extends Map<BoolFlag, boolean> { }
