@@ -1,12 +1,12 @@
 export class Time {
   seconds: number
 
-  constructor (seconds: number = 0) {
-    this.seconds = seconds
-  }
-
-  clone (): Time {
-    return new Time(this.seconds)
+  constructor (val: number | Time = 0) {
+    if (val instanceof Time) {
+      this.seconds = val.seconds
+    } else {
+      this.seconds = val
+    }
   }
 
   valueOf () {

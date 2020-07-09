@@ -6,7 +6,7 @@ export class Message {
 
   constructor (content: string, time: Time) {
     this.content = content
-    this.time = time.clone()
+    this.time = new Time(time)
   }
 
   toString () {
