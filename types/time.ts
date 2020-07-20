@@ -15,8 +15,8 @@ export class Time {
 
   toString () {
     const days = Math.floor(this.seconds / (60 * 60 * 24))
-    const hours = Math.floor(this.seconds / (60 * 60))
-    const minutes = Math.floor(this.seconds / 60)
+    const hours = Math.floor(this.seconds / (60 * 60)) % 24
+    const minutes = Math.floor(this.seconds / 60) % 60
     const seconds = this.seconds % 60
 
     const daysString = days > 0 ? String(days).padStart(1, '0') + 'd ' : ''
