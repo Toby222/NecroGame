@@ -1,4 +1,8 @@
 {
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/toman222/Impact.git"
+  },
   "scripts": {
     "dev": "next",
     "build": "npm run build-scss && next build",
