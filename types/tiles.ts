@@ -16,6 +16,13 @@ export class Tile {
   }
 }
 
+/**
+ * Get a Tile by its ID.
+ *
+ * @param id - The ID of the Tile to look for.
+ * @deprecated This is dumb. Should be a Map, or just plain removed.
+ * @returns The found Tile, or undefined if not found.
+ */
 export function definedTiles (id: number): Tile | undefined {
   switch (id) {
     case 0:

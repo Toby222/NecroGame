@@ -4,8 +4,9 @@ import { Action } from './actions'
 import { Model } from '../components/model'
 
 export interface Transformation {
-  apply (model: Model, inverse?: boolean): void
-  applyDelta (model: Model, inverse?: boolean): void
+  perform (model: Model): void
+  apply (model: Model): void
+  clear (model: Model): void
 }
 
 export class Transformation {
@@ -18,14 +19,16 @@ export class Transformation {
       this.delta = delta
     }
 
-    apply (model: Model, inverse: boolean = false) {
-      const delta = inverse ? -this.delta : this.delta
-      new Action.AddResourceValue(this.resource, delta).perform(model)
+    perform (model: Model) {
+      new Action.AddResourceValue(this.resource, this.delta).perform(model)
     }
 
-    applyDelta (model: Model, inverse: boolean = false) {
-      const delta = inverse ? -this.delta : this.delta
-      new Action.AddResourceDelta(this.resource, delta).perform(model)
+    apply (model: Model) {
+      new Action.AddResourceDelta(this.resource, this.delta).perform(model)
+    }
+
+    clear (model: Model) {
+      new Action.AddResourceDelta(this.resource, -this.delta).perform(model)
     }
   }
 
@@ -35,17 +38,19 @@ export class Transformation {
 
     constructor (resource: Resource, delta: number) {
       this.resource = resource
-      this.delta = delta
+      this.delta = -delta
     }
 
-    apply (model: Model, inverse: boolean = false) {
-      const delta = inverse ? this.delta : -this.delta
-      new Action.AddResourceValue(this.resource, delta).perform(model)
+    perform (model: Model) {
+      new Action.AddResourceValue(this.resource, this.delta).perform(model)
     }
 
-    applyDelta (model: Model, inverse: boolean = false) {
-      const delta = inverse ? this.delta : -this.delta
-      new Action.AddResourceDelta(this.resource, delta).perform(model)
+    apply (model: Model) {
+      new Action.AddResourceDelta(this.resource, this.delta).perform(model)
+    }
+
+    clear (model: Model) {
+      new Action.AddResourceDelta(this.resource, -this.delta).perform(model)
     }
   }
 }

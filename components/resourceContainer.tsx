@@ -21,9 +21,16 @@ export class ResourceContainer extends React.Component<ResourceContainerProps> {
   }
 
   render () {
-    function renderResource (rId: number, resource: Resource) {
+    /**
+     * Helper function to turn Resources into Elements.
+     *
+     * @param resourceId - ID of the Resource inside the ResourceContainer.
+     * @param resource - The Resource to render.
+     * @returns Element of the Resource.
+     */
+    function renderResource (resourceId: number, resource: Resource) {
       return (
-        <div key={rId} className='resource'>
+        <div key={resourceId} className='resource'>
           <span className='resource-title'>{resource.name}</span>
           <span className='resource-amt'>{resource.amount}</span>
           <span className='resource-delta'>{resource.delta}/sec</span>

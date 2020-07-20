@@ -88,11 +88,8 @@ export class Msg {
       console.log('[DEBUG] Ticked. Model:', model)
       model.time.seconds += this.ticks
       for (const [flag, enabled] of model.boolFlags) {
-        if (enabled && flag.transformer !== undefined) {
-          for (const transformation of flag.transformer.transformations) {
-            transformation.apply(model)
-          }
-          flag.transformer.apply(model)
+        if (enabled) {
+          flag.performEffects(model)
         }
       }
       applyTimeactions(model)
@@ -151,6 +148,12 @@ const timeactions = [
   new TimeAction(15, new Action.AddMessage("It's been 15 SECONDS"))
 ]
 
+/**
+ * Apply Actions that are based on pre-defined timepoints
+ * Might be replaced with intro sequence later, where Actions trigger each other with delays somehow, as I don't see any reason to have any other defined Action than that.
+ *
+ * @param model - The Model to apply the Actions to.
+ */
 function applyTimeactions (model: Model) {
   for (const timeaction of timeactions) {
     if (timeaction.trigger(model)) {

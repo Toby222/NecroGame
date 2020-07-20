@@ -21,9 +21,16 @@ export class MessagesContainer extends React.Component<MessagesContainerProps> {
   }
 
   render () {
-    function renderMessage (mId: number, message: Message) {
+    /**
+     * Helper function to turn Messages into Elements.
+     *
+     * @param messageId - ID of the Message inside the MessagesContainer.
+     * @param message - The Message to render.
+     * @returns Element of the Message.
+     */
+    function renderMessage (messageId: number, message: Message) {
       return (
-        <li key={mId} className='message'>
+        <li key={messageId} className='message'>
           <span className='message-time'>{message.time.toString()}</span>
           {message.content}
         </li>
