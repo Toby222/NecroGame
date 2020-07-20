@@ -47,12 +47,10 @@ export class Model extends React.Component {
           <meta name='author' content='Toby, deciduously' />
           <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Fira+Code' />
           <link rel='stylesheet' type='text/css' href='impact.css' />
-          <script type='text/javascript'>
-            {`(function(e,r,n,t,s){var a=[];e[s]=function(){a.push(arguments)};e[s].queue=a;  var o=[];var i=[];var c=true;var p=void 0;if(window.PerformanceObserver&&  window.PerformanceObserver.supportedEntryTypes&&(  PerformanceObserver.supportedEntryTypes.indexOf("longtask")>=0||  PerformanceObserver.supportedEntryTypes.indexOf("element")>=0)){  p=new PerformanceObserver(function(e){e.getEntries().forEach(function(e){  switch(e.entryType){case"element":i.push(e);break;case"longtask":o.push(e);break;  default:break}})});p.observe({entryTypes:["longtask","element"]})}e[s+"lt"]={  longTasks:o,timingElements:i,inPageLoad:c,observer:p};if(t){var u=r.createElement(n);  u.async=1;u.src=t;var f=r.getElementsByTagName(n)[0];f.parentNode.insertBefore(u,f)}})
-            (window,document,"script","//cdn.sematext.com/rum.js","strum");
-            window.strum('config', { token: '5dfa22c5-c8cc-45b9-b58f-51967f34b3b2', 'receiverUrl': 'https://rum-receiver.eu.sematext.com' });`}
-          </script>
           <title>IMPACT</title>
+          {process.env.NODE_ENV === 'production'
+            ? <script type='text/javascript'>{'(function(e,r,n,t,s){var a=[];e[s]=function(){a.push(arguments)};e[s].queue=a;  var o=[];var i=[];var c=true;var p=void 0;if(window.PerformanceObserver&&  window.PerformanceObserver.supportedEntryTypes&&(  PerformanceObserver.supportedEntryTypes.indexOf("longtask")>=0||  PerformanceObserver.supportedEntryTypes.indexOf("element")>=0)){  p=new PerformanceObserver(function(e){e.getEntries().forEach(function(e){  switch(e.entryType){case"element":i.push(e);break;case"longtask":o.push(e);break;  default:break}})});p.observe({entryTypes:["longtask","element"]})}e[s+"lt"]={  longTasks:o,timingElements:i,inPageLoad:c,observer:p};if(t){var u=r.createElement(n);  u.async=1;u.src=t;var f=r.getElementsByTagName(n)[0];f.parentNode.insertBefore(u,f)}})            (window,document,"script","//cdn.sematext.com/rum.js","strum");window.strum(\'config\', { token: \'5dfa22c5-c8cc-45b9-b58f-51967f34b3b2\', \'receiverUrl\': \'https://rum-receiver.eu.sematext.com\' });'}</script>
+            : <></>}
         </Head>
         <main>
           <div className='header'>IMPACT</div>
