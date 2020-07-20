@@ -149,8 +149,9 @@ export class Button {
     get actions (): Action[] {
       if (this.actionsCache === undefined) {
         this.actionsCache = [
-          new Action.AddMessage('You push the airlock open and immediately DIE.'),
-          new Action.AddMessage('Just kidding - everything is fine.'),
+          new Action.AddMessage('You tell the airlock to start cycling.'),
+          new Action.AddMessage('However it doesn\'t detect you wearing safety equipment and refuses.'),
+          new Action.Wait(5),
           new Action.SetResourceValue(Resource.Chutzpah, 50),
           new Action.AddTile(1),
           new Action.DisableButton(this)
