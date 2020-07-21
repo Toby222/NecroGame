@@ -72,5 +72,6 @@
     "plugins": [
       "jsdoc"
     ]
-  }
+  },
+  "version": "0.0.1-indev.0"
 }
