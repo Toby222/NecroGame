@@ -17,6 +17,8 @@ import Head from 'next/head'
 
 import * as React from 'react'
 
+import { version } from '../package.json'
+
 declare global {
   interface Window { strum: Function; }
 }
@@ -29,6 +31,8 @@ export class Model extends React.Component {
   resourceValues: Resource[] = []
   tiles: Map<number, Tile> = new Map<number, Tile>()
   time: Time = new Time()
+
+  version: string = version
 
   constructor (props: React.Props<Model>) {
     super(props)
@@ -67,6 +71,7 @@ export class Model extends React.Component {
         </main>
         <footer>
           <a href='https://github.com/toman222/Impact'>source</a>
+          <div>Version: {this.version}</div>
         </footer>
       </div>
     )
