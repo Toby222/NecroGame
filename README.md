@@ -5,7 +5,8 @@ An incremental game skeleton. Very much WIP.
 
 ![screenshot](/screenshots/image1.png?raw=true)
 
-Play the first thrilling 30 seconds [here](https://impact.tobot.tech/).
+Play the current version [here](https://impact.tobot.tech/).
+Play around with the development version [here](https://dev.impact.tobot.tech/).
 
 ## Requirements
 
