@@ -1,12 +1,3 @@
-# Current WIPs
-
-* https://github.com/deciduously/impact/issues
-
-The game is incremental, but not in real time.
-For now, one second passes each time an action happens, which is not ideal... Bulk actions will take way too long.
-Eventually I will fine tune this so that each action has a duration, meaning adding messages to the console won't clog it up.
-
-
 # Impact
 ![Code quality check](https://github.com/toman222/Impact/workflows/Code%20quality%20check/badge.svg)
 
