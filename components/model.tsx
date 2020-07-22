@@ -32,8 +32,6 @@ export class Model extends React.Component {
   tiles: Map<number, Tile> = new Map<number, Tile>()
   time: Time = new Time()
 
-  version: string = version
-
   constructor (props: React.Props<Model>) {
     super(props)
 
@@ -71,7 +69,7 @@ export class Model extends React.Component {
         </main>
         <footer>
           <a href='https://github.com/toman222/Impact'>source</a>
-          <div>Version: {this.version}</div>
+          <div>Version: {version}</div>
         </footer>
       </div>
     )

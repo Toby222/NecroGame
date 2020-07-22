@@ -64,30 +64,4 @@ export class BoolFlag {
       }
     }
   }()
-
-  static TimeFreeze = new class TimeFreeze implements BoolFlag {
-    private transformations = [
-      new Transformation.Consume(Resource.Power, 1)
-    ]
-
-    set (model: Model) {
-      for (const transformation of this.transformations) {
-        transformation.apply(model)
-      }
-    }
-
-    clear (model: Model) {
-      model.boolFlags.set(this, false)
-      for (const transformation of this.transformations) {
-        transformation.clear(model)
-      }
-    }
-
-    performEffects (model: Model) {
-      model.time.seconds--
-      for (const transformation of this.transformations) {
-        transformation.perform(model)
-      }
-    }
-  }()
 }

@@ -124,7 +124,6 @@ export class Button {
         this.actionsCache = [
           new Action.SetResourceValue(Resource.Power, 1),
           new Action.SetBoolFlag(BoolFlag.PowerRegen),
-          new Action.EnableButton(Button.FreezeTime),
           new Action.DisableButton(this),
           new Action.Wait(1),
           new Action.AddMessage('You hear a loud bang from the bottom of the ship'),
@@ -154,55 +153,6 @@ export class Button {
           new Action.Wait(5),
           new Action.SetResourceValue(Resource.Chutzpah, 50),
           new Action.AddTile(1),
-          new Action.DisableButton(this)
-        ]
-      }
-      return this.actionsCache
-    }
-  }()
-
-  static FreezeTime = new class FreezeTime implements Button {
-    id: number
-    private actionsCache?: Action[]
-
-    constructor () {
-      this.id = Button.buttons.length
-      Button.buttons.push(this)
-    }
-
-    toString () { return 'Enable TimeFreeze' }
-
-    get actions (): Action[] {
-      if (this.actionsCache === undefined) {
-        this.actionsCache = [
-          new Action.SetBoolFlag(BoolFlag.TimeFreeze),
-          new Action.EnableButton(Button.UnfreezeTime),
-          new Action.DisableButton(this),
-          new Action.Wait(60),
-          new Action.AddMessage('After a minute of fiddling, the Time Freezer starts humming.')
-        ]
-      }
-      return this.actionsCache
-    }
-  }()
-
-  static UnfreezeTime = new class UnfreezeTime implements Button {
-    id: number
-    private actionsCache?: Action[]
-
-    constructor () {
-      this.id = Button.buttons.length
-      Button.buttons.push(this)
-    }
-
-    toString () { return 'Disable TimeFreeze' }
-
-    get actions (): Action[] {
-      if (this.actionsCache === undefined) {
-        this.actionsCache = [
-          new Action.AddMessage('The Time Freezer goes quiet'),
-          new Action.ClearBoolFlag(BoolFlag.TimeFreeze),
-          new Action.EnableButton(Button.FreezeTime),
           new Action.DisableButton(this)
         ]
       }
