@@ -31,7 +31,7 @@ export class Model extends React.Component {
   resourceValues: Resource[] = []
   tiles: Map<number, Tile> = new Map<number, Tile>()
   time: Time = new Time()
-  
+
   constructor (props: React.Props<Model>) {
     super(props)
 
