@@ -6,6 +6,7 @@ export interface Button {
   id: number
   actions: Action[]
 }
+
 export class Button {
   static buttons: Button[] = []
 
@@ -44,7 +45,6 @@ export class Button {
     get actions (): Action[] {
       if (this.actionsCache === undefined) {
         this.actionsCache = [
-          new Action.SetBoolFlag(BoolFlag.OxygenMonitor),
           new Action.SetResourceValue(Resource.Oxygen, 1000),
           new Action.SetBoolFlag(BoolFlag.LeakyTank),
           new Action.AddMessage('Oxygen Monitor Up'),

@@ -10,12 +10,6 @@ export interface BoolFlag {
 }
 
 export class BoolFlag {
-  static OxygenMonitor = new class OxygenMonitor implements BoolFlag {
-    set (_model: Model) { }
-    clear (_model: Model) {}
-    performEffects (_model: Model) { }
-  }()
-
   static LeakyTank = new class LeakyTank implements BoolFlag {
     private transformations = [
       new Transformation.Consume(Resource.Oxygen, 10)
@@ -31,6 +25,7 @@ export class BoolFlag {
       for (const transformation of this.transformations) {
         transformation.clear(model)
       }
+      model.boolFlags.set(this, false)
     }
 
     performEffects (model: Model) {
@@ -56,6 +51,7 @@ export class BoolFlag {
       for (const transformation of this.transformations) {
         transformation.clear(model)
       }
+      model.boolFlags.set(this, false)
     }
 
     performEffects (model: Model) {
