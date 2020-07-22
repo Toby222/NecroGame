@@ -13,7 +13,7 @@ export const Wait = new class Wait extends Button {
   toString () { return 'Wait 1 Second' }
 
   get actions (): Actions.Action[] {
-    this.actionsCache = this.actionsCache ?? [ new Actions.Wait(1) ]
+    this.actionsCache = this.actionsCache ?? [new Actions.Wait(1)]
     return this.actionsCache
   }
 }()
