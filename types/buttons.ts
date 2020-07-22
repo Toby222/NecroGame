@@ -1,162 +1,112 @@
-import { Action } from './actions'
-import { BoolFlag } from './flags'
-import { Resource } from './resource'
+import * as Actions from './actions'
+import * as BoolFlags from './flags'
+import * as Resources from './resource'
 
-export interface Button {
-  id: number
-  actions: Action[]
+export abstract class Button {
+  protected abstract actionsCache?: Actions.Action[]
+  abstract get actions(): Actions.Action[]
+  abstract toString(): string
 }
 
-export class Button {
-  static buttons: Button[] = []
+export const Wait = new class Wait extends Button {
+  protected actionsCache?: Actions.Action[]
+  toString () { return 'Wait 1 Second' }
 
-  static Wait = new class Wait implements Button {
-    id: number
-    private actionsCache?: Action[]
+  get actions (): Actions.Action[] {
+    this.actionsCache = this.actionsCache ?? [ new Actions.Wait(1) ]
+    return this.actionsCache
+  }
+}()
 
-    constructor () {
-      this.id = Button.buttons.length
-      Button.buttons.push(this)
+export const ActivateOxygen = new class ActivateOxygen extends Button {
+  protected actionsCache?: Actions.Action[]
+  toString () { return 'Activate Oxygen' }
+
+  get actions (): Actions.Action[] {
+    if (this.actionsCache === undefined) {
+      this.actionsCache = [
+        new Actions.SetResourceValue(Resources.Oxygen, 1000),
+        new Actions.SetBoolFlag(BoolFlags.LeakyTank),
+        new Actions.AddMessage('Oxygen Monitor Up'),
+        new Actions.AddMessage('Losing 10 Oxygen per second - tank leaky'),
+        new Actions.EnableButton(OpenToolbox),
+        new Actions.EnableButton(OpenDoor),
+        new Actions.DisableButton(this),
+        new Actions.Wait(1)
+      ]
     }
+    return this.actionsCache
+  }
+}()
 
-    toString () { return 'Wait 1 Second' }
+export const OpenToolbox = new class OpenToolbox extends Button {
+  protected actionsCache?: Actions.Action[]
+  toString () { return 'Search Toolbox' }
 
-    get actions () {
-      if (this.actionsCache === undefined) {
-        this.actionsCache = [
-          new Action.Wait(1)
-        ]
-      }
-      return this.actionsCache
+  get actions (): Actions.Action[] {
+    if (this.actionsCache === undefined) {
+      this.actionsCache = [
+        new Actions.AddMessage('You unceremoniously dump the toolbox contents all over the ship'),
+        new Actions.EnableButton(ApplyTape),
+        new Actions.EnableButton(FiddleControls),
+        new Actions.DisableButton(this),
+        new Actions.Wait(1)
+      ]
     }
-  }()
+    return this.actionsCache
+  }
+}()
 
-  static ActivateOxygen = new class ActivateOxygen implements Button {
-    id: number
-    private actionsCache?: Action[]
+export const ApplyTape = new class ApplyTape extends Button {
+  protected actionsCache?: Actions.Action[]
+  toString () { return 'Apply Scotch Tape to Tank' }
 
-    constructor () {
-      this.id = Button.buttons.length
-      Button.buttons.push(this)
+  get actions (): Actions.Action[] {
+    if (this.actionsCache === undefined) {
+      this.actionsCache = [
+        new Actions.ClearBoolFlag(BoolFlags.LeakyTank),
+        new Actions.DisableButton(this),
+        new Actions.Wait(1),
+        new Actions.AddMessage('Leak stopped - for now.')
+      ]
     }
+    return this.actionsCache
+  }
+}()
 
-    toString () { return 'Activate Oxygen' }
+export const FiddleControls = new class FiddleControls extends Button {
+  protected actionsCache?: Actions.Action[]
+  toString () { return 'Mess with the control panel' }
 
-    get actions (): Action[] {
-      if (this.actionsCache === undefined) {
-        this.actionsCache = [
-          new Action.SetResourceValue(Resource.Oxygen, 1000),
-          new Action.SetBoolFlag(BoolFlag.LeakyTank),
-          new Action.AddMessage('Oxygen Monitor Up'),
-          new Action.AddMessage('Losing 10 Oxygen per second - tank leaky'),
-          new Action.EnableButton(Button.OpenToolbox),
-          new Action.EnableButton(Button.OpenDoor),
-          new Action.DisableButton(this),
-          new Action.Wait(1)
-        ]
-      }
-      return this.actionsCache
+  get actions () : Actions.Action[] {
+    if (this.actionsCache === undefined) {
+      this.actionsCache = [
+        new Actions.SetResourceValue(Resources.Power, 0),
+        new Actions.SetBoolFlag(BoolFlags.PowerRegen),
+        new Actions.DisableButton(this),
+        new Actions.Wait(1),
+        new Actions.AddMessage('You hear a loud bang from the bottom of the ship'),
+        new Actions.AddMessage('Your fuel cells are on and recharging from your excess oxygen')
+      ]
     }
-  }()
+    return this.actionsCache
+  }
+}()
 
-  static OpenToolbox = new class OpenToolbox implements Button {
-    id: number
-    private actionsCache?: Action[]
+export const OpenDoor = new class OpenDoor extends Button {
+  protected actionsCache?: Actions.Action[]
+  toString () { return 'Open Airlock' }
 
-    constructor () {
-      this.id = Button.buttons.length
-      Button.buttons.push(this)
+  get actions (): Actions.Action[] {
+    if (this.actionsCache === undefined) {
+      this.actionsCache = [
+        new Actions.AddMessage('You tell the airlock to start cycling.'),
+        new Actions.AddMessage('However it doesn\'t detect you wearing safety equipment and refuses.'),
+        new Actions.Wait(5),
+        new Actions.SetResourceValue(Resources.Chutzpah, 50),
+        new Actions.DisableButton(this)
+      ]
     }
-
-    toString () { return 'Search Toolbox' }
-
-    get actions (): Action[] {
-      if (this.actionsCache === undefined) {
-        this.actionsCache = [
-          new Action.AddMessage('You unceremoniously dump the toolbox contents all over the ship'),
-          new Action.EnableButton(Button.ApplyTape),
-          new Action.EnableButton(Button.FiddleControls),
-          new Action.DisableButton(this),
-          new Action.Wait(1)
-        ]
-      }
-      return this.actionsCache
-    }
-  }()
-
-  static ApplyTape = new class ApplyTape implements Button {
-    id: number
-    private actionsCache?: Action[]
-
-    constructor () {
-      this.id = Button.buttons.length
-      Button.buttons.push(this)
-    }
-
-    toString () { return 'Apply Scotch Tape to Tank' }
-
-    get actions (): Action[] {
-      if (this.actionsCache === undefined) {
-        this.actionsCache = [
-          new Action.ClearBoolFlag(BoolFlag.LeakyTank),
-          new Action.DisableButton(this),
-          new Action.Wait(1),
-          new Action.AddMessage('Leak stopped - for now.')
-        ]
-      }
-      return this.actionsCache
-    }
-  }()
-
-  static FiddleControls = new class FiddleControls implements Button {
-    id: number
-    private actionsCache?: Action[]
-
-    constructor () {
-      this.id = Button.buttons.length
-      Button.buttons.push(this)
-    }
-
-    toString () { return 'Mess with the control panel' }
-
-    get actions (): Action[] {
-      if (this.actionsCache === undefined) {
-        this.actionsCache = [
-          new Action.SetResourceValue(Resource.Power, 1),
-          new Action.SetBoolFlag(BoolFlag.PowerRegen),
-          new Action.DisableButton(this),
-          new Action.Wait(1),
-          new Action.AddMessage('You hear a loud bang from the bottom of the ship'),
-          new Action.AddMessage('Your fuel cells are on and recharging from your excess oxygen')
-        ]
-      }
-      return this.actionsCache
-    }
-  }()
-
-  static OpenDoor = new class OpenDoor implements Button {
-    id: number
-    private actionsCache?: Action[]
-
-    constructor () {
-      this.id = Button.buttons.length
-      Button.buttons.push(this)
-    }
-
-    toString () { return 'Open Airlock' }
-
-    get actions (): Action[] {
-      if (this.actionsCache === undefined) {
-        this.actionsCache = [
-          new Action.AddMessage('You tell the airlock to start cycling.'),
-          new Action.AddMessage('However it doesn\'t detect you wearing safety equipment and refuses.'),
-          new Action.Wait(5),
-          new Action.SetResourceValue(Resource.Chutzpah, 50),
-          new Action.AddTile(1),
-          new Action.DisableButton(this)
-        ]
-      }
-      return this.actionsCache
-    }
-  }()
-}
+    return this.actionsCache
+  }
+}()

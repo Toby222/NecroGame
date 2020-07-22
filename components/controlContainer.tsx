@@ -1,6 +1,7 @@
-import { Action } from '../types/actions'
 import { Button } from '../types/buttons'
 import { Msg } from './model'
+
+import * as Actions from '../types/actions'
 
 import * as React from 'react'
 
@@ -15,9 +16,9 @@ interface ControlContainerProps extends React.Props<ControlContainer> {
  * @param actions - The Actions to turn into a Msg.
  * @returns The resulting Msg.
  */
-function msgFromActions (actions: Action[]): Msg {
+function msgFromActions (actions: Actions.Action[]): Msg {
   if (actions.length === 0) {
-    return new Msg.PerformAction(new Action.Wait(1))
+    return new Msg.PerformAction(new Actions.Wait(1))
   } else if (actions.length === 1) {
     return new Msg.PerformAction(actions[0])
   }

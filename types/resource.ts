@@ -1,30 +1,31 @@
-export interface Resource {
-  min?: number
-  max?: number
-  amount: number
-  delta: number
-  name: string
+export abstract class Resource {
+  abstract min?: number
+  abstract max?: number
+  abstract amount: number
+  abstract delta: number
+  abstract name: string
 }
 
-export class Resource {
-  static Chutzpah = new class Chutzpah implements Resource {
-    amount = 0
-    delta = 0
-    name = 'Chutzpah'
-  }()
+export const Chutzpah = new class Chutzpah extends Resource {
+  amount = 0
+  delta = 0
+  max = undefined
+  min = undefined
+  name = 'Chutzpah'
+}()
 
-  static Oxygen = new class Oxygen implements Resource {
-    amount = 0
-    delta = 0
-    min = 0
-    max = 1000
-    name = 'Oxygen'
-  }()
+export const Oxygen = new class Oxygen extends Resource {
+  amount = 0
+  delta = 0
+  max = 1000
+  min = 0
+  name = 'Oxygen'
+}()
 
-  static Power = new class Power implements Resource {
-    amount = 0
-    delta = 0
-    min = 0
-    name = 'Power'
-  }()
-}
+export const Power = new class Power extends Resource {
+  amount = 0
+  delta = 0
+  max = undefined
+  min = 0
+  name = 'Power'
+}()
