@@ -33,4 +33,4 @@ Developed with the help of vercel, and its command line tool.
 
 ## Acknowledgements
 
-This entire thing is adapted from [deciduously's](https://github.com/deciduously/impact) prototype, just translated to TypeScript as best as possible.
+This entire thing is adapted from [deciduously's](https://github.com/deciduously/impact) prototype, translated to TypeScript as best as I could and built upon after that.
