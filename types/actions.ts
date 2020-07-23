@@ -1,4 +1,3 @@
-import { definedTiles } from './tiles'
 import { Button } from './buttons'
 import { BoolFlag } from './flags'
 import { Resource } from './resource'
@@ -6,26 +5,29 @@ import { Message } from './messages'
 
 import { Model } from '../components/model'
 
-export interface Action {
-  timeCost: number
-  perform(model: Model): void
+export abstract class Action {
+  abstract timeCost: number
+  abstract perform(model: Model): void
 }
 
-export class Action {
-  static Wait = class Wait implements Action {
+export class Wait extends Action {
     timeCost: number
     constructor (time: number) {
+      super()
+
       this.timeCost = time
     }
 
     perform (_model: Model) { }
-  }
+}
 
-  static SetBoolFlag = class SetBoolFlag implements Action {
+export class SetBoolFlag extends Action {
     private flag: BoolFlag
 
     timeCost = 0
     constructor (flag: BoolFlag) {
+      super()
+
       this.flag = flag
     }
 
@@ -36,13 +38,15 @@ export class Action {
       model.boolFlags.set(this.flag, true)
       this.flag.set(model)
     }
-  }
+}
 
-  static ClearBoolFlag = class ClearBoolFlag implements Action {
+export class ClearBoolFlag extends Action {
     private flag: BoolFlag
 
     timeCost = 0
     constructor (flag: BoolFlag) {
+      super()
+
       this.flag = flag
     }
 
@@ -52,15 +56,17 @@ export class Action {
       }
       this.flag.clear(model)
     }
-  }
+}
 
-  static SetResourceValue = class SetResourceValue implements Action {
+export class SetResourceValue extends Action {
     private resource: Resource
     private amount: number
 
     timeCost = 0
 
     constructor (resource: Resource, amount: number) {
+      super()
+
       this.resource = resource
       this.amount = amount
     }
@@ -74,9 +80,9 @@ export class Action {
 
       model.resourceValues.push(this.resource)
     }
-  }
+}
 
-  static AddResourceValue = class AddResourceValue implements Action {
+export class AddResourceValue extends Action {
     // TODO add min/maxes, and check here
     private resource: Resource
     private delta: number
@@ -84,6 +90,8 @@ export class Action {
     timeCost = 0
 
     constructor (resource: Resource, delta: number) {
+      super()
+
       this.resource = resource
       this.delta = delta
     }
@@ -91,15 +99,17 @@ export class Action {
     perform (_model: Model) {
       this.resource.amount += this.delta
     }
-  }
+}
 
-  static AddResourceDelta = class AddResourceDelta implements Action {
+export class AddResourceDelta extends Action {
     private resource: Resource
     private delta: number
 
     timeCost = 0
 
     constructor (resource: Resource, delta: number) {
+      super()
+
       this.resource = resource
       this.delta = delta
     }
@@ -107,28 +117,32 @@ export class Action {
     perform (_model: Model) {
       this.resource.delta += this.delta
     }
-  }
+}
 
-  static AddMessage = class AddMessage implements Action {
+export class AddMessage extends Action {
     private message: string
 
     timeCost = 0
 
     constructor (message: string) {
+      super()
+
       this.message = message
     }
 
     perform (model: Model) {
       model.messages.unshift(new Message(this.message, model.time))
     }
-  }
+}
 
-  static EnableButton = class EnableButton implements Action {
+export class EnableButton extends Action {
     private button: Button
 
     timeCost = 0
 
     constructor (button: Button) {
+      super()
+
       this.button = button
     }
 
@@ -138,14 +152,16 @@ export class Action {
       }
       model.buttons.push(this.button)
     }
-  }
+}
 
-  static DisableButton = class DisableButton implements Action {
+export class DisableButton extends Action {
     private button: Button
 
     timeCost = 0
 
     constructor (button: Button) {
+      super()
+
       this.button = button
     }
 
@@ -155,30 +171,9 @@ export class Action {
         model.buttons.splice(toDelete, 1)
       }
     }
-  }
+}
 
-  static AddTile = class AddTile implements Action {
-    private tid: number
-
-    timeCost = 0
-
-    constructor (tid: number) {
-      this.tid = tid
-    }
-
-    perform (model: Model) {
-      const newTile = definedTiles(this.tid)
-      if (newTile === undefined) {
-        return
-      }
-      model.tiles.set(this.tid, newTile)
-      for (const button of newTile.buttons) {
-        model.buttons.push(button)
-      }
-    }
-  }
-
-  static LogAction = class LogAction implements Action {
+export class LogAction extends Action {
     private action: string
     private end: boolean
 
@@ -187,6 +182,8 @@ export class Action {
     timeCost = 0
 
     constructor (end: boolean, action: string) {
+      super()
+
       this.end = end
       this.action = action
     }
@@ -209,5 +206,4 @@ export class Action {
         LogAction.active.push(this.action)
       }
     }
-  }
 }

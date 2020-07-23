@@ -1,67 +1,39 @@
-import { Resource } from './resource'
-import { Transformation } from './transformations'
+import * as Resources from './resource'
+import * as Transformations from './transformations'
 
 import { Model } from '../components/model'
 
-export interface BoolFlag {
-  set (model: Model): void
-  clear (model: Model): void
-  performEffects(model: Model): void
+export abstract class BoolFlag {
+  protected abstract transformations: Transformations.Transformation[]
+  set (model: Model) {
+    for (const transformation of this.transformations) {
+      transformation.apply(model)
+    }
+  }
+
+  clear (model: Model) {
+    for (const transformation of this.transformations) {
+      transformation.clear(model)
+    }
+    model.boolFlags.set(this, false)
+  }
+
+  performEffects (model: Model) {
+    for (const transformation of this.transformations) {
+      transformation.perform(model)
+    }
+  }
 }
 
-export class BoolFlag {
-  static OxygenMonitor = new class OxygenMonitor implements BoolFlag {
-    set (_model: Model) { }
-    clear (_model: Model) {}
-    performEffects (_model: Model) { }
-  }()
+export const LeakyTank = new class LeakyTank extends BoolFlag {
+  protected transformations = [
+    new Transformations.Consume(Resources.Oxygen, 10)
+  ]
+}()
 
-  static LeakyTank = new class LeakyTank implements BoolFlag {
-    private transformations = [
-      new Transformation.Consume(Resource.Oxygen, 10)
-    ]
-
-    set (model: Model) {
-      for (const transformation of this.transformations) {
-        transformation.apply(model)
-      }
-    }
-
-    clear (model: Model) {
-      for (const transformation of this.transformations) {
-        transformation.clear(model)
-      }
-    }
-
-    performEffects (model: Model) {
-      for (const transformation of this.transformations) {
-        transformation.perform(model)
-      }
-    }
-  }()
-
-  static PowerRegen = new class PowerRegen implements BoolFlag {
-    private transformations = [
-      new Transformation.Generate(Resource.Power, 2),
-      new Transformation.Consume(Resource.Oxygen, 1)
-    ]
-
-    set (model: Model) {
-      for (const transformation of this.transformations) {
-        transformation.apply(model)
-      }
-    }
-
-    clear (model: Model) {
-      for (const transformation of this.transformations) {
-        transformation.clear(model)
-      }
-    }
-
-    performEffects (model: Model) {
-      for (const transformation of this.transformations) {
-        transformation.perform(model)
-      }
-    }
-  }()
-}
+export const PowerRegen = new class PowerRegen extends BoolFlag {
+  protected transformations = [
+    new Transformations.Generate(Resources.Power, 2),
+    new Transformations.Consume(Resources.Oxygen, 1)
+  ]
+}()

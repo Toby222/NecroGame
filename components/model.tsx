@@ -1,17 +1,16 @@
 import { Player } from '../types/player'
-import { Button } from '../types/buttons'
-import { Tile } from '../types/tiles'
 import { BoolFlag } from '../types/flags'
-import { Resource } from '../types/resource'
 import { Time } from '../types/time'
 import { Message } from '../types/messages'
-import { Action } from '../types/actions'
+
+import * as Actions from '../types/actions'
+import * as Buttons from '../types/buttons'
+import * as Resources from '../types/resource'
 
 import ControlContainer from './controlContainer'
 import ResourceContainer from './resourceContainer'
 import PlayerContainer from './playerContainer'
 import MessagesContainer from './messagesContainer'
-import MapContainer from './mapContainer'
 
 import Head from 'next/head'
 
@@ -25,18 +24,11 @@ declare global {
 
 export class Model extends React.Component {
   boolFlags: Map<BoolFlag, boolean> = new Map<BoolFlag, boolean>()
-  buttons: Button[] = []
+  buttons: Buttons.Button[] = [Buttons.Wait]
   messages: Message[] = []
   player: Player = new Player()
-  resourceValues: Resource[] = []
-  tiles: Map<number, Tile> = new Map<number, Tile>()
+  resourceValues: Resources.Resource[] = []
   time: Time = new Time()
-
-  constructor (props: React.Props<Model>) {
-    super(props)
-
-    new Action.AddTile(0).perform(this)
-  }
 
   render () {
     return (
@@ -60,10 +52,7 @@ export class Model extends React.Component {
           <div className='body'>
             <ResourceContainer resources={this.resourceValues} />
             <ControlContainer buttons={this.buttons} onsignal={(msg: Msg) => msg.act(this)} />
-            <div>
-              <PlayerContainer player={this.player} />
-              <MapContainer tile={this.player.currentTile} />
-            </div>
+            <PlayerContainer player={this.player} />
           </div>
           <MessagesContainer messages={this.messages} />
         </main>
@@ -101,9 +90,9 @@ export class Msg {
   }
 
   static PerformAction = class PerformAction {
-    action: Action
+    action: Actions.Action
 
-    constructor (action: Action) {
+    constructor (action: Actions.Action) {
       this.action = action
     }
 
@@ -130,9 +119,9 @@ export class Msg {
 
 class TimeAction {
   time: number
-  action: Action
+  action: Actions.Action
 
-  constructor (ticks: number, action: Action) {
+  constructor (ticks: number, action: Actions.Action) {
     this.time = ticks
     this.action = action
   }
@@ -147,8 +136,8 @@ class TimeAction {
 }
 
 const timeactions = [
-  new TimeAction(1, new Action.EnableButton(Button.ActivateOxygen)),
-  new TimeAction(15, new Action.AddMessage("It's been 15 SECONDS"))
+  new TimeAction(1, new Actions.EnableButton(Buttons.ActivateOxygen)),
+  new TimeAction(15, new Actions.AddMessage("It's been 15 SECONDS"))
 ]
 
 /**

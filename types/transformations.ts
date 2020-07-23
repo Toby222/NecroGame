@@ -1,56 +1,58 @@
-import { Resource } from './resource'
-import { Action } from './actions'
+import * as Resources from './resource'
+import * as Actions from './actions'
 
 import { Model } from '../components/model'
 
-export interface Transformation {
-  perform (model: Model): void
-  apply (model: Model): void
-  clear (model: Model): void
+export abstract class Transformation {
+  abstract perform (model: Model): void
+  abstract apply (model: Model): void
+  abstract clear (model: Model): void
 }
 
-export class Transformation {
-  static Generate = class Generate implements Transformation {
-    private resource: Resource
+export const Generate = class Generate extends Transformation {
+    private resource: Resources.Resource
     private delta: number
 
-    constructor (resource: Resource, delta: number) {
+    constructor (resource: Resources.Resource, delta: number) {
+      super()
+
       this.resource = resource
       this.delta = delta
     }
 
     perform (model: Model) {
-      new Action.AddResourceValue(this.resource, this.delta).perform(model)
+      new Actions.AddResourceValue(this.resource, this.delta).perform(model)
     }
 
     apply (model: Model) {
-      new Action.AddResourceDelta(this.resource, this.delta).perform(model)
+      new Actions.AddResourceDelta(this.resource, this.delta).perform(model)
     }
 
     clear (model: Model) {
-      new Action.AddResourceDelta(this.resource, -this.delta).perform(model)
+      new Actions.AddResourceDelta(this.resource, -this.delta).perform(model)
     }
-  }
+}
 
-  static Consume = class Consume implements Transformation {
-    private resource: Resource
+export const Consume = class Consume extends Transformation {
+    private resource: Resources.Resource
     private delta: number
 
-    constructor (resource: Resource, delta: number) {
+    constructor (resource: Resources.Resource, delta: number) {
+      super()
+
       this.resource = resource
       this.delta = -delta
     }
 
     perform (model: Model) {
-      new Action.AddResourceValue(this.resource, this.delta).perform(model)
+      new Actions.AddResourceValue(this.resource, this.delta).perform(model)
     }
 
     apply (model: Model) {
-      new Action.AddResourceDelta(this.resource, this.delta).perform(model)
+      new Actions.AddResourceDelta(this.resource, this.delta).perform(model)
     }
 
     clear (model: Model) {
-      new Action.AddResourceDelta(this.resource, -this.delta).perform(model)
+      new Actions.AddResourceDelta(this.resource, -this.delta).perform(model)
     }
-  }
 }
