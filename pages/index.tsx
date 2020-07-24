@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 export default class extends React.Component {
-  render() {
+  render () {
     return (
       <>
         <head>
@@ -13,7 +13,7 @@ export default class extends React.Component {
           <title>U r stimky</title>
         </head>
         <p>
-          Rember 2 taek ur meds uwu<br/>stinky
+          Rember 2 taek ur meds uwu<br />stinky
         </p>
       </>
     )
