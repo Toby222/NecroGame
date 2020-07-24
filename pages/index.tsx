@@ -16,8 +16,8 @@ export default class extends React.Component {
           <link rel='stylesheet' type='text/css' href='impact.css' />
           <title>U r stimky</title>
         </Head>
-        <p font-family='Fira Code'>
-          Rember 2 taek ur meds uwu
+        <p>
+          Rember 2 taek ur meds uwu<br/>stinky
         </p>
       </>
     )
