@@ -5,7 +5,7 @@ import Head from 'next/head'
 import * as React from 'react'
 
 export default class extends React.Component {
-  render() {
+  render () {
     return (
       <>
         <Head>
@@ -18,7 +18,7 @@ export default class extends React.Component {
           <link rel='stylesheet' type='text/css' href='impact.css' />
           <title>IMPACT</title>
         </Head>
-        <Model/>
+        <Model />
       </>
     )
   }
