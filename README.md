@@ -1,8 +1,6 @@
 # Impact
 ![Code quality check](https://github.com/toman222/Impact/workflows/Code%20quality%20check/badge.svg)
 
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/toman222/Impact/tree/dev)
-
 An incremental game skeleton. Very much WIP.
 
 ![screenshot](/.github/images/screenshot_1.png?raw=true)
