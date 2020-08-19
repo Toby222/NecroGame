@@ -1,209 +1,209 @@
-import { Button } from './buttons'
-import { BoolFlag } from './flags'
-import { Resource } from './resource'
-import { Message } from './messages'
+import { Button } from "./buttons";
+import { BoolFlag } from "./flags";
+import { Resource } from "./resource";
+import { Message } from "./messages";
 
-import { Model } from '../components/model'
+import { Model } from "../components/model";
 
 export abstract class Action {
-  abstract timeCost: number
-  abstract perform(model: Model): void
+  abstract timeCost: number;
+  abstract perform(model: Model): void;
 }
 
 export class Wait extends Action {
-    timeCost: number
-    constructor (time: number) {
-      super()
+  timeCost: number;
+  constructor(time: number) {
+    super();
 
-      this.timeCost = time
-    }
+    this.timeCost = time;
+  }
 
-    perform (_model: Model) { }
+  perform(_model: Model) {}
 }
 
 export class SetBoolFlag extends Action {
-    private flag: BoolFlag
+  private flag: BoolFlag;
 
-    timeCost = 0
-    constructor (flag: BoolFlag) {
-      super()
+  timeCost = 0;
+  constructor(flag: BoolFlag) {
+    super();
 
-      this.flag = flag
+    this.flag = flag;
+  }
+
+  perform(model: Model) {
+    if (model.boolFlags.get(this.flag) === true) {
+      throw new Error("Enabled flags cannot be enabled again.");
     }
-
-    perform (model: Model) {
-      if (model.boolFlags.get(this.flag) === true) {
-        throw new Error('Enabled flags cannot be enabled again.')
-      }
-      model.boolFlags.set(this.flag, true)
-      this.flag.set(model)
-    }
+    model.boolFlags.set(this.flag, true);
+    this.flag.set(model);
+  }
 }
 
 export class ClearBoolFlag extends Action {
-    private flag: BoolFlag
+  private flag: BoolFlag;
 
-    timeCost = 0
-    constructor (flag: BoolFlag) {
-      super()
+  timeCost = 0;
+  constructor(flag: BoolFlag) {
+    super();
 
-      this.flag = flag
+    this.flag = flag;
+  }
+
+  perform(model: Model) {
+    if (model.boolFlags.get(this.flag) === false) {
+      throw new Error("Disabled flags cannot be disabled again.");
     }
-
-    perform (model: Model) {
-      if (model.boolFlags.get(this.flag) === false) {
-        throw new Error('Disabled flags cannot be disabled again.')
-      }
-      this.flag.clear(model)
-    }
+    this.flag.clear(model);
+  }
 }
 
 export class SetResourceValue extends Action {
-    private resource: Resource
-    private amount: number
+  private resource: Resource;
+  private amount: number;
 
-    timeCost = 0
+  timeCost = 0;
 
-    constructor (resource: Resource, amount: number) {
-      super()
+  constructor(resource: Resource, amount: number) {
+    super();
 
-      this.resource = resource
-      this.amount = amount
+    this.resource = resource;
+    this.amount = amount;
+  }
+
+  perform(model: Model) {
+    if (model.resourceValues.includes(this.resource)) {
+      throw new Error("Resource may only be set once");
     }
+    this.resource.amount = this.amount;
+    this.resource.delta = 0;
 
-    perform (model: Model) {
-      if (model.resourceValues.includes(this.resource)) {
-        throw new Error('Resource may only be set once')
-      }
-      this.resource.amount = this.amount
-      this.resource.delta = 0
-
-      model.resourceValues.push(this.resource)
-    }
+    model.resourceValues.push(this.resource);
+  }
 }
 
 export class AddResourceValue extends Action {
-    // TODO add min/maxes, and check here
-    private resource: Resource
-    private delta: number
+  // TODO add min/maxes, and check here
+  private resource: Resource;
+  private delta: number;
 
-    timeCost = 0
+  timeCost = 0;
 
-    constructor (resource: Resource, delta: number) {
-      super()
+  constructor(resource: Resource, delta: number) {
+    super();
 
-      this.resource = resource
-      this.delta = delta
-    }
+    this.resource = resource;
+    this.delta = delta;
+  }
 
-    perform (_model: Model) {
-      this.resource.amount += this.delta
-    }
+  perform(_model: Model) {
+    this.resource.amount += this.delta;
+  }
 }
 
 export class AddResourceDelta extends Action {
-    private resource: Resource
-    private delta: number
+  private resource: Resource;
+  private delta: number;
 
-    timeCost = 0
+  timeCost = 0;
 
-    constructor (resource: Resource, delta: number) {
-      super()
+  constructor(resource: Resource, delta: number) {
+    super();
 
-      this.resource = resource
-      this.delta = delta
-    }
+    this.resource = resource;
+    this.delta = delta;
+  }
 
-    perform (_model: Model) {
-      this.resource.delta += this.delta
-    }
+  perform(_model: Model) {
+    this.resource.delta += this.delta;
+  }
 }
 
 export class AddMessage extends Action {
-    private message: string
+  private message: string;
 
-    timeCost = 0
+  timeCost = 0;
 
-    constructor (message: string) {
-      super()
+  constructor(message: string) {
+    super();
 
-      this.message = message
-    }
+    this.message = message;
+  }
 
-    perform (model: Model) {
-      model.messages.unshift(new Message(this.message, model.time))
-    }
+  perform(model: Model) {
+    model.messages.unshift(new Message(this.message, model.time));
+  }
 }
 
 export class EnableButton extends Action {
-    private button: Button
+  private button: Button;
 
-    timeCost = 0
+  timeCost = 0;
 
-    constructor (button: Button) {
-      super()
+  constructor(button: Button) {
+    super();
 
-      this.button = button
+    this.button = button;
+  }
+
+  perform(model: Model) {
+    if (this.button === undefined) {
+      throw new Error("Invalid id for EnableButton action");
     }
-
-    perform (model: Model) {
-      if (this.button === undefined) {
-        throw new Error('Invalid id for EnableButton action')
-      }
-      model.buttons.push(this.button)
-    }
+    model.buttons.push(this.button);
+  }
 }
 
 export class DisableButton extends Action {
-    private button: Button
+  private button: Button;
 
-    timeCost = 0
+  timeCost = 0;
 
-    constructor (button: Button) {
-      super()
+  constructor(button: Button) {
+    super();
 
-      this.button = button
+    this.button = button;
+  }
+
+  perform(model: Model) {
+    const toDelete = model.buttons.indexOf(this.button);
+    if (toDelete >= 0) {
+      model.buttons.splice(toDelete, 1);
     }
-
-    perform (model: Model) {
-      const toDelete = model.buttons.indexOf(this.button)
-      if (toDelete >= 0) {
-        model.buttons.splice(toDelete, 1)
-      }
-    }
+  }
 }
 
 export class LogAction extends Action {
-    private action: string
-    private end: boolean
+  private action: string;
+  private end: boolean;
 
-    static active: string[] = []
+  static active: string[] = [];
 
-    timeCost = 0
+  timeCost = 0;
 
-    constructor (end: boolean, action: string) {
-      super()
+  constructor(end: boolean, action: string) {
+    super();
 
-      this.end = end
-      this.action = action
+    this.end = end;
+    this.action = action;
+  }
+
+  perform(_model: Model) {
+    if (process.env.NODE_ENV !== "production") {
+      return;
     }
-
-    perform (_model: Model) {
-      if (process.env.NODE_ENV !== 'production') {
-        return
-      }
-      if (!this.end && LogAction.active.includes(this.action)) {
-        throw new Error('Tried to start already started log transaction')
-      }
-      if (this.end && !LogAction.active.includes(this.action)) {
-        throw new Error('Tried to end log transaction that hasn\'t been started')
-      }
-      if (this.end) {
-        window.strum('endTransaction', this.action)
-        LogAction.active.splice(LogAction.active.indexOf(this.action), 1)
-      } else {
-        window.strum('startTransaction', this.action)
-        LogAction.active.push(this.action)
-      }
+    if (!this.end && LogAction.active.includes(this.action)) {
+      throw new Error("Tried to start already started log transaction");
     }
+    if (this.end && !LogAction.active.includes(this.action)) {
+      throw new Error("Tried to end log transaction that hasn't been started");
+    }
+    if (this.end) {
+      window.strum("endTransaction", this.action);
+      LogAction.active.splice(LogAction.active.indexOf(this.action), 1);
+    } else {
+      window.strum("startTransaction", this.action);
+      LogAction.active.push(this.action);
+    }
+  }
 }

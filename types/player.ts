@@ -1,3 +1,3 @@
 export class Player {
-  name: string = 'Spiff'
+  name: string = "Spiff";
 }

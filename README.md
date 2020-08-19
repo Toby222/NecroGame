@@ -1,4 +1,5 @@
 # Impact
+
 ![Code quality check](https://github.com/toman222/Impact/workflows/Code%20quality%20check/badge.svg)
 
 An incremental game skeleton. Very much WIP.
@@ -16,18 +17,17 @@ Developed with the help of vercel, and its command line tool.
 
 ## Usage
 
-* `npm run lint` - Check if code fits the standards.
-    * `npm run lint -- --fix` - Automatically fix where possible.
-* `npm run dev` - Start a development server on `localhost:3000` and watch for code.
-* `npm run build` - Create a production build.
-* `npm run start` - Host the latest production build at `localhost:3000`
+- `npm run lint` - Auto-format the codebase.
+- `npm run dev` - Start a development server on `localhost:3000` and watch for code.
+- `npm run build` - Create a production build.
+- `npm run start` - Host the latest production build at `localhost:3000`
 
 ## Dependencies
 
-* [Next.js](https://nextjs.org/) - React framework
-* [Sass](https://sass-lang.com/) - CSS, but better
-* [typescript](https://www.typescriptlang.org/) - JS, but typesafe
-* ["Fira Code" font family](https://fonts.google.com/specimen/Fira+Code) - Console font
+- [Next.js](https://nextjs.org/) - React framework
+- [Sass](https://sass-lang.com/) - CSS, but better
+- [typescript](https://www.typescriptlang.org/) - JS, but typesafe
+- ["Fira Code" font family](https://fonts.google.com/specimen/Fira+Code) - Console font
 
 ## Acknowledgements
 

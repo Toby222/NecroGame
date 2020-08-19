@@ -1,13 +1,13 @@
-import { Button } from '../types/buttons'
-import { Msg } from './model'
+import { Button } from "../types/buttons";
+import { Msg } from "./model";
 
-import * as Actions from '../types/actions'
+import * as Actions from "../types/actions";
 
-import * as React from 'react'
+import * as React from "react";
 
 interface ControlContainerProps extends React.Props<ControlContainer> {
-  buttons: Button[]
-  onsignal?: (msg: Msg) => void
+  buttons: Button[];
+  onsignal?: (msg: Msg) => void;
 }
 
 /**
@@ -16,34 +16,38 @@ interface ControlContainerProps extends React.Props<ControlContainer> {
  * @param actions - The Actions to turn into a Msg.
  * @returns The resulting Msg.
  */
-function msgFromActions (actions: Actions.Action[]): Msg {
+function msgFromActions(actions: Actions.Action[]): Msg {
   if (actions.length === 0) {
-    return new Msg.PerformAction(new Actions.Wait(1))
+    return new Msg.PerformAction(new Actions.Wait(1));
   } else if (actions.length === 1) {
-    return new Msg.PerformAction(actions[0])
+    return new Msg.PerformAction(actions[0]);
   }
 
-  return new Msg.Bulk(actions.map(action => new Msg.PerformAction(action)))
+  return new Msg.Bulk(actions.map((action) => new Msg.PerformAction(action)));
 }
 
 export class ControlContainer extends React.Component<ControlContainerProps> {
-  private static bId: number = 0
-  title: string = 'Control'
-  buttons: Button[]
-  onsignal?: (msg: Msg) => void
+  private static bId: number = 0;
+  title = "Control";
+  buttons: Button[];
+  onsignal?: (msg: Msg) => void;
 
-  constructor (props: ControlContainerProps) {
-    super(props)
+  constructor(props: ControlContainerProps) {
+    super(props);
 
-    this.buttons = props.buttons
-    this.onsignal = props.onsignal
+    this.buttons = props.buttons;
+    this.onsignal = props.onsignal;
   }
 
-  shouldComponentUpdate (_nextProps: Readonly<{}>, _nextState: Readonly<{}>, _nextContext: any): boolean {
-    return true
+  shouldComponentUpdate(
+    _nextProps: Readonly<{}>,
+    _nextState: Readonly<{}>,
+    _nextContext: any
+  ): boolean {
+    return true;
   }
 
-  render () {
+  render() {
     /**
      * Helper function to turn Buttons into Elements.
      *
@@ -51,30 +55,31 @@ export class ControlContainer extends React.Component<ControlContainerProps> {
      * @param container - The Container to render in.
      * @returns Element of the Button.
      */
-    function renderButton (button: Button, container: ControlContainer) {
+    function renderButton(button: Button, container: ControlContainer) {
       if (button?.actions === undefined) {
-        return <span key={ControlContainer.bId++} />
+        return <span key={ControlContainer.bId++} />;
       }
 
-      const msg = msgFromActions(button.actions)
-      const onsignal = container.onsignal !== undefined ? container.onsignal : () => {}
+      const msg = msgFromActions(button.actions);
+      const onsignal =
+        container.onsignal !== undefined ? container.onsignal : () => {};
 
       return (
-        <span key={ControlContainer.bId++} className='control-button'>
+        <span key={ControlContainer.bId++} className="control-button">
           <button onClick={() => onsignal(msg)}>{button.toString()}</button>
         </span>
-      )
+      );
     }
 
     return (
-      <div className='container container-control'>
-        <div className='title'>{this.title}</div>
-        <div className='scroller'>
-          {this.buttons.map(button => renderButton(button, this))}
+      <div className="container container-control">
+        <div className="title">{this.title}</div>
+        <div className="scroller">
+          {this.buttons.map((button) => renderButton(button, this))}
         </div>
       </div>
-    )
+    );
   }
 }
 
-export default ControlContainer
+export default ControlContainer;

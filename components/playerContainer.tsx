@@ -1,33 +1,35 @@
-import { Player } from '../types/player'
+import { Player } from "../types/player";
 
-import * as React from 'react'
+import * as React from "react";
 
 interface PlayerContainerProps extends React.Props<PlayerContainer> {
-  player: Player
+  player: Player;
 }
 
 export class PlayerContainer extends React.Component<PlayerContainerProps> {
-  player: Player
+  player: Player;
 
-  constructor (props: PlayerContainerProps) {
-    super(props)
+  constructor(props: PlayerContainerProps) {
+    super(props);
 
-    this.player = props.player
+    this.player = props.player;
   }
 
-  shouldComponentUpdate (_nextProps: Readonly<{}>, _nextState: Readonly<{}>, _nextContext: any): boolean {
-    return true
+  shouldComponentUpdate(
+    _nextProps: Readonly<{}>,
+    _nextState: Readonly<{}>,
+    _nextContext: any
+  ): boolean {
+    return true;
   }
 
-  render () {
+  render() {
     return (
-      <div className='container container-player'>
-        <div className='title'>{this.player.name}</div>
-        <div className='scroller'>
-          Name: {this.player.name}
-        </div>
+      <div className="container container-player">
+        <div className="title">{this.player.name}</div>
+        <div className="scroller">Name: {this.player.name}</div>
       </div>
-    )
+    );
   }
 }
-export default PlayerContainer
+export default PlayerContainer;

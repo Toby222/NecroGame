@@ -1,106 +1,106 @@
 .impact {
-    font-family: 'Fira Code';
+  font-family: "Fira Code";
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+
+  footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+  }
+
+  .container {
+    border: solid 1px #000;
     display: flex;
     flex-direction: column;
-    height: 100%;
-    width: 100%;
+    overflow: hidden;
 
-    footer {
-        position: fixed;
-        left: 0;
-        bottom: 0;
+    > .title {
+      border-bottom: solid 1px #000;
+      font-weight: bold;
+      text-align: center;
     }
 
-    .container {
-        border: solid 1px #000;
-        display: flex;
-        flex-direction: column;
-        overflow: hidden;
+    > .scroller {
+      overflow: auto;
+    }
+  }
 
-        >.title {
-            border-bottom: solid 1px #000;
-            font-weight: bold;
-            text-align: center;
-        }
+  .header {
+    flex: 0;
+    font-size: 72px;
+    font-weight: bold;
+    text-align: center;
+  }
 
-        >.scroller {
-            overflow: auto;
-        }
+  .time {
+    display: flex;
+    font-size: 14px;
+  }
+
+  .body {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+  }
+
+  .container-resources {
+    flex: 0 0 256px;
+    order: 0;
+
+    .resource {
+      border: dashed 1px #000;
+      display: flex;
+      flex: 0;
+      flex-direction: row;
     }
 
-    .header {
-        flex: 0;
-        font-size: 72px;
-        font-weight: bold;
-        text-align: center;
+    .resource-title {
+      display: flex;
+      flex: 2;
+      font-weight: bold;
+      width: 50%;
     }
 
-    .time {
-        display: flex;
-        font-size: 14px;
+    .resource-amt {
+      display: flex;
+      flex: 1;
+      font-style: italic;
+      padding-left: 8px;
     }
 
-    .body {
-        display: flex;
-        flex: 1;
-        flex-direction: row;
+    .resource-delta {
+      display: flex;
+      flex: 1;
+      font-style: italic;
+      padding-left: 2px;
     }
+  }
 
-    .container-resources {
-        flex: 0 0 256px;
-        order: 0;
+  .container-control {
+    flex: 0 0 256px;
 
-        .resource {
-            border: dashed 1px #000;
-            display: flex;
-            flex: 0;
-            flex-direction: row;
-        }
-
-        .resource-title {
-            display: flex;
-            flex: 2;
-            font-weight: bold;
-            width: 50%;
-        }
-
-        .resource-amt {
-            display: flex;
-            flex: 1;
-            font-style: italic;
-            padding-left: 8px;
-        }
-
-        .resource-delta {
-            display: flex;
-            flex: 1;
-            font-style: italic;
-            padding-left: 2px;
-        }
+    .control-button {
+      flex: 1;
     }
+  }
 
-    .container-control {
-        flex: 0 0 256px;
+  .container-map {
+    flex: 1 0 256px;
+    order: 1;
+  }
 
-        .control-button {
-            flex: 1;
-        }
+  .container-messages {
+    margin-top: 12px;
+
+    .message-time {
+      margin-right: 8px;
+      text-decoration: underline;
+      flex: 0;
+      font-weight: bold;
+      text-align: center;
     }
-
-    .container-map {
-        flex: 1 0 256px;
-        order: 1;
-    }
-
-    .container-messages {
-        margin-top: 12px;
-
-        .message-time {
-            margin-right: 8px;
-            text-decoration: underline;
-            flex: 0;
-            font-weight: bold;
-            text-align: center;
-        }
-    }
+  }
 }
