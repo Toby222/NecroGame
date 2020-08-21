@@ -53,10 +53,7 @@ export class Model extends React.Component {
               </footer>
             </div>
             <div className="content-wrapper d-flex flex-column justify-content-between">
-              <ControlContainer
-                buttons={this.buttons}
-                callback={(msg: Msg) => msg.act(this)}
-              />
+              <ControlContainer buttons={this.buttons} model={this} />
               <MessagesContainer messages={this.messages} />
             </div>
           </div>

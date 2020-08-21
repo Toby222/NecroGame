@@ -1,5 +1,5 @@
 import { Button } from "../types/buttons";
-import { Msg } from "./model";
+import { Model, Msg } from "./model";
 
 import * as Actions from "../types/actions";
 
@@ -8,6 +8,7 @@ import * as React from "react";
 interface ControlContainerProps {
   buttons: Button[];
   callback?: (msg: Msg) => void;
+  model: Model;
 }
 
 /**
@@ -28,15 +29,15 @@ function msgFromActions(actions: Actions.Action[]): Msg {
 
 export class ControlContainer extends React.Component<ControlContainerProps> {
   private static bId: number = 0;
-  title = "Controls";
+  readonly title = "Controls";
   buttons: Button[];
-  onsignal?: (msg: Msg) => void;
+  model: Model;
 
   constructor(props: ControlContainerProps) {
     super(props);
 
     this.buttons = props.buttons;
-    this.onsignal = props.callback;
+    this.model = props.model;
   }
 
   shouldComponentUpdate(
@@ -56,18 +57,17 @@ export class ControlContainer extends React.Component<ControlContainerProps> {
      * @returns Element of the Button.
      */
     function renderButton(button: Button, container: ControlContainer) {
-      if (button?.actions === undefined) {
+      if (button.actions === undefined) {
         return <></>;
       }
 
       const msg = msgFromActions(button.actions);
-      const onsignal = container.onsignal ?? (() => {});
 
       return (
         <button
           key={ControlContainer.bId++}
           className="btn flex-fill"
-          onClick={() => onsignal(msg)}
+          onClick={() => msg.act(container.model)}
         >
           {button.toString()}
         </button>
