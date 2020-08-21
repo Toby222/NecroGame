@@ -172,38 +172,3 @@ export class DisableButton extends Action {
     }
   }
 }
-
-export class LogAction extends Action {
-  private action: string;
-  private end: boolean;
-
-  static active: string[] = [];
-
-  timeCost = 0;
-
-  constructor(end: boolean, action: string) {
-    super();
-
-    this.end = end;
-    this.action = action;
-  }
-
-  perform(_model: Model) {
-    if (process.env.NODE_ENV !== "production") {
-      return;
-    }
-    if (!this.end && LogAction.active.includes(this.action)) {
-      throw new Error("Tried to start already started log transaction");
-    }
-    if (this.end && !LogAction.active.includes(this.action)) {
-      throw new Error("Tried to end log transaction that hasn't been started");
-    }
-    if (this.end) {
-      window.strum("endTransaction", this.action);
-      LogAction.active.splice(LogAction.active.indexOf(this.action), 1);
-    } else {
-      window.strum("startTransaction", this.action);
-      LogAction.active.push(this.action);
-    }
-  }
-}
