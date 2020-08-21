@@ -29,25 +29,6 @@ function msgFromActions(actions: Actions.Action[]): Msg {
 
 export class ControlContainer extends React.Component<ControlContainerProps> {
   private static bId: number = 0;
-  readonly title = "Controls";
-  buttons: Button[];
-  model: Model;
-
-  constructor(props: ControlContainerProps) {
-    super(props);
-
-    this.buttons = props.buttons;
-    this.model = props.model;
-  }
-
-  shouldComponentUpdate(
-    _nextProps: Readonly<{}>,
-    _nextState: Readonly<{}>,
-    _nextContext: any
-  ): boolean {
-    return true;
-  }
-
   render() {
     /**
      * Helper function to turn Buttons into Elements.
@@ -56,7 +37,7 @@ export class ControlContainer extends React.Component<ControlContainerProps> {
      * @param container - The Container to render in.
      * @returns Element of the Button.
      */
-    function renderButton(button: Button, container: ControlContainer) {
+    function renderButton(button: Button, model: Model) {
       if (button.actions === undefined) {
         return <></>;
       }
@@ -67,7 +48,7 @@ export class ControlContainer extends React.Component<ControlContainerProps> {
         <button
           key={ControlContainer.bId++}
           className="btn flex-fill"
-          onClick={() => msg.act(container.model)}
+          onClick={() => msg.act(model)}
         >
           {button.toString()}
         </button>
@@ -76,9 +57,11 @@ export class ControlContainer extends React.Component<ControlContainerProps> {
 
     return (
       <div className="container row">
-        <h4>{this.title}</h4>
+        <h4>Controls</h4>
         <div className="container">
-          {this.buttons.map((button) => renderButton(button, this))}
+          {this.props.buttons.map((button) =>
+            renderButton(button, this.props.model)
+          )}
         </div>
       </div>
     );

@@ -26,6 +26,7 @@ export default class extends React.Component {
             type="text/css"
             href="halfmoon-variables.css"
           />
+          <link rel="icon" href="favicon.svg" />
           <link rel="stylesheet" type="text/css" href="impact.css" />
           <script src="https://cdn.jsdelivr.net/gh/halfmoonui/halfmoon@1.0.4/js/halfmoon.min.js" />
           <title>Impact</title>

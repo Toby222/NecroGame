@@ -13,7 +13,7 @@ import ControlContainer from "./controlContainer";
 import ResourceContainer from "./resourceContainer";
 import PlayerContainer from "./playerContainer";
 import MessagesContainer from "./messagesContainer";
-import Modal from "./modalContainer";
+import Modal from "./Modal";
 
 import React from "react";
 
@@ -46,7 +46,7 @@ export class Model extends React.Component {
               </Modal>
               <ResourceContainer resources={this.resources} />
               <div className="sidebar-divider" />
-              <PlayerContainer player={this.player} />
+              <PlayerContainer time={this.time} player={this.player} />
               <footer>
                 <a href="https://github.com/toman222/Impact">source</a>
                 <div>Version: {version}</div>

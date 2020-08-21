@@ -7,23 +7,6 @@ interface ResourceContainerProps {
 }
 
 export class ResourceContainer extends React.Component<ResourceContainerProps> {
-  title: string = "Resources";
-  resources: Resource[];
-
-  constructor(props: ResourceContainerProps) {
-    super(props);
-
-    this.resources = props.resources;
-  }
-
-  shouldComponentUpdate(
-    _nextProps: Readonly<{}>,
-    _nextState: Readonly<{}>,
-    _nextContext: any
-  ): boolean {
-    return true;
-  }
-
   render() {
     /**
      * Helper function to turn Resources into Elements.
@@ -43,9 +26,9 @@ export class ResourceContainer extends React.Component<ResourceContainerProps> {
     }
     return (
       <div className="container">
-        <h1 className="sidebar-title">{this.title}</h1>
+        <h1 className="sidebar-title">Resources</h1>
         <div className="container">
-          {this.resources.map((res, idx) => renderResource(idx, res))}
+          {this.props.resources.map((res, idx) => renderResource(idx, res))}
         </div>
       </div>
     );
