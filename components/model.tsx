@@ -7,11 +7,13 @@ import * as Actions from "../types/actions";
 import * as Buttons from "../types/buttons";
 import * as Resources from "../types/resource";
 
+import { halfmoon } from "../util/halfmoon";
+
 import ControlContainer from "./controlContainer";
 import ResourceContainer from "./resourceContainer";
 import PlayerContainer from "./playerContainer";
 import MessagesContainer from "./messagesContainer";
-import SettingsContainer from "./settingsContainer";
+import Modal from "./modalContainer";
 
 import React from "react";
 
@@ -29,10 +31,19 @@ export class Model extends React.Component {
     return (
       <>
         <main className="font-size-12">
-          <SettingsContainer display="modal" />
+          <div id="modals">
+            <Modal display="modal" modalId="settings">
+              <h5 className="modal-title">Settings</h5>
+              <button className="btn" onClick={halfmoon.toggleDarkMode}>
+                Toggle Theme
+              </button>
+            </Modal>
+          </div>
           <div className="page-wrapper with-sidebar with-transitions">
             <div className="sidebar">
-              <SettingsContainer display="button" />
+              <Modal display="button" modalId="settings">
+                Show Settings
+              </Modal>
               <ResourceContainer resources={this.resources} />
               <div className="sidebar-divider" />
               <PlayerContainer player={this.player} />
