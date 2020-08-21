@@ -72,13 +72,13 @@ export class SetResourceValue extends Action {
   }
 
   perform(model: Model) {
-    if (model.resourceValues.includes(this.resource)) {
+    if (model.resources.includes(this.resource)) {
       throw new Error("Resource may only be set once");
     }
     this.resource.amount = this.amount;
     this.resource.delta = 0;
 
-    model.resourceValues.push(this.resource);
+    model.resources.push(this.resource);
   }
 }
 

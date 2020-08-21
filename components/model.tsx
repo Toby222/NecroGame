@@ -16,41 +16,38 @@ import * as React from "react";
 
 import { version } from "../package.json";
 
-declare global {
-  interface Window {
-    strum: Function;
-  }
-}
-
 export class Model extends React.Component {
   boolFlags: Map<BoolFlag, boolean> = new Map<BoolFlag, boolean>();
   buttons: Buttons.Button[] = [Buttons.Wait];
   messages: Message[] = [];
   player: Player = new Player();
-  resourceValues: Resources.Resource[] = [];
+  resources: Resources.Resource[] = [];
   time: Time = new Time();
 
   render() {
     return (
-      <div className="impact">
-        <main>
-          <div className="header">IMPACT</div>
-          <span className="time">{`Time: ${this.time}`}</span>
-          <div className="body">
-            <ResourceContainer resources={this.resourceValues} />
-            <ControlContainer
-              buttons={this.buttons}
-              onsignal={(msg: Msg) => msg.act(this)}
-            />
-            <PlayerContainer player={this.player} />
+      <>
+        <main className="font-size-12">
+          <div className="page-wrapper with-sidebar with-transitions">
+            <div className="sidebar">
+              <ResourceContainer resources={this.resources} />
+              <div className="sidebar-divider" />
+              <PlayerContainer player={this.player} />
+              <footer>
+                <a href="https://github.com/toman222/Impact">source</a>
+                <div>Version: {version}</div>
+              </footer>
+            </div>
+            <div className="content-wrapper d-flex flex-column justify-content-between">
+              <ControlContainer
+                buttons={this.buttons}
+                onsignal={(msg: Msg) => msg.act(this)}
+              />
+              <MessagesContainer messages={this.messages} />
+            </div>
           </div>
-          <MessagesContainer messages={this.messages} />
         </main>
-        <footer>
-          <a href="https://github.com/toman222/Impact">source</a>
-          <div>Version: {version}</div>
-        </footer>
-      </div>
+      </>
     );
   }
 }

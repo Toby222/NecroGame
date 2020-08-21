@@ -25,9 +25,9 @@ export class PlayerContainer extends React.Component<PlayerContainerProps> {
 
   render() {
     return (
-      <div className="container container-player">
-        <div className="title">{this.player.name}</div>
-        <div className="scroller">Name: {this.player.name}</div>
+      <div className="container">
+        <h1 className="sidebar-title">{this.player.name}</h1>
+        <div>Magic~~</div>
       </div>
     );
   }

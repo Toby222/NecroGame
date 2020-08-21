@@ -34,20 +34,18 @@ export class ResourceContainer extends React.Component<ResourceContainerProps> {
      */
     function renderResource(resourceId: number, resource: Resource) {
       return (
-        <div key={resourceId} className="resource">
-          <span className="resource-title">{resource.name}</span>
-          <span className="resource-amt">{resource.amount}</span>
-          <span className="resource-delta">{resource.delta}/sec</span>
+        <div key={resourceId} className="row">
+          <div className="col-sm-5">{resource.name}</div>
+          <div className="col-sm-3 text-right">{resource.amount}</div>
+          <div className="col-sm-4 text-right">{resource.delta}/sec</div>
         </div>
       );
     }
     return (
-      <div className="container container-resources">
-        <div className="title">{this.title}</div>
-        <div className="scroller">
-          {Array.from(this.resources.entries(), ([idx, res]) =>
-            renderResource(idx, res)
-          )}
+      <div className="container">
+        <h1 className="sidebar-title">{this.title}</h1>
+        <div className="container">
+          {this.resources.map((res, idx) => renderResource(idx, res))}
         </div>
       </div>
     );

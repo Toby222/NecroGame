@@ -5,6 +5,7 @@ node_modules
 
 public/
 !public/*.ico
+!public/*.css
 
 # Environment Variables
 .env

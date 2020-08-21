@@ -10,6 +10,8 @@ export class MessagesContainer extends React.Component<MessagesContainerProps> {
   title: string = "Messages";
   messages: Message[];
 
+  static readonly messageCount = 15;
+
   constructor(props: MessagesContainerProps) {
     super(props);
 
@@ -19,7 +21,7 @@ export class MessagesContainer extends React.Component<MessagesContainerProps> {
   shouldComponentUpdate(
     _nextProps: Readonly<{}>,
     _nextState: Readonly<{}>,
-    _nextContext: any
+    _nextContext: any,
   ): boolean {
     return true;
   }
@@ -40,15 +42,14 @@ export class MessagesContainer extends React.Component<MessagesContainerProps> {
         </li>
       );
     }
+
     return (
-      <div className="container container-messages">
-        <div className="title">{this.title}</div>
-        <div className="scroller">
-          <ul>
-            {this.messages
-              .slice(0, 15)
-              .map((msg, idx) => renderMessage(idx, msg))}
-          </ul>
+      <div className="container row messages-container">
+        <h4>{this.title}</h4>
+        <div className="d-flex flex-column-reverse container">
+          {this.messages
+            .slice(0, MessagesContainer.messageCount)
+            .map((msg, idx) => renderMessage(idx, msg))}
         </div>
       </div>
     );

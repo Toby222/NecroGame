@@ -28,7 +28,7 @@ function msgFromActions(actions: Actions.Action[]): Msg {
 
 export class ControlContainer extends React.Component<ControlContainerProps> {
   private static bId: number = 0;
-  title = "Control";
+  title = "Controls";
   buttons: Button[];
   onsignal?: (msg: Msg) => void;
 
@@ -42,7 +42,7 @@ export class ControlContainer extends React.Component<ControlContainerProps> {
   shouldComponentUpdate(
     _nextProps: Readonly<{}>,
     _nextState: Readonly<{}>,
-    _nextContext: any
+    _nextContext: any,
   ): boolean {
     return true;
   }
@@ -57,24 +57,27 @@ export class ControlContainer extends React.Component<ControlContainerProps> {
      */
     function renderButton(button: Button, container: ControlContainer) {
       if (button?.actions === undefined) {
-        return <span key={ControlContainer.bId++} />;
+        return <></>;
       }
 
       const msg = msgFromActions(button.actions);
-      const onsignal =
-        container.onsignal !== undefined ? container.onsignal : () => {};
+      const onsignal = container.onsignal ?? (() => {});
 
       return (
-        <span key={ControlContainer.bId++} className="control-button">
-          <button onClick={() => onsignal(msg)}>{button.toString()}</button>
-        </span>
+        <button
+          key={ControlContainer.bId++}
+          className="btn flex-fill"
+          onClick={() => onsignal(msg)}
+        >
+          {button.toString()}
+        </button>
       );
     }
 
     return (
-      <div className="container container-control">
-        <div className="title">{this.title}</div>
-        <div className="scroller">
+      <div className="container row">
+        <h4>{this.title}</h4>
+        <div className="container">
           {this.buttons.map((button) => renderButton(button, this))}
         </div>
       </div>
