@@ -5,7 +5,7 @@
   },
   "scripts": {
     "dev": "next",
-    "build": "npm run build-scss && next build",
+    "build": "next build",
     "start": "next start",
     "lint": "prettier . --check",
     "format": "prettier . --write",
