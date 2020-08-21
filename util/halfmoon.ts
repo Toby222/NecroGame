@@ -1,8 +1,8 @@
 export class halfmoon {
   // Getting the required elements
   // Re-initialized once the DOM is loaded (to avoid issues with virtual DOM)
-  static pageWrapper? = document.getElementsByClassName("page-wrapper")[0];
-  static stickyAlerts? = document.getElementsByClassName("sticky-alerts")[0];
+  static pageWrapper?: Element;
+  static stickyAlerts?: Element;
 
   static darkModeOn: "yes" | "no" = "no"; // Also re-initialized once the DOM is loaded (see below)
 
@@ -31,28 +31,28 @@ export class halfmoon {
 
   // Erase cookie
   static eraseCookie(name: any) {
-    this.createCookie(name, "", -1);
+    halfmoon.createCookie(name, "", -1);
   }
 
   // Toggle light/dark mode
   static toggleDarkMode() {
     if (document.body.classList.contains("dark-mode")) {
       document.body.classList.remove("dark-mode");
-      this.darkModeOn = "no";
+      halfmoon.darkModeOn = "no";
     } else {
       document.body.classList.add("dark-mode");
-      this.darkModeOn = "yes";
+      halfmoon.darkModeOn = "yes";
     }
-    this.createCookie("darkModeOn", this.darkModeOn, 365);
+    halfmoon.createCookie("darkModeOn", halfmoon.darkModeOn, 365);
   }
 
   // Toggles sidebar
   static toggleSidebar() {
-    if (this.pageWrapper) {
-      if (this.pageWrapper.getAttribute("data-sidebar-hidden")) {
-        this.pageWrapper.removeAttribute("data-sidebar-hidden");
+    if (halfmoon.pageWrapper) {
+      if (halfmoon.pageWrapper.getAttribute("data-sidebar-hidden")) {
+        halfmoon.pageWrapper.removeAttribute("data-sidebar-hidden");
       } else {
-        this.pageWrapper.setAttribute("data-sidebar-hidden", "hidden");
+        halfmoon.pageWrapper.setAttribute("data-sidebar-hidden", "hidden");
       }
     }
   }
@@ -143,7 +143,7 @@ export class halfmoon {
     let alertElement = document.createElement("div");
 
     // Set ID to the alert element
-    alertElement.setAttribute("id", this.makeId(6));
+    alertElement.setAttribute("id", halfmoon.makeId(6));
 
     // Add the title
     if (title) {
@@ -166,13 +166,13 @@ export class halfmoon {
     alertElement.innerHTML = content;
 
     // Append the alert element to the sticky alerts
-    this.stickyAlerts?.insertBefore(
+    halfmoon.stickyAlerts?.insertBefore(
       alertElement,
-      this.stickyAlerts.childNodes[0] ?? null
+      halfmoon.stickyAlerts.childNodes[0] ?? null
     );
 
     // Toast the alert
-    this.toastAlert(alertElement.getAttribute("id")!, timeShown);
+    halfmoon.toastAlert(alertElement.getAttribute("id")!, timeShown);
   }
 
   /* End code block for handling sticky alerts */
@@ -182,6 +182,8 @@ export class halfmoon {
 
   // Keydown handler that can be overridden by users if needed
   static keydownHandler: (event: any) => void;
+
+  static onDomContentLoaded: () => void;
 }
 
 /* Things done once the DOM is loaded */
@@ -492,4 +494,4 @@ function HalfMoonOnDOMContentLoaded() {
   }
 }
 // Call the function when the DOM is loaded
-document.addEventListener("DOMContentLoaded", HalfMoonOnDOMContentLoaded);
+halfmoon.onDomContentLoaded = HalfMoonOnDOMContentLoaded;
