@@ -17,15 +17,16 @@ Developed with the help of vercel, and its command line tool.
 
 ## Usage
 
-- `npm run lint` - Auto-format the codebase.
-- `npm run dev` - Start a development server on `localhost:3000` and watch for code.
-- `npm run build` - Create a production build.
-- `npm run start` - Host the latest production build at `localhost:3000`
+- `npm run format` - Auto-format the codebase.
+  - `npm run lint` - Check if codebase conforms to prettier standard.
+  - `npm run test` - Check if codebase is ready for commit.
+- `npm run dev` - Start a development server at `localhost:3000` and watch for code changes.
+  - `npm run build` - Create a production build.
+  - `npm run start` - Host the latest production build at `localhost:3000`
 
 ## Dependencies
 
 - [Next.js](https://nextjs.org/) - React framework
-- [Sass](https://sass-lang.com/) - CSS, but better
 - [typescript](https://www.typescriptlang.org/) - JS, but typesafe
 - ["Fira Code" font family](https://fonts.google.com/specimen/Fira+Code) - Console font
 
