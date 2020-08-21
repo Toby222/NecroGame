@@ -11,8 +11,9 @@ import ControlContainer from "./controlContainer";
 import ResourceContainer from "./resourceContainer";
 import PlayerContainer from "./playerContainer";
 import MessagesContainer from "./messagesContainer";
+import SettingsContainer from "./settingsContainer";
 
-import * as React from "react";
+import React from "react";
 
 import { version } from "../package.json";
 
@@ -28,8 +29,10 @@ export class Model extends React.Component {
     return (
       <>
         <main className="font-size-12">
+          <SettingsContainer display="modal" />
           <div className="page-wrapper with-sidebar with-transitions">
             <div className="sidebar">
+              <SettingsContainer display="button" />
               <ResourceContainer resources={this.resources} />
               <div className="sidebar-divider" />
               <PlayerContainer player={this.player} />
