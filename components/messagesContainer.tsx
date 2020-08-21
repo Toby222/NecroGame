@@ -10,7 +10,7 @@ export class MessagesContainer extends React.Component<MessagesContainerProps> {
   title: string = "Messages";
   messages: Message[];
 
-  static readonly messageCount = 15;
+  private static readonly messageCount = 15;
 
   constructor(props: MessagesContainerProps) {
     super(props);
@@ -32,19 +32,21 @@ export class MessagesContainer extends React.Component<MessagesContainerProps> {
      *
      * @param messageId - ID of the Message inside the MessagesContainer.
      * @param message - The Message to render.
-     * @returns Element of the Message.
+     * @returns Element representing the Message.
      */
     function renderMessage(messageId: number, message: Message) {
       return (
-        <li key={messageId} className="message">
-          <span className="message-time">{message.time.toString()}</span>
-          {message.content}
+        <li key={messageId} className="row">
+          <span className="w-150 pr-15 text-right">
+            {message.time.toString()}
+          </span>
+          <span>{message.content}</span>
         </li>
       );
     }
 
     return (
-      <div className="container row messages-container">
+      <div className="container row messages-container overflow-hidden">
         <h4>{this.title}</h4>
         <div className="d-flex flex-column-reverse container">
           {this.messages
