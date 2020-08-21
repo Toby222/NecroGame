@@ -7,7 +7,7 @@ import * as React from "react";
 
 interface ControlContainerProps {
   buttons: Button[];
-  onsignal?: (msg: Msg) => void;
+  callback?: (msg: Msg) => void;
 }
 
 /**
@@ -36,7 +36,7 @@ export class ControlContainer extends React.Component<ControlContainerProps> {
     super(props);
 
     this.buttons = props.buttons;
-    this.onsignal = props.onsignal;
+    this.onsignal = props.callback;
   }
 
   shouldComponentUpdate(

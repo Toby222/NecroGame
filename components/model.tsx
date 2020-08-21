@@ -41,7 +41,7 @@ export class Model extends React.Component {
             <div className="content-wrapper d-flex flex-column justify-content-between">
               <ControlContainer
                 buttons={this.buttons}
-                onsignal={(msg: Msg) => msg.act(this)}
+                callback={(msg: Msg) => msg.act(this)}
               />
               <MessagesContainer messages={this.messages} />
             </div>
