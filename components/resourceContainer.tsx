@@ -2,7 +2,7 @@ import { Resource } from "../types/resource";
 
 import * as React from "react";
 
-interface ResourceContainerProps extends React.Props<ResourceContainer> {
+interface ResourceContainerProps {
   resources: Resource[];
 }
 

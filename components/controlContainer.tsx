@@ -5,7 +5,7 @@ import * as Actions from "../types/actions";
 
 import * as React from "react";
 
-interface ControlContainerProps extends React.Props<ControlContainer> {
+interface ControlContainerProps {
   buttons: Button[];
   onsignal?: (msg: Msg) => void;
 }
@@ -42,7 +42,7 @@ export class ControlContainer extends React.Component<ControlContainerProps> {
   shouldComponentUpdate(
     _nextProps: Readonly<{}>,
     _nextState: Readonly<{}>,
-    _nextContext: any,
+    _nextContext: any
   ): boolean {
     return true;
   }

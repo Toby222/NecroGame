@@ -2,7 +2,7 @@ import { Message } from "../types/messages";
 
 import * as React from "react";
 
-interface MessagesContainerProps extends React.Props<MessagesContainer> {
+interface MessagesContainerProps {
   messages: Message[];
 }
 
@@ -21,7 +21,7 @@ export class MessagesContainer extends React.Component<MessagesContainerProps> {
   shouldComponentUpdate(
     _nextProps: Readonly<{}>,
     _nextState: Readonly<{}>,
-    _nextContext: any,
+    _nextContext: any
   ): boolean {
     return true;
   }

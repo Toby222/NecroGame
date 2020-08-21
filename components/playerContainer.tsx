@@ -2,7 +2,7 @@ import { Player } from "../types/player";
 
 import * as React from "react";
 
-interface PlayerContainerProps extends React.Props<PlayerContainer> {
+interface PlayerContainerProps {
   player: Player;
 }
 
