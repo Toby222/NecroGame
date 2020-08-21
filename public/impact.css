@@ -1,0 +1,14 @@
+body {
+  font-family: "Fira Code" !important;
+}
+
+.messages-container {
+  height: 33%;
+  overflow: hidden;
+}
+
+footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+}
