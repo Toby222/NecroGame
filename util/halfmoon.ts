@@ -8,12 +8,11 @@ export class halfmoon {
 
   // Create cookie
   static createCookie(name: string, value: string, days?: number) {
-    let expires;
+    let expires = "";
     if (days !== undefined) {
-      let date = new Date(Date.now() + days * 24 * 60 * 60 * 1000);
-      expires = "; expires=" + date.toUTCString();
-    } else {
-      expires = "";
+      expires =
+        "; expires=" +
+        new Date(Date.now() + days * 24 * 60 * 60 * 1000).toUTCString();
     }
     document.cookie = name + "=" + value + expires + "; path=/";
   }
@@ -372,7 +371,7 @@ function HalfMoonOnDOMContentLoaded() {
       if (!(event.ctrlKey || event.metaKey)) {
         // Toggle sidebar when [shift] + [S] keys are pressed
         if (document.body.getAttribute("data-sidebar-shortcut-enabled")) {
-          if (event.shiftKey && event.which == 83) {
+          if (event.shiftKey && event.key === "s") {
             // letiable to store whether a modal is open or not
             let modalOpen = false;
 
@@ -401,7 +400,7 @@ function HalfMoonOnDOMContentLoaded() {
 
         // Toggle dark mode when [shift] + [D] keys are pressed
         if (document.body.getAttribute("data-dm-shortcut-enabled")) {
-          if (event.shiftKey && event.which == 68) {
+          if (event.shiftKey && event.key === "d") {
             halfmoon.toggleDarkMode();
             event.preventDefault();
           }
@@ -410,7 +409,7 @@ function HalfMoonOnDOMContentLoaded() {
     }
 
     // Handling other keydown events
-    if (event.which === 27) {
+    if (event.key === "Escape") {
       // Close dropdown menu (if one is open) when [esc] key is pressed
       if (document.querySelector("[data-toggle='dropdown'].active")) {
         let elem = document.querySelector("[data-toggle='dropdown'].active");
