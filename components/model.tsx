@@ -1,5 +1,5 @@
 import { Player } from "../types/player";
-import { BoolFlag } from "../types/flags";
+import { BoolFlag, Flag, Flags } from "../types/flags";
 import { Time } from "../types/time";
 import { Message } from "../types/messages";
 
@@ -20,7 +20,7 @@ import React from "react";
 import { version } from "../package.json";
 
 export class Model extends React.Component {
-  boolFlags: Map<BoolFlag, boolean> = new Map<BoolFlag, boolean>();
+  flags = new Flags();
   buttons: Buttons.Button[] = [Buttons.Wait];
   messages: Message[] = [];
   player: Player = new Player();
@@ -57,7 +57,7 @@ export class Model extends React.Component {
               <div className="sidebar-divider" />
               <PlayerContainer time={this.time} player={this.player} />
               <footer>
-                <a href="https://github.com/toman222/Impact">source</a>
+                <a href="https://github.com/toman222/NecroGame">source</a>
                 <div>Version: {version}</div>
               </footer>
             </div>
@@ -86,8 +86,8 @@ export class Msg {
     act(model: Model) {
       console.log("[DEBUG] Ticked. Model:", model);
       model.time.seconds += this.ticks;
-      for (const [flag, enabled] of model.boolFlags) {
-        if (enabled) {
+      for (const [flag, value] of model.flags) {
+        if (flag instanceof BoolFlag && value) {
           flag.performEffects(model);
         }
       }
@@ -142,10 +142,7 @@ class TimeAction {
   }
 }
 
-const timeactions = [
-  new TimeAction(1, new Actions.EnableButton(Buttons.ActivateOxygen)),
-  new TimeAction(15, new Actions.AddMessage("It's been 15 SECONDS")),
-];
+const timeactions = [];
 
 /**
  * Apply Actions that are based on pre-defined timepoints

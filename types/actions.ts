@@ -32,10 +32,10 @@ export class SetBoolFlag extends Action {
   }
 
   perform(model: Model) {
-    if (model.boolFlags.get(this.flag) === true) {
+    if (model.flags.get(this.flag) === true) {
       throw new Error("Enabled flags cannot be enabled again.");
     }
-    model.boolFlags.set(this.flag, true);
+    model.flags.set(this.flag, true);
     this.flag.set(model);
   }
 }
@@ -51,7 +51,7 @@ export class ClearBoolFlag extends Action {
   }
 
   perform(model: Model) {
-    if (model.boolFlags.get(this.flag) === false) {
+    if (model.flags.get(this.flag) === false) {
       throw new Error("Disabled flags cannot be disabled again.");
     }
     this.flag.clear(model);

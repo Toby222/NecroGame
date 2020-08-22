@@ -27,9 +27,9 @@ export default class extends React.Component {
             href="halfmoon-variables.css"
           />
           <link rel="icon" href="favicon.svg" />
-          <link rel="stylesheet" type="text/css" href="impact.css" />
+          <link rel="stylesheet" type="text/css" href="necro.css" />
           <script src="https://cdn.jsdelivr.net/gh/halfmoonui/halfmoon@1.0.4/js/halfmoon.min.js" />
-          <title>Impact</title>
+          <title>NecroGame</title>
         </Head>
         <Model />
       </>

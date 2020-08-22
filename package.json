@@ -1,7 +1,7 @@
 {
   "repository": {
     "type": "git",
-    "url": "git://github.com/toman222/Impact.git"
+    "url": "git://github.com/toman222/NecroGame.git"
   },
   "scripts": {
     "dev": "next",

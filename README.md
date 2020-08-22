@@ -1,19 +1,19 @@
-# Impact
+# Necromancy Game (Working Title)
 
-![Code quality check](https://github.com/toman222/Impact/workflows/Code%20quality%20check/badge.svg)
+![Code quality check](https://github.com/toman222/Necromancy/workflows/Code%20quality%20check/badge.svg)
 
 An incremental game skeleton. Very much WIP.
 
 ![screenshot](/.github/images/screenshot_1.png?raw=true)
 
-Play the current version [here](https://impact.tobot.tech/).
-Play around with the development version [here](https://dev.impact.tobot.tech/).
+Play the current version [here](https://necro.tobot.tech/).
+Play around with the development version [here](https://dev.necro.tobot.tech/).
 
 ## Requirements
 
 Built with Node.js.
 
-Developed with the help of vercel, and its command line tool.
+Developed with the help of [vercel](https://vercel.com/), and its command line tool.
 
 ## Usage
 
@@ -32,4 +32,4 @@ Developed with the help of vercel, and its command line tool.
 
 ## Acknowledgements
 
-This entire thing is adapted from [deciduously's](https://github.com/deciduously/impact) prototype, translated to TypeScript as best as I could and built upon after that.
+Originally adapted from [deciduously's](https://github.com/deciduously/impact) prototype, translated to TypeScript as best as I could and then built upon after that.

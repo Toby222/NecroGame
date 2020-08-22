@@ -3,7 +3,42 @@ import * as Transformations from "./transformations";
 
 import { Model } from "../components/model";
 
-export abstract class BoolFlag {
+export class Flags extends Map<Flag<any>, any> {
+  get<T>(flag: Flag<T>) {
+    return super.get(flag) as T;
+  }
+
+  set<T>(flag: Flag<T>, value: T) {
+    return super.set(flag, value);
+  }
+}
+
+export interface Flag<T> {
+  set(model: Model, value: T): void;
+  clear(model: Model): void;
+}
+
+export abstract class StringFlag implements Flag<string> {
+  set(model: Model, value: string): void {
+    model.flags.set(this, value);
+  }
+
+  clear(model: Model): void {
+    model.flags.delete(this);
+  }
+}
+
+export abstract class NumberFlag implements Flag<number> {
+  set(model: Model, value: number): void {
+    model.flags.set(this, value);
+  }
+
+  clear(model: Model): void {
+    model.flags.delete(this);
+  }
+}
+
+export abstract class BoolFlag implements Flag<boolean> {
   protected abstract transformations: Transformations.Transformation[];
   set(model: Model) {
     for (const transformation of this.transformations) {
@@ -15,7 +50,7 @@ export abstract class BoolFlag {
     for (const transformation of this.transformations) {
       transformation.clear(model);
     }
-    model.boolFlags.set(this, false);
+    model.flags.set(this, false);
   }
 
   performEffects(model: Model) {
@@ -24,16 +59,3 @@ export abstract class BoolFlag {
     }
   }
 }
-
-export const LeakyTank = new (class LeakyTank extends BoolFlag {
-  protected transformations = [
-    new Transformations.Consume(Resources.Oxygen, 10),
-  ];
-})();
-
-export const PowerRegen = new (class PowerRegen extends BoolFlag {
-  protected transformations = [
-    new Transformations.Generate(Resources.Power, 2),
-    new Transformations.Consume(Resources.Oxygen, 1),
-  ];
-})();
