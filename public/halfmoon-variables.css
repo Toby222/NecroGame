@@ -397,6 +397,7 @@ html {
 html {
   font-size: 62.5%;
 }
+
 @media (min-width: 1600px) {
   html {
     font-size: 75%;
@@ -407,6 +408,7 @@ html {
     font-size: 87.5%;
   }
 }
+
 body {
   background-color: #ffffff;
   color: rgba(0, 0, 0, 0.85);

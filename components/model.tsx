@@ -30,7 +30,7 @@ export class Model extends React.Component {
   render() {
     return (
       <>
-        <main className="font-size-12">
+        <main>
           <div id="modals">
             <Modal display="modal" modalId="settings">
               <h5 className="modal-title">Settings</h5>
@@ -39,11 +39,20 @@ export class Model extends React.Component {
               </button>
             </Modal>
           </div>
-          <div className="page-wrapper with-sidebar with-transitions">
+          <div className="page-wrapper with-sidebar">
             <div className="sidebar">
-              <Modal display="button" modalId="settings">
-                Show Settings
+              <Modal
+                display="button"
+                className="row p-0 w-20 h-20"
+                modalId="settings"
+              >
+                <img
+                  src="gear.svg"
+                  className="p-0 m-0 w-20 h-20"
+                  alt="Settings"
+                />
               </Modal>
+              <div className="sidebar-divider" />
               <ResourceContainer resources={this.resources} />
               <div className="sidebar-divider" />
               <PlayerContainer time={this.time} player={this.player} />

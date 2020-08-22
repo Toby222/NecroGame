@@ -3,6 +3,7 @@ import React from "react";
 interface Props {
   modalId: string;
   display: "modal" | "button";
+  className?: string;
 }
 
 export default class Modal extends React.Component<Props> {
@@ -10,14 +11,14 @@ export default class Modal extends React.Component<Props> {
     switch (this.props.display) {
       case "modal":
         return (
-          <div className="modal" id="settings" tabIndex={-1} role="dialog">
+          <div
+            className={"modal " + this.props.className ?? ""}
+            id="settings"
+            tabIndex={-1}
+            role="dialog"
+          >
             <div className="modal-dialog" role="document">
-              <div className="modal-content">
-                <a href="#" className="close" role="button" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </a>
-                {this.props.children}
-              </div>
+              <div className="modal-content">{this.props.children}</div>
             </div>
           </div>
         );
@@ -25,7 +26,7 @@ export default class Modal extends React.Component<Props> {
         return (
           <a
             href={`#${this.props.modalId}`}
-            className="btn btn-primary"
+            className={"btn btn-primary p-0" + this.props.className ?? ""}
             role="button"
           >
             {this.props.children}

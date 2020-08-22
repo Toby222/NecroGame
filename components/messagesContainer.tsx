@@ -22,7 +22,7 @@ export class MessagesContainer extends React.Component<MessagesContainerProps> {
           <span className="col-auto pr-15 text-right">
             {message.time.toString()}
           </span>
-          <span className="col">{message.content}</span>
+          <span className="col w-full">{message.content}</span>
         </div>
       );
     }
