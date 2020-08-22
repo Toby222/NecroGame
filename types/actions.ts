@@ -1,32 +1,38 @@
 import { Button } from "./Buttons";
-import { Flag } from "./Flags";
+import * as Flags from "./Flags";
 import { Resource } from "./Resource";
 import { Message } from "./Messages";
 
 import { Model } from "../components/Model";
 
 export abstract class Action {
-  abstract timeCost: number;
   abstract perform(model: Model): void;
 }
 
-export class Wait extends Action {
-  timeCost: number;
-  constructor(time: number) {
+export class PassTime extends Action {
+  delay: number;
+  constructor(delay: number) {
     super();
-
-    this.timeCost = time;
+    this.delay = delay;
   }
 
-  perform(_model: Model) {}
+  perform(model: Model) {
+    for (let i = 0; i < this.delay; i++) {
+      model.time.seconds++;
+      for (const [flag, value] of model.flags) {
+        if (flag instanceof Flags.BoolFlag && value === true) {
+          flag.performEffects(model);
+        }
+      }
+    }
+  }
 }
 
 export class SetFlag<T> extends Action {
-  private flag: Flag<T>;
+  private flag: Flags.Flag<T>;
   private value: T;
 
-  timeCost = 0;
-  constructor(flag: Flag<T>, value: T) {
+  constructor(flag: Flags.Flag<T>, value: T) {
     super();
 
     this.value = value;
@@ -39,11 +45,10 @@ export class SetFlag<T> extends Action {
   }
 }
 
-export class ClearFlag<T> extends Action {
-  private flag: Flag<T>;
+export class ClearFlag extends Action {
+  private flag: Flags.Flag;
 
-  timeCost = 0;
-  constructor(flag: Flag<T>) {
+  constructor(flag: Flags.Flag) {
     super();
 
     this.flag = flag;
@@ -58,8 +63,6 @@ export class ClearFlag<T> extends Action {
 export class SetResourceValue extends Action {
   private resource: Resource;
   private amount: number;
-
-  timeCost = 0;
 
   constructor(resource: Resource, amount: number) {
     super();
@@ -84,8 +87,6 @@ export class AddResourceValue extends Action {
   private resource: Resource;
   private delta: number;
 
-  timeCost = 0;
-
   constructor(resource: Resource, delta: number) {
     super();
 
@@ -102,8 +103,6 @@ export class AddResourceDelta extends Action {
   private resource: Resource;
   private delta: number;
 
-  timeCost = 0;
-
   constructor(resource: Resource, delta: number) {
     super();
 
@@ -119,8 +118,6 @@ export class AddResourceDelta extends Action {
 export class AddMessage extends Action {
   private message: string;
 
-  timeCost = 0;
-
   constructor(message: string) {
     super();
 
@@ -134,8 +131,6 @@ export class AddMessage extends Action {
 
 export class EnableButton extends Action {
   private button: Button;
-
-  timeCost = 0;
 
   constructor(button: Button) {
     super();
@@ -153,8 +148,6 @@ export class EnableButton extends Action {
 
 export class DisableButton extends Action {
   private button: Button;
-
-  timeCost = 0;
 
   constructor(button: Button) {
     super();

@@ -58,7 +58,7 @@ export const Consume = class Consume extends Transformation {
   }
 };
 
-export const RevertTime = class ExampleTransformation extends Transformation {
+export const AlterTime = class ExampleTransformation extends Transformation {
   constructor() {
     super();
   }
@@ -66,9 +66,9 @@ export const RevertTime = class ExampleTransformation extends Transformation {
   perform(model: Model): void {
     console.log(
       "Performing RevertTime Transformation. Factor:",
-      model.flags.get(Flags.RevertTimeFactor)
+      model.flags.get(Flags.AlterTimeFactor)
     );
-    model.time.seconds -= (model.flags.get(Flags.RevertTimeFactor) ?? 1) + 1;
+    model.time.seconds += (model.flags.get(Flags.AlterTimeFactor) ?? 0) - 1;
   }
 
   apply(_model: Model): void {

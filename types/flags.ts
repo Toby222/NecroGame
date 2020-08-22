@@ -49,17 +49,17 @@ export abstract class BoolFlag implements Flag<boolean> {
   }
 }
 
-export const RevertTimeFactor = new (class ExampleNumberFlag extends NumberFlag {
+export const AlterTimeFactor = new (class ExampleNumberFlag extends NumberFlag {
   onSet(model: Model, value: number) {
     super.onSet(model, value);
-    console.log("Setting RevertTimeFactor flag. Value:", value);
+    console.log("Setting AlterTimeFactor flag. Value:", value);
   }
 })();
 
-export const RevertTime = new (class ExampleBoolFlag extends BoolFlag {
-  protected transformations = [new Transformations.RevertTime()];
+export const AlterTime = new (class ExampleBoolFlag extends BoolFlag {
+  protected transformations = [new Transformations.AlterTime()];
   onSet(model: Model, value: boolean) {
     super.onSet(model, value);
-    console.log("Setting RevertTime flag. Value:", value);
+    console.log("Setting AlterTime flag. Value:", value);
   }
 })();

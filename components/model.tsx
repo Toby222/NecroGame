@@ -30,9 +30,15 @@ export class Model extends React.Component {
   trySetTimeFactor(event: React.KeyboardEvent<HTMLInputElement>) {
     const val = Math.trunc(parseInt(event.currentTarget.value));
     if (!isNaN(val)) {
-      this.flags.set(Flags.RevertTimeFactor, val);
+      this.flags.set(Flags.AlterTimeFactor, val);
     } else {
-      this.flags.delete(Flags.RevertTimeFactor);
+      this.flags.delete(Flags.AlterTimeFactor);
+    }
+  }
+
+  performActions(...actions: Actions.Action[]) {
+    for (const action of actions) {
+      action.perform(this);
     }
   }
 
@@ -79,58 +85,6 @@ export class Model extends React.Component {
   }
 }
 
-export interface Msg {
-  act(model: Model): void;
-}
-
-export class Msg {
-  static Tick = class Tick implements Msg {
-    private ticks: number;
-    constructor(ticks: number) {
-      this.ticks = ticks;
-    }
-
-    act(model: Model) {
-      console.log("[DEBUG] Ticked. Model:", model);
-      model.time.seconds += this.ticks;
-      for (const [flag, value] of model.flags) {
-        if (flag instanceof Flags.BoolFlag && value) {
-          flag.performEffects(model);
-        }
-      }
-      applyTimeactions(model);
-      model.forceUpdate();
-    }
-  };
-
-  static PerformAction = class PerformAction {
-    action: Actions.Action;
-
-    constructor(action: Actions.Action) {
-      this.action = action;
-    }
-
-    act(model: Model) {
-      this.action.perform(model);
-      new Msg.Tick(this.action.timeCost).act(model);
-    }
-  };
-
-  static Bulk = class Bulk {
-    messages: Msg[];
-
-    constructor(messages: Msg[]) {
-      this.messages = messages;
-    }
-
-    act(model: Model) {
-      for (const msg of this.messages) {
-        msg.act(model);
-      }
-    }
-  };
-}
-
 class TimeAction {
   time: number;
   action: Actions.Action;
@@ -146,21 +100,5 @@ class TimeAction {
       return true;
     }
     return false;
-  }
-}
-
-const timeactions: TimeAction[] = [];
-
-/**
- * Apply Actions that are based on pre-defined timepoints
- * Might be replaced with intro sequence later, where Actions trigger each other with delays somehow, as I don't see any reason to have any other defined Action than that.
- *
- * @param model - The Model to apply the Actions to.
- */
-function applyTimeactions(model: Model) {
-  for (const timeaction of timeactions) {
-    if (timeaction.trigger(model)) {
-      timeactions.splice(timeactions.indexOf(timeaction), 1);
-    }
   }
 }
