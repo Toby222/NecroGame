@@ -1,7 +1,7 @@
 import * as Resources from "./resource";
 import * as Actions from "./actions";
 
-import { Model } from "../components/model";
+import { Model } from "../components/Model";
 
 export abstract class Transformation {
   abstract perform(model: Model): void;

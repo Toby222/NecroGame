@@ -1,5 +1,5 @@
 import { Button } from "../types/buttons";
-import { Model, Msg } from "./model";
+import { Model, Msg } from "./Model";
 
 import * as Actions from "../types/actions";
 

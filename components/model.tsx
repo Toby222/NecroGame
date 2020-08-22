@@ -9,10 +9,10 @@ import * as Resources from "../types/resource";
 
 import { halfmoon } from "../util/halfmoon";
 
-import ControlContainer from "./controlContainer";
-import ResourceContainer from "./resourceContainer";
-import PlayerContainer from "./playerContainer";
-import MessagesContainer from "./messagesContainer";
+import ControlContainer from "./ControlContainer";
+import ResourceContainer from "./ResourceContainer";
+import PlayerContainer from "./PlayerContainer";
+import MessagesContainer from "./MessagesContainer";
 import Modal from "./Modal";
 
 import React from "react";

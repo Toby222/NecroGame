@@ -3,7 +3,7 @@ import { BoolFlag } from "./flags";
 import { Resource } from "./resource";
 import { Message } from "./messages";
 
-import { Model } from "../components/model";
+import { Model } from "../components/Model";
 
 export abstract class Action {
   abstract timeCost: number;

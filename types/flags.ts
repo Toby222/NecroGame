@@ -1,7 +1,7 @@
 import * as Resources from "./resource";
 import * as Transformations from "./transformations";
 
-import { Model } from "../components/model";
+import { Model } from "../components/Model";
 
 export class Flags extends Map<Flag<any>, any> {
   get<T>(flag: Flag<T>) {
