@@ -1,4 +1,4 @@
-import { Time } from "./time";
+import { Time } from "./Time";
 
 export class Message {
   time: Time;

@@ -1,7 +1,7 @@
-import { Player } from "../types/player";
+import { Player } from "../types/Player";
 
 import * as React from "react";
-import { Time } from "../types/time";
+import { Time } from "../types/Time";
 
 interface PlayerContainerProps {
   player: Player;

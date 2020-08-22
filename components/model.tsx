@@ -1,13 +1,13 @@
-import { Player } from "../types/player";
-import { BoolFlag, Flag, Flags } from "../types/flags";
-import { Time } from "../types/time";
-import { Message } from "../types/messages";
+import { Player } from "../types/Player";
+import * as Flags from "../types/Flags";
+import { Time } from "../types/Time";
+import { Message } from "../types/Messages";
 
-import * as Actions from "../types/actions";
-import * as Buttons from "../types/buttons";
-import * as Resources from "../types/resource";
+import * as Actions from "../types/Actions";
+import * as Buttons from "../types/Buttons";
+import * as Resources from "../types/Resource";
 
-import { halfmoon } from "../util/halfmoon";
+import { halfmoon } from "../util/HalfMoon";
 
 import ControlContainer from "./ControlContainer";
 import ResourceContainer from "./ResourceContainer";
@@ -20,12 +20,21 @@ import React from "react";
 import { version } from "../package.json";
 
 export class Model extends React.Component {
-  flags = new Flags();
-  buttons: Buttons.Button[] = [Buttons.Wait];
+  flags = new Flags.Flags();
+  buttons: Buttons.Button[] = [Buttons.Wait, Buttons.RevertTime];
   messages: Message[] = [];
   player: Player = new Player();
   resources: Resources.Resource[] = [];
   time: Time = new Time();
+
+  trySetTimeFactor(event: React.KeyboardEvent<HTMLInputElement>) {
+    const val = Math.trunc(parseInt(event.currentTarget.value));
+    if (!isNaN(val)) {
+      this.flags.set(Flags.RevertTimeFactor, val);
+    } else {
+      this.flags.delete(Flags.RevertTimeFactor);
+    }
+  }
 
   render() {
     return (
@@ -52,6 +61,12 @@ export class Model extends React.Component {
                   alt="Settings"
                 />
               </Modal>
+              <div className="sidebar-divider" />
+              <input
+                className="form-control"
+                placeholder="Time factor"
+                onKeyUp={this.trySetTimeFactor.bind(this)}
+              />
               <div className="sidebar-divider" />
               <ResourceContainer resources={this.resources} />
               <div className="sidebar-divider" />
@@ -87,7 +102,7 @@ export class Msg {
       console.log("[DEBUG] Ticked. Model:", model);
       model.time.seconds += this.ticks;
       for (const [flag, value] of model.flags) {
-        if (flag instanceof BoolFlag && value) {
+        if (flag instanceof Flags.BoolFlag && value) {
           flag.performEffects(model);
         }
       }
@@ -142,7 +157,7 @@ class TimeAction {
   }
 }
 
-const timeactions = [];
+const timeactions: any[] = [];
 
 /**
  * Apply Actions that are based on pre-defined timepoints

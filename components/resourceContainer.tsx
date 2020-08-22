@@ -1,4 +1,4 @@
-import { Resource } from "../types/resource";
+import { Resource } from "../types/Resource";
 
 import * as React from "react";
 

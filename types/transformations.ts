@@ -1,5 +1,6 @@
-import * as Resources from "./resource";
-import * as Actions from "./actions";
+import * as Resources from "./Resource";
+import * as Actions from "./Actions";
+import * as Flags from "./Flags";
 
 import { Model } from "../components/Model";
 
@@ -54,5 +55,27 @@ export const Consume = class Consume extends Transformation {
 
   clear(model: Model) {
     new Actions.AddResourceDelta(this.resource, -this.delta).perform(model);
+  }
+};
+
+export const RevertTime = class ExampleTransformation extends Transformation {
+  constructor() {
+    super();
+  }
+
+  perform(model: Model): void {
+    console.log(
+      "Performing RevertTime Transformation. Factor:",
+      model.flags.get(Flags.RevertTimeFactor)
+    );
+    model.time.seconds -= (model.flags.get(Flags.RevertTimeFactor) ?? 1) + 1;
+  }
+
+  apply(_model: Model): void {
+    console.log("Applying RevertTime Transformation");
+  }
+
+  clear(_model: Model): void {
+    console.log("Clearing RevertTime Transformation");
   }
 };

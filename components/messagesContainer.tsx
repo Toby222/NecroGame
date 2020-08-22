@@ -1,4 +1,4 @@
-import { Message } from "../types/messages";
+import { Message } from "../types/Messages";
 
 import * as React from "react";
 

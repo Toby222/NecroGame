@@ -1,7 +1,7 @@
-import { Button } from "../types/buttons";
+import { Button } from "../types/Buttons";
 import { Model, Msg } from "./Model";
 
-import * as Actions from "../types/actions";
+import * as Actions from "../types/Actions";
 
 import * as React from "react";
 

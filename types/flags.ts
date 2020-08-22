@@ -1,11 +1,11 @@
-import * as Resources from "./resource";
-import * as Transformations from "./transformations";
+import * as Resources from "./Resource";
+import * as Transformations from "./Transformations";
 
 import { Model } from "../components/Model";
 
-export class Flags extends Map<Flag<any>, any> {
+export class Flags extends Map<Flag, any> {
   get<T>(flag: Flag<T>) {
-    return super.get(flag) as T;
+    return super.get(flag) as T | undefined;
   }
 
   set<T>(flag: Flag<T>, value: T) {
@@ -13,44 +13,33 @@ export class Flags extends Map<Flag<any>, any> {
   }
 }
 
-export interface Flag<T> {
-  set(model: Model, value: T): void;
-  clear(model: Model): void;
+export interface Flag<T = any> {
+  onSet(model: Model, value: T): void;
+  onClear(model: Model): void;
 }
 
 export abstract class StringFlag implements Flag<string> {
-  set(model: Model, value: string): void {
-    model.flags.set(this, value);
-  }
-
-  clear(model: Model): void {
-    model.flags.delete(this);
-  }
+  onSet(model: Model, value: string): void {}
+  onClear(model: Model): void {}
 }
 
 export abstract class NumberFlag implements Flag<number> {
-  set(model: Model, value: number): void {
-    model.flags.set(this, value);
-  }
-
-  clear(model: Model): void {
-    model.flags.delete(this);
-  }
+  onSet(model: Model, value: number): void {}
+  onClear(model: Model): void {}
 }
 
 export abstract class BoolFlag implements Flag<boolean> {
   protected abstract transformations: Transformations.Transformation[];
-  set(model: Model) {
+  onSet(model: Model, value: boolean) {
     for (const transformation of this.transformations) {
       transformation.apply(model);
     }
   }
 
-  clear(model: Model) {
+  onClear(model: Model) {
     for (const transformation of this.transformations) {
       transformation.clear(model);
     }
-    model.flags.set(this, false);
   }
 
   performEffects(model: Model) {
@@ -59,3 +48,18 @@ export abstract class BoolFlag implements Flag<boolean> {
     }
   }
 }
+
+export const RevertTimeFactor = new (class ExampleNumberFlag extends NumberFlag {
+  onSet(model: Model, value: number) {
+    super.onSet(model, value);
+    console.log("Setting RevertTimeFactor flag. Value:", value);
+  }
+})();
+
+export const RevertTime = new (class ExampleBoolFlag extends BoolFlag {
+  protected transformations = [new Transformations.RevertTime()];
+  onSet(model: Model, value: boolean) {
+    super.onSet(model, value);
+    console.log("Setting RevertTime flag. Value:", value);
+  }
+})();

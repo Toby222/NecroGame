@@ -1,7 +1,7 @@
-import { Button } from "./buttons";
-import { BoolFlag } from "./flags";
-import { Resource } from "./resource";
-import { Message } from "./messages";
+import { Button } from "./Buttons";
+import { Flag } from "./Flags";
+import { Resource } from "./Resource";
+import { Message } from "./Messages";
 
 import { Model } from "../components/Model";
 
@@ -21,40 +21,37 @@ export class Wait extends Action {
   perform(_model: Model) {}
 }
 
-export class SetBoolFlag extends Action {
-  private flag: BoolFlag;
+export class SetFlag<T> extends Action {
+  private flag: Flag<T>;
+  private value: T;
 
   timeCost = 0;
-  constructor(flag: BoolFlag) {
+  constructor(flag: Flag<T>, value: T) {
     super();
 
+    this.value = value;
     this.flag = flag;
   }
 
   perform(model: Model) {
-    if (model.flags.get(this.flag) === true) {
-      throw new Error("Enabled flags cannot be enabled again.");
-    }
-    model.flags.set(this.flag, true);
-    this.flag.set(model);
+    model.flags.set(this.flag, this.value);
+    this.flag.onSet(model, this.value);
   }
 }
 
-export class ClearBoolFlag extends Action {
-  private flag: BoolFlag;
+export class ClearFlag<T> extends Action {
+  private flag: Flag<T>;
 
   timeCost = 0;
-  constructor(flag: BoolFlag) {
+  constructor(flag: Flag<T>) {
     super();
 
     this.flag = flag;
   }
 
   perform(model: Model) {
-    if (model.flags.get(this.flag) === false) {
-      throw new Error("Disabled flags cannot be disabled again.");
-    }
-    this.flag.clear(model);
+    model.flags.delete(this.flag);
+    this.flag.onClear(model);
   }
 }
 

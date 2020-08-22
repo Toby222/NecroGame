@@ -14,9 +14,9 @@ export class Time {
   }
 
   toString() {
-    const days = Math.floor(this.seconds / (60 * 60 * 24));
-    const hours = Math.floor(this.seconds / (60 * 60)) % 24;
-    const minutes = Math.floor(this.seconds / 60) % 60;
+    const days = Math.trunc(this.seconds / (60 * 60 * 24));
+    const hours = Math.trunc(this.seconds / (60 * 60)) % 24;
+    const minutes = Math.trunc(this.seconds / 60) % 60;
     const seconds = this.seconds % 60;
 
     const daysString = String(days).padStart(1, "0") + "d ";
