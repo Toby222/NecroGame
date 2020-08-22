@@ -50,16 +50,8 @@ export class Model extends React.Component {
           </div>
           <div className="page-wrapper with-sidebar">
             <div className="sidebar">
-              <Modal
-                display="button"
-                className="row p-0 w-20 h-20"
-                modalId="settings"
-              >
-                <img
-                  src="gear.svg"
-                  className="p-0 m-0 w-20 h-20"
-                  alt="Settings"
-                />
+              <Modal display="button" className="row p-0" modalId="settings">
+                Settings
               </Modal>
               <div className="sidebar-divider" />
               <input
@@ -157,7 +149,7 @@ class TimeAction {
   }
 }
 
-const timeactions: any[] = [];
+const timeactions: TimeAction[] = [];
 
 /**
  * Apply Actions that are based on pre-defined timepoints
