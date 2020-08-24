@@ -1,0 +1,21 @@
+body {
+  font-family: "Fira Code" !important;
+}
+
+.messages-container {
+  height: 33%;
+}
+
+.w-20 {
+  width: 2rem !important;
+}
+
+.h-20 {
+  height: 2rem !important;
+}
+
+footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+}

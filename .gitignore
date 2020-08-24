@@ -3,9 +3,6 @@
 .now
 node_modules
 
-public/
-!public/*.ico
-
 # Environment Variables
 .env
 .env.build
