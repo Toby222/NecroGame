@@ -33,7 +33,7 @@ export class Model extends React.Component {
   resources: typeof Resources.BaseResource[] = [];
   time: Time = new Time();
 
-  trySetTimeFactor(event: React.KeyboardEvent<HTMLInputElement>) {
+  trySetTimeFactor(event: React.FormEvent<HTMLInputElement>) {
     const val = Math.trunc(parseInt(event.currentTarget.value));
     if (!isNaN(val)) {
       this.flags.set(Flags.AlterTimeFactor, val);
@@ -71,7 +71,7 @@ export class Model extends React.Component {
                   className="form-control"
                   type="number"
                   placeholder="Time factor"
-                  onKeyUp={this.trySetTimeFactor.bind(this)}
+                  onInput={this.trySetTimeFactor.bind(this)}
                 />
               </>
             ) : (
