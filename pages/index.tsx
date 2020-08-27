@@ -17,17 +17,12 @@ export default class extends React.Component {
           />
           <meta name="description" content="Survive the crash!" />
           <meta name="author" content="Toby, deciduously" />
-          <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/css?family=Fira+Code"
-          />
-          <link
-            rel="stylesheet"
-            type="text/css"
-            href="halfmoon-variables.css"
-          />
           <link rel="icon" href="favicon.svg" />
+          <link rel="stylesheet" type="text/css" href="normalize.css" />
+          <link rel="stylesheet" type="text/css" href="fira-code.css" />
+          <link rel="stylesheet" type="text/css" href="halfmoon.css" />
           <link rel="stylesheet" type="text/css" href="necro.css" />
+          {/* TODO: Replace with non-cdn version somehow */}
           <script src="https://cdn.jsdelivr.net/gh/halfmoonui/halfmoon@1.0.4/js/halfmoon.min.js" />
           <title>NecroGame</title>
         </Head>
