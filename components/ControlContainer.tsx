@@ -1,10 +1,10 @@
-import { Button } from "../types/Buttons";
+import { BaseButton } from "../types/Buttons";
 import { Model } from "./Model";
 
 import * as React from "react";
 
 interface ControlContainerProps {
-  buttons: Button[];
+  buttons: typeof BaseButton[];
   model: Model;
 }
 
@@ -18,8 +18,11 @@ export class ControlContainer extends React.Component<ControlContainerProps> {
      * @param container - The Container to render in.
      * @returns Element of the Button.
      */
-    function renderButton(button: Button, model: Model) {
-      if (button.actions === undefined) {
+    function renderButton<T extends typeof BaseButton>(
+      button: T,
+      model: Model
+    ) {
+      if (!button.visible) {
         return <></>;
       }
       return (
