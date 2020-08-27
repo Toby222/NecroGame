@@ -1,6 +1,6 @@
-import { Button } from "./Buttons";
+import { BaseButton } from "./Buttons";
 import * as Flags from "./Flags";
-import { Resource } from "./Resource";
+import { BaseResource, Dirt } from "./Resources";
 import { Message } from "./Messages";
 
 import { Model } from "../components/Model";
@@ -60,17 +60,15 @@ export class ClearFlag extends Action {
   }
 }
 
-export class SetResourceValue extends Action {
-  private resource: Resource;
+export class SetResourceValue<T extends typeof BaseResource> extends Action {
   private amount: number;
+  private resource: T;
 
-  constructor(resource: Resource, amount: number) {
+  constructor(resource: T, amount: number) {
     super();
-
-    this.resource = resource;
     this.amount = amount;
+    this.resource = resource;
   }
-
   perform(model: Model) {
     if (model.resources.includes(this.resource)) {
       throw new Error("Resource may only be set once");
@@ -82,35 +80,41 @@ export class SetResourceValue extends Action {
   }
 }
 
-export class AddResourceValue extends Action {
+export class AddResourceValue<T extends typeof BaseResource> extends Action {
   // TODO add min/maxes, and check here
-  private resource: Resource;
+  private resource: T;
   private delta: number;
 
-  constructor(resource: Resource, delta: number) {
+  constructor(resource: T, delta: number) {
     super();
 
     this.resource = resource;
     this.delta = delta;
   }
 
-  perform(_model: Model) {
+  perform(model: Model) {
+    if (!model.resources.includes(this.resource)) {
+      new SetResourceValue(this.resource, this.resource.amount).perform(model);
+    }
     this.resource.amount += this.delta;
   }
 }
 
-export class AddResourceDelta extends Action {
-  private resource: Resource;
+export class AddResourceDelta<T extends typeof BaseResource> extends Action {
+  private resource: T;
   private delta: number;
 
-  constructor(resource: Resource, delta: number) {
+  constructor(resource: T, delta: number) {
     super();
 
     this.resource = resource;
     this.delta = delta;
   }
 
-  perform(_model: Model) {
+  perform(model: Model) {
+    if (!model.resources.includes(this.resource)) {
+      new SetResourceValue(this.resource, this.resource.amount).perform(model);
+    }
     this.resource.delta += this.delta;
   }
 }
@@ -129,36 +133,33 @@ export class AddMessage extends Action {
   }
 }
 
-export class EnableButton extends Action {
-  private button: Button;
+export class EnableButton<T extends typeof BaseButton> extends Action {
+  private button: T;
 
-  constructor(button: Button) {
+  constructor(button: T) {
     super();
 
     this.button = button;
   }
 
   perform(model: Model) {
-    if (this.button === undefined) {
-      throw new Error("Invalid id for EnableButton action");
+    if (!model.buttons.includes(this.button)) {
+      model.buttons.push(this.button);
     }
-    model.buttons.push(this.button);
+    this.button.visible = true;
   }
 }
 
-export class DisableButton extends Action {
-  private button: Button;
+export class DisableButton<T extends typeof BaseButton> extends Action {
+  private button: T;
 
-  constructor(button: Button) {
+  constructor(button: T) {
     super();
 
     this.button = button;
   }
 
   perform(model: Model) {
-    const toDelete = model.buttons.indexOf(this.button);
-    if (toDelete >= 0) {
-      model.buttons.splice(toDelete, 1);
-    }
+    this.button.visible = false;
   }
 }

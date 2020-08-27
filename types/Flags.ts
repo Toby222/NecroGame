@@ -1,4 +1,4 @@
-import * as Resources from "./Resource";
+import * as Resources from "./Resources";
 import * as Transformations from "./Transformations";
 
 import { Model } from "../components/Model";
@@ -49,14 +49,14 @@ export abstract class BoolFlag implements Flag<boolean> {
   }
 }
 
-export const AlterTimeFactor = new (class ExampleNumberFlag extends NumberFlag {
+export const AlterTimeFactor = new (class extends NumberFlag {
   onSet(model: Model, value: number) {
     super.onSet(model, value);
     console.log("Setting AlterTimeFactor flag. Value:", value);
   }
 })();
 
-export const AlterTime = new (class ExampleBoolFlag extends BoolFlag {
+export const AlterTime = new (class extends BoolFlag {
   protected transformations = [new Transformations.AlterTime()];
   onSet(model: Model, value: boolean) {
     super.onSet(model, value);

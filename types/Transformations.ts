@@ -1,22 +1,21 @@
-import * as Resources from "./Resource";
+import * as Resources from "./Resources";
 import * as Actions from "./Actions";
 import * as Flags from "./Flags";
 
 import { Model } from "../components/Model";
 
-export abstract class Transformation {
-  abstract perform(model: Model): void;
-  abstract apply(model: Model): void;
-  abstract clear(model: Model): void;
+export interface Transformation {
+  perform(model: Model): void;
+  apply(model: Model): void;
+  clear(model: Model): void;
 }
 
-export const Generate = class Generate extends Transformation {
-  private resource: Resources.Resource;
+export class Generate<T extends typeof Resources.BaseResource>
+  implements Transformation {
+  private resource: T;
   private delta: number;
 
-  constructor(resource: Resources.Resource, delta: number) {
-    super();
-
+  constructor(resource: T, delta: number) {
     this.resource = resource;
     this.delta = delta;
   }
@@ -32,15 +31,14 @@ export const Generate = class Generate extends Transformation {
   clear(model: Model) {
     new Actions.AddResourceDelta(this.resource, -this.delta).perform(model);
   }
-};
+}
 
-export const Consume = class Consume extends Transformation {
-  private resource: Resources.Resource;
+export class Consume<T extends typeof Resources.BaseResource>
+  implements Transformation {
+  private resource: T;
   private delta: number;
 
-  constructor(resource: Resources.Resource, delta: number) {
-    super();
-
+  constructor(resource: T, delta: number) {
     this.resource = resource;
     this.delta = -delta;
   }
@@ -56,26 +54,24 @@ export const Consume = class Consume extends Transformation {
   clear(model: Model) {
     new Actions.AddResourceDelta(this.resource, -this.delta).perform(model);
   }
-};
+}
 
-export const AlterTime = class ExampleTransformation extends Transformation {
-  constructor() {
-    super();
-  }
+export class AlterTime implements Transformation {
+  constructor() {}
 
   perform(model: Model): void {
     console.log(
-      "Performing RevertTime Transformation. Factor:",
+      "Performing AlterTime Transformation. Factor:",
       model.flags.get(Flags.AlterTimeFactor)
     );
     model.time.seconds += (model.flags.get(Flags.AlterTimeFactor) ?? 0) - 1;
   }
 
   apply(_model: Model): void {
-    console.log("Applying RevertTime Transformation");
+    console.log("Applying AlterTime Transformation");
   }
 
   clear(_model: Model): void {
-    console.log("Clearing RevertTime Transformation");
+    console.log("Clearing AlterTime Transformation");
   }
-};
+}

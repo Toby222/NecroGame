@@ -1,12 +1,14 @@
-import { Resource } from "../types/Resource";
+import { BaseResource } from "../types/Resources";
 
 import * as React from "react";
 
-interface ResourceContainerProps {
-  resources: Resource[];
+interface ResourceContainerProps<T extends typeof BaseResource> {
+  resources: T[];
 }
 
-export class ResourceContainer extends React.Component<ResourceContainerProps> {
+export class ResourceContainer<
+  T extends typeof BaseResource
+> extends React.Component<ResourceContainerProps<T>> {
   render() {
     /**
      * Helper function to turn Resources into Elements.
@@ -15,10 +17,13 @@ export class ResourceContainer extends React.Component<ResourceContainerProps> {
      * @param resource - The Resource to render.
      * @returns Element of the Resource.
      */
-    function renderResource(resourceId: number, resource: Resource) {
+    function renderResource<T extends typeof BaseResource>(
+      resourceId: number,
+      resource: T
+    ) {
       return (
         <div key={resourceId} className="row">
-          <div className="col-sm-5">{resource.name}</div>
+          <div className="col-sm-5">{resource.resourceName}</div>
           <div className="col-sm-3 text-right">{resource.amount}</div>
           <div className="col-sm-4 text-right">{resource.delta}/sec</div>
         </div>
