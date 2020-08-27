@@ -1,6 +1,7 @@
 # Necromancy Game (Working Title)
 
-![Code quality check](https://github.com/toman222/Necromancy/workflows/Code%20quality%20check/badge.svg)
+Dev: ![Code quality dev branch](https://github.com/toman222/NecroGame/workflows/Code%20quality%20check/badge.svg?branch=dev)  
+Main: ![Code quality main branch](https://github.com/toman222/NecroGame/workflows/Code%20quality%20check/badge.svg)
 
 An incremental game skeleton. Very much WIP.
 
