@@ -27,7 +27,7 @@ export class Wait extends BaseButton {
 export class AlterTime extends BaseButton {
   static visible = true;
   static toString() {
-    return "Reverse time";
+    return "Alter timeflow";
   }
 
   static get actions(): Actions.Action[] {
@@ -41,7 +41,7 @@ export class AlterTime extends BaseButton {
 
 export class UnAlterTime extends BaseButton {
   static toString() {
-    return "Return time to normal";
+    return "Normalize timeflow";
   }
 
   static get actions(): Actions.Action[] {

@@ -64,13 +64,19 @@ export class Model extends React.Component {
             <Modal display="button" className="row p-0" modalId="settings">
               Settings
             </Modal>
-            <div className="sidebar-divider" />
-            <input
-              className="form-control"
-              type="number"
-              placeholder="Time factor"
-              onKeyUp={this.trySetTimeFactor.bind(this)}
-            />
+            {this.flags.get(Flags.AlterTime) ?? false ? (
+              <>
+                <div className="sidebar-divider" />
+                <input
+                  className="form-control"
+                  type="number"
+                  placeholder="Time factor"
+                  onKeyUp={this.trySetTimeFactor.bind(this)}
+                />
+              </>
+            ) : (
+              <></>
+            )}
             <div className="sidebar-divider" />
             <ResourceContainer resources={this.resources} />
             <div className="sidebar-divider" />

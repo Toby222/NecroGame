@@ -57,7 +57,7 @@ export const AlterTimeFactor = new (class extends NumberFlag {
 })();
 
 export const AlterTime = new (class extends BoolFlag {
-  protected transformations = [new Transformations.AlterTime()];
+  transformations = [new Transformations.AlterTime()];
   onSet(model: Model, value: boolean) {
     super.onSet(model, value);
     console.log("Setting AlterTime flag. Value:", value);
