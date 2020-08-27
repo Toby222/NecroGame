@@ -93,7 +93,7 @@ export class AddResourceValue<T extends typeof BaseResource> extends Action {
   }
 
   perform(model: Model) {
-    if (!model.resources.includes(this.resource)) {
+    if (this.delta !== 0 && !model.resources.includes(this.resource)) {
       new SetResourceValue(this.resource, this.resource.amount).perform(model);
     }
     this.resource.amount += this.delta;
@@ -112,7 +112,7 @@ export class AddResourceDelta<T extends typeof BaseResource> extends Action {
   }
 
   perform(model: Model) {
-    if (!model.resources.includes(this.resource)) {
+    if (this.delta !== 0 && !model.resources.includes(this.resource)) {
       new SetResourceValue(this.resource, this.resource.amount).perform(model);
     }
     this.resource.delta += this.delta;

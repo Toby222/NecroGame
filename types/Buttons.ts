@@ -66,6 +66,7 @@ export class Dig extends BaseButton {
         Math.floor(Math.random() * 10 + 1)
       ),
       new Actions.AddResourceValue(Resources.Bones, Math.round(Math.random())),
+      new Actions.PassTime(300),
     ];
   }
 }
