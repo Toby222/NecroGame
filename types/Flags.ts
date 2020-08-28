@@ -12,21 +12,47 @@ export class Flags extends Map<StaticFlag, any> {
   }
 }
 
+/**
+ * Type used to reference a generic Flag more easily
+ *
+ * Equal to `typeof Flag`
+ */
 export type StaticFlag = typeof Flag;
-export class Flag {
-  protected static transformations: Transformations.Transformation[];
+
+/**
+ * Generic Type of a Flag
+ *
+ * Should not be used on its own, only to be extended on!
+ */
+export abstract class Flag {
+  /**
+   * Called when the Flag gets assigned a new value
+   *
+   * @param model The model that the Flag was applied to
+   * @param value The value that the Flag was assigned
+   */
   static onSet(model: Model, value: any) {}
+  /**
+   * Called when the Flag gets reset
+   *
+   * @param model The model that the Flag was reset on
+   */
   static onClear(model: Model) {}
 }
 
+/**
+ * A {@link Flag} with an additional list of {@link Transformation}s that get applied when its value is true-ish
+ */
 export class TransformationFlag extends Flag {
   static is(flag: typeof Flag): flag is typeof TransformationFlag {
-    return flag.transformations !== undefined;
+    return (flag as any).transformations !== undefined;
   }
   protected static transformations: Transformations.Transformation[];
   static onSet(model: Model, value: any) {
-    for (const transformation of this.transformations) {
-      transformation.apply(model);
+    if (Boolean(value)) {
+      for (const transformation of this.transformations) {
+        transformation.apply(model);
+      }
     }
   }
 
@@ -36,6 +62,10 @@ export class TransformationFlag extends Flag {
     }
   }
 
+  /**
+   * Perform all of the transformations of this Flag
+   * @param model The Model to perform the effects on
+   */
   static performEffects(model: Model) {
     for (const transformation of this.transformations) {
       transformation.perform(model);

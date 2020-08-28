@@ -10,6 +10,16 @@ export class Time {
     return Math.trunc(this.hours / 24);
   }
 
+  /**
+   * Create a copy of a Time object
+   * @param other A time to copy the value form
+   */
+  constructor(other: Time);
+  /**
+   * Create a Time object with a specific amount of seconds
+   * @param seconds The value of the Time in seconds
+   */
+  constructor(seconds: number);
   constructor(val: number | Time = 0) {
     if (val instanceof Time) {
       this.seconds = val.seconds;
