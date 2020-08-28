@@ -21,6 +21,21 @@ import React from "react";
 import { version } from "../package.json";
 
 export class Model extends React.Component {
+  // Example values
+  actionsQueue: Actions.DelayedAction[] = [
+    new Actions.DelayedAction(
+      new Actions.BulkAction(
+        new Actions.AddMessage("It's been 15 seconds"),
+        new Actions.EnqueueAction(
+          new Actions.DelayedAction(
+            new Actions.AddMessage("It's been another 15 seconds"),
+            15
+          )
+        )
+      ),
+      15
+    ),
+  ];
   flags = new Flags.Flags();
   buttons: typeof Buttons.BaseButton[] = [
     Buttons.Wait,
