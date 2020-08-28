@@ -1,65 +1,50 @@
-import * as Resources from "./Resources";
 import * as Transformations from "./Transformations";
 
 import { Model } from "../components/Model";
 
-export class Flags extends Map<Flag, any> {
-  get<T>(flag: Flag<T>) {
-    return super.get(flag) as T | undefined;
+export class Flags extends Map<StaticFlag, any> {
+  get(flag: StaticFlag) {
+    return super.get(flag);
   }
 
-  set<T>(flag: Flag<T>, value: T) {
+  set(flag: StaticFlag, value: any) {
     return super.set(flag, value);
   }
 }
 
-export interface Flag<T = any> {
-  onSet(model: Model, value: T): void;
-  onClear(model: Model): void;
+export type StaticFlag = typeof Flag;
+export class Flag {
+  protected static transformations: Transformations.Transformation[];
+  static onSet(model: Model, value: any) {}
+  static onClear(model: Model) {}
 }
 
-export abstract class StringFlag implements Flag<string> {
-  onSet(model: Model, value: string): void {}
-  onClear(model: Model): void {}
-}
-
-export abstract class NumberFlag implements Flag<number> {
-  onSet(model: Model, value: number): void {}
-  onClear(model: Model): void {}
-}
-
-export abstract class BoolFlag implements Flag<boolean> {
-  protected abstract transformations: Transformations.Transformation[];
-  onSet(model: Model, value: boolean) {
+export class TransformationFlag extends Flag {
+  static is(flag: typeof Flag): flag is typeof TransformationFlag {
+    return flag.transformations !== undefined;
+  }
+  protected static transformations: Transformations.Transformation[];
+  static onSet(model: Model, value: any) {
     for (const transformation of this.transformations) {
       transformation.apply(model);
     }
   }
 
-  onClear(model: Model) {
+  static onClear(model: Model) {
     for (const transformation of this.transformations) {
       transformation.clear(model);
     }
   }
 
-  performEffects(model: Model) {
+  static performEffects(model: Model) {
     for (const transformation of this.transformations) {
       transformation.perform(model);
     }
   }
 }
 
-export const AlterTimeFactor = new (class extends NumberFlag {
-  onSet(model: Model, value: number) {
-    super.onSet(model, value);
-    console.log("Setting AlterTimeFactor flag. Value:", value);
-  }
-})();
+export class AlterTimeFactor extends Flag {}
 
-export const AlterTime = new (class extends BoolFlag {
-  transformations = [new Transformations.AlterTime()];
-  onSet(model: Model, value: boolean) {
-    super.onSet(model, value);
-    console.log("Setting AlterTime flag. Value:", value);
-  }
-})();
+export class AlterTime extends TransformationFlag {
+  static transformations = [new Transformations.AlterTime()];
+}

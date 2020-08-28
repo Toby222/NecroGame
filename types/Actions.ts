@@ -20,7 +20,7 @@ export class PassTime extends Action {
     for (let i = 0; i < this.delay; i++) {
       model.time.seconds++;
       for (const [flag, value] of model.flags) {
-        if (flag instanceof Flags.BoolFlag && value === true) {
+        if (Flags.TransformationFlag.is(flag) && Boolean(value)) {
           flag.performEffects(model);
         }
       }
@@ -28,11 +28,11 @@ export class PassTime extends Action {
   }
 }
 
-export class SetFlag<T> extends Action {
-  private flag: Flags.Flag<T>;
-  private value: T;
+export class SetFlag extends Action {
+  private flag: Flags.StaticFlag;
+  private value: any;
 
-  constructor(flag: Flags.Flag<T>, value: T) {
+  constructor(flag: Flags.StaticFlag, value: any) {
     super();
 
     this.value = value;
@@ -46,9 +46,9 @@ export class SetFlag<T> extends Action {
 }
 
 export class ClearFlag extends Action {
-  private flag: Flags.Flag;
+  private flag: Flags.StaticFlag;
 
-  constructor(flag: Flags.Flag) {
+  constructor(flag: Flags.StaticFlag) {
     super();
 
     this.flag = flag;
