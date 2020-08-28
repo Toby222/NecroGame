@@ -20,6 +20,10 @@ export class Time {
    * @param seconds The value of the Time in seconds
    */
   constructor(seconds: number);
+  /**
+   * Create a Time object with value 0
+   */
+  constructor();
   constructor(val: number | Time = 0) {
     if (val instanceof Time) {
       this.seconds = val.seconds;
@@ -37,7 +41,8 @@ export class Time {
     const hours = `${Math.abs(this.hours % 24)}`.padStart(2, "0");
     const minutes = `${Math.abs(this.minutes % 60)}`.padStart(2, "0");
     const seconds = `${Math.abs(this.seconds % 60)}`.padStart(2, "0");
+    const prefix = this.seconds < 0 ? "-" : "";
 
-    return (this.seconds < 0 ? "-" : "") + `${days}d ${hours}h ${minutes}m ${seconds}s`;
+    return `${prefix}${days}d ${hours}h ${minutes}m ${seconds}s`;
   }
 }
