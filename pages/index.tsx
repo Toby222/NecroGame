@@ -15,7 +15,7 @@ export default class extends React.Component {
             name="viewport"
             content="width=device-width, initial-scale=1.0"
           />
-          <meta name="description" content="Survive the crash!" />
+          <meta name="description" content="This description is TODO UmU" />
           <meta name="author" content="Toby, deciduously" />
           <link rel="icon" href="favicon.svg" />
           <link rel="stylesheet" type="text/css" href="normalize.css" />
