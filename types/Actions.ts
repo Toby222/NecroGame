@@ -1,6 +1,6 @@
 import { BaseButton } from "./Buttons";
 import * as Flags from "./Flags";
-import { BaseResource, Dirt } from "./Resources";
+import { BaseResource } from "./Resources";
 import { Message } from "./Messages";
 
 import { Model } from "../components/Model";
@@ -24,7 +24,65 @@ export class PassTime extends Action {
           flag.performEffects(model);
         }
       }
+      const oldQueue = model.actionsQueue;
+      model.actionsQueue = [];
+      for (const delayedAction of oldQueue) {
+        if (!delayedAction.perform(model)) {
+          model.actionsQueue.push(delayedAction);
+        }
+      }
     }
+  }
+}
+
+export class BulkAction extends Action {
+  private actions: Action[];
+
+  constructor(...actions: Action[]) {
+    super();
+
+    this.actions = actions;
+  }
+
+  perform(model: Model) {
+    model.performActions(...this.actions);
+  }
+}
+
+export class EnqueueAction extends Action {
+  private delayedAction: DelayedAction;
+
+  constructor(delayedAction: DelayedAction) {
+    super();
+
+    this.delayedAction = delayedAction;
+  }
+
+  perform(model: Model) {
+    model.actionsQueue.push(this.delayedAction);
+  }
+}
+
+export class DelayedAction extends Action {
+  private action: Action;
+  private delay: number;
+
+  constructor(action: Action, delay: number) {
+    super();
+
+    this.delay = delay;
+    this.action = action;
+  }
+
+  /**
+   * @returns Wether or not the delayed Action was called
+   */
+  perform(model: Model) {
+    if (--this.delay <= 0) {
+      this.action.perform(model);
+      return true;
+    }
+    return false;
   }
 }
 

@@ -23,7 +23,7 @@ export class ControlContainer extends React.Component<ControlContainerProps> {
       model: Model
     ) {
       if (!button.visible) {
-        return <></>;
+        return undefined;
       }
       return (
         <button
