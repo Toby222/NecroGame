@@ -23,18 +23,11 @@ export class Time {
   }
 
   toString() {
-    const days = Math.abs(this.days);
-    const hours = Math.abs(this.hours % 24);
-    const minutes = Math.abs(this.minutes % 60);
-    const seconds = Math.abs(this.seconds % 60);
+    const days = `${Math.abs(this.days)}`.padStart(1, "0");
+    const hours = `${Math.abs(this.hours % 24)}`.padStart(2, "0");
+    const minutes = `${Math.abs(this.minutes % 60)}`.padStart(2, "0");
+    const seconds = `${Math.abs(this.seconds % 60)}`.padStart(2, "0");
 
-    const daysString = String(days).padStart(1, "0") + "d ";
-    const hoursString = String(hours).padStart(2, "0") + "h ";
-    const minutesString = String(minutes).padStart(2, "0") + "m ";
-    const secondsString = String(seconds).padStart(2, "0") + "s";
-    return (
-      (this.seconds < 0 ? "-" : "") +
-      `${daysString}${hoursString}${minutesString}${secondsString}`
-    );
+    return (this.seconds < 0 ? "-" : "") + `${days}d ${hours}h ${minutes}m ${seconds}s`;
   }
 }
