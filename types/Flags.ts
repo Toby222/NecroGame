@@ -80,3 +80,5 @@ export class AlterTimeFactor extends Flag {}
 export class AlterTime extends TransformationFlag {
   static transformations = [new Transformations.AlterTime()];
 }
+
+export class Paused extends Flag {}

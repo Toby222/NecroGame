@@ -13,17 +13,6 @@ export class BaseButton {
   }
 }
 
-export class Wait extends BaseButton {
-  static visible = true;
-  static toString() {
-    return "Wait 1 Second";
-  }
-
-  static get actions(): Actions.Action[] {
-    return [new Actions.PassTime(1)];
-  }
-}
-
 export class AlterTime extends BaseButton {
   static visible = true;
   static toString() {
@@ -65,8 +54,8 @@ export class Dig extends BaseButton {
         Resources.Dirt,
         Math.floor(Math.random() * 10 + 1)
       ),
-      new Actions.AddResourceValue(Resources.Bones, Math.round(Math.random())),
       new Actions.PassTime(300),
+      new Actions.AddResourceValue(Resources.Bones, Math.round(Math.random())),
     ];
   }
 }

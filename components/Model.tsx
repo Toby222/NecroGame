@@ -39,7 +39,6 @@ export class Model extends React.Component {
   ];
   flags = new Flags.Flags();
   buttons: typeof Buttons.BaseButton[] = [
-    Buttons.Wait,
     Buttons.AlterTime,
     Buttons.UnAlterTime,
     Buttons.Dig,
@@ -49,7 +48,16 @@ export class Model extends React.Component {
   resources: typeof Resources.BaseResource[] = [];
   time: Time = new Time();
 
+  togglePause() {
+    if(!this.flags.has(Flags.Paused)) {
+      setInterval(this.tick.bind(this), 1000)
+    }
+    this.flags.set(Flags.Paused, !(this.flags.get(Flags.Paused) ?? true));
+    this.forceUpdate()
+  }
+
   tick() {
+    if(this.flags.get(Flags.Paused)) return
     this.time.seconds++;
     for (const [flag, value] of this.flags) {
       if (Flags.TransformationFlag.is(flag) && Boolean(value)) {
@@ -98,23 +106,34 @@ export class Model extends React.Component {
               <Modal display="button" className="col-auto" modalId="settings">
                 <FontAwesomeIcon icon="cog" />
               </Modal>
-              <button className="btn btn-primary col-auto" onClick={() => {}}>
-                <FontAwesomeIcon icon="pause"/>
+              <button
+                className="btn btn-primary col-auto"
+                onClick={this.togglePause.bind(this)}
+              >
+                <>
+                  {Boolean(this.flags.get(Flags.Paused) ?? true) ? (
+                    <FontAwesomeIcon icon="play" />
+                  ) : (
+                    <FontAwesomeIcon icon="pause" />
+                  )}
+                </>
               </button>
             </div>
-            {this.flags.get(Flags.AlterTime) ?? false ? (
-              <>
-                <div className="sidebar-divider" />
-                <input
-                  className="form-control"
-                  type="number"
-                  placeholder="Time factor"
-                  onInput={this.trySetTimeFactor.bind(this)}
-                />
-              </>
-            ) : (
-              <></>
-            )}
+            <>
+              {this.flags.get(Flags.AlterTime) ?? false ? (
+                <>
+                  <div className="sidebar-divider" />
+                  <input
+                    className="form-control"
+                    type="number"
+                    placeholder="Time factor"
+                    onInput={this.trySetTimeFactor.bind(this)}
+                  />
+                </>
+              ) : (
+                <></>
+              )}
+            </>
             <div className="sidebar-divider" />
             <ResourceContainer resources={this.resources} />
             <div className="sidebar-divider" />
