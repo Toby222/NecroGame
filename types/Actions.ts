@@ -75,10 +75,10 @@ export class DelayedAction extends Action {
 }
 
 export class SetFlag extends Action {
-  private flag: Flags.StaticFlag;
+  private flag: Flags.AnyFlag;
   private value: any;
 
-  constructor(flag: Flags.StaticFlag, value: any) {
+  constructor(flag: Flags.AnyFlag, value: any) {
     super();
 
     this.value = value;
@@ -92,9 +92,9 @@ export class SetFlag extends Action {
 }
 
 export class ClearFlag extends Action {
-  private flag: Flags.StaticFlag;
+  private flag: Flags.AnyFlag;
 
-  constructor(flag: Flags.StaticFlag) {
+  constructor(flag: Flags.AnyFlag) {
     super();
 
     this.flag = flag;
