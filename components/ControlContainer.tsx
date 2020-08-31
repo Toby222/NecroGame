@@ -34,9 +34,10 @@ export class ControlContainer extends React.Component<ControlContainerProps> {
             if (model.flags.get(Flags.Paused) ?? true) return;
             model.performActions(...button.actions);
             button.currentCooldown = button.cooldown;
+            button.stats.timesUsed++;
             model.forceUpdate();
           }}
-          disabled={button.currentCooldown !== 0}
+          disabled={button.currentCooldown !== 0 || !button.active}
         >
           {button.toString()}
         </button>

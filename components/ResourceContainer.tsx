@@ -24,8 +24,12 @@ export class ResourceContainer<
       return (
         <div key={resourceId} className="row">
           <div className="col-sm-5">{resource.resourceName}</div>
-          <div className="col-sm-3 text-right">{resource.amount}</div>
-          <div className="col-sm-4 text-right">{resource.delta}/sec</div>
+          <div className="col-sm-3 text-right">
+            {Math.round(resource.amount * 100) / 100}
+          </div>
+          <div className="col-sm-4 text-right">
+            {Math.round(resource.delta * 100) / 100}/sec
+          </div>
         </div>
       );
     }

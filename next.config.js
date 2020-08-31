@@ -1,5 +1,4 @@
-const WithCSS = require("@zeit/next-css");
-module.exports = WithCSS({
+module.exports = {
   target: "serverless",
   reactStrictMode: true,
-});
+};

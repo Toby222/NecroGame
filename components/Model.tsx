@@ -6,6 +6,7 @@ import * as Flags from "../types/Flags";
 import * as Actions from "../types/Actions";
 import * as Buttons from "../types/Buttons";
 import * as Resources from "../types/Resources";
+import * as Conditions from "../types/Conditions";
 
 import { halfmoon } from "../util/HalfMoon";
 
@@ -25,20 +26,8 @@ let mainLoop: NodeJS.Timeout;
 
 export class Model extends React.Component {
   // Example values
-  actionsQueue: Actions.DelayedAction[] = [
-    new Actions.DelayedAction(
-      new Actions.BulkAction(
-        new Actions.AddMessage("It's been 15 seconds"),
-        new Actions.EnqueueAction(
-          new Actions.DelayedAction(
-            new Actions.AddMessage("It's been another 15 seconds"),
-            15
-          )
-        )
-      ),
-      15
-    ),
-  ];
+  actionsQueue: Actions.DelayedAction[] = [];
+  conditions = new Array<Conditions.Condition>();
   flags = new Flags.Flags();
   buttons: typeof Buttons.BaseButton[] = [
     Buttons.AlterTime,
@@ -51,13 +40,17 @@ export class Model extends React.Component {
   time: Time = new Time();
 
   togglePause() {
-    if (!this.flags.has(Flags.Paused)) {
-      mainLoop = setInterval(this.tick.bind(this), 1000);
-    }
-    this.flags.set(Flags.Paused, !(this.flags.get(Flags.Paused) ?? true));
+    this.flags.set(Flags.Paused, !this.flags.get(Flags.Paused));
     this.forceUpdate();
   }
 
+  // Basically constructor for order purposes
+  componentDidMount() {
+    this.flags.set(Flags.Paused, false);
+    mainLoop = setInterval(this.tick.bind(this), 1000);
+  }
+
+  // Basically deconstructor for order purposes
   componentWillUnmount() {
     clearInterval(mainLoop);
   }
@@ -70,6 +63,11 @@ export class Model extends React.Component {
         flag.performEffects(this);
       }
     }
+
+    for (const resource of this.resources) {
+      resource.amount += resource.delta;
+    }
+
     const oldQueue = this.actionsQueue;
     this.actionsQueue = [];
     for (const delayedAction of oldQueue) {
@@ -132,7 +130,7 @@ export class Model extends React.Component {
                 onClick={this.togglePause.bind(this)}
               >
                 <>
-                  {Boolean(this.flags.get(Flags.Paused) ?? true) ? (
+                  {Boolean(this.flags.get(Flags.Paused)) ? (
                     <FontAwesomeIcon icon="play" />
                   ) : (
                     <FontAwesomeIcon icon="pause" />
