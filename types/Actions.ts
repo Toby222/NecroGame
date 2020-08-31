@@ -18,19 +18,7 @@ export class PassTime extends Action {
 
   perform(model: Model) {
     for (let i = 0; i < this.delay; i++) {
-      model.time.seconds++;
-      for (const [flag, value] of model.flags) {
-        if (Flags.TransformationFlag.is(flag) && Boolean(value)) {
-          flag.performEffects(model);
-        }
-      }
-      const oldQueue = model.actionsQueue;
-      model.actionsQueue = [];
-      for (const delayedAction of oldQueue) {
-        if (!delayedAction.perform(model)) {
-          model.actionsQueue.push(delayedAction);
-        }
-      }
+      model.tick();
     }
   }
 }

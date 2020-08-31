@@ -49,6 +49,23 @@ export class Model extends React.Component {
   resources: typeof Resources.BaseResource[] = [];
   time: Time = new Time();
 
+  tick() {
+    this.time.seconds++;
+    for (const [flag, value] of this.flags) {
+      if (Flags.TransformationFlag.is(flag) && Boolean(value)) {
+        flag.performEffects(this);
+      }
+    }
+    const oldQueue = this.actionsQueue;
+    this.actionsQueue = [];
+    for (const delayedAction of oldQueue) {
+      if (!delayedAction.perform(this)) {
+        this.actionsQueue.push(delayedAction);
+      }
+    }
+    this.forceUpdate();
+  }
+
   trySetTimeFactor(event: React.FormEvent<HTMLInputElement>) {
     const val = Math.trunc(parseInt(event.currentTarget.value));
     if (!isNaN(val)) {
