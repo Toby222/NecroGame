@@ -23,6 +23,6 @@ export class ResourceValue<
   }
 
   check(model: Model): boolean {
-    return this.resource.amount === this.value;
+    return this.resource.amount >= this.value;
   }
 }

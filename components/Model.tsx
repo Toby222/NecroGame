@@ -75,6 +75,17 @@ export class Model extends React.Component {
         this.actionsQueue.push(delayedAction);
       }
     }
+
+    const oldConditions = this.conditions;
+    this.conditions = [];
+    for (const condition of oldConditions) {
+      if (condition.check(this)) {
+        condition.action.perform(this);
+      } else {
+        this.conditions.push(condition);
+      }
+    }
+
     for (const button of this.buttons) {
       button.currentCooldown = Math.max(0, --button.currentCooldown);
     }

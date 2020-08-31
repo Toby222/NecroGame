@@ -4,6 +4,7 @@ import { BaseResource } from "./Resources";
 import { Message } from "./Messages";
 
 import { Model } from "../components/Model";
+import { Condition } from "./Conditions";
 
 export abstract class Action {
   abstract perform(model: Model): void;
@@ -203,5 +204,21 @@ export class DisableButton<T extends typeof BaseButton> extends Action {
 
   perform(model: Model) {
     this.button.visible = false;
+  }
+}
+
+export class AddCondition extends Action {
+  private condition: Condition;
+  action: Action;
+
+  constructor(condition: Condition, action: Action) {
+    super();
+
+    this.condition = condition;
+    this.action = action;
+  }
+
+  perform(model: Model) {
+    model.conditions.push(this.condition);
   }
 }

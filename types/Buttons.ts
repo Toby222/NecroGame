@@ -1,3 +1,4 @@
+import * as Conditions from "./Conditions";
 import * as Resources from "./Resources";
 import * as Actions from "./Actions";
 import * as Flags from "./Flags";
@@ -58,26 +59,43 @@ export class Dig extends BaseButton {
   }
 
   static get actions() {
+    let result: Actions.Action[] = [];
     if (this.stats.timesUsed === 0) {
-      return [
+      result.push(
+        new Actions.AddCondition(
+          new Conditions.ResourceValue(Resources.Bones, 2),
+          new Actions.EnableButton(SummonSkeleton)
+        )
+      );
+    }
+
+    if (Math.random() <= 0.04) {
+      result = result.concat([
         new Actions.AddResourceValue(
           Resources.Dirt,
           Math.floor(Math.random() * 10 + 1)
         ),
-        new Actions.AddResourceValue(Resources.Bones, 10),
-        new Actions.EnableButton(SummonSkeleton),
-        new Actions.AddMessage(
-          "You find a bunch of bones just beneath the surface. Weird..."
+        new Actions.AddResourceValue(
+          Resources.Bones,
+          Math.trunc(Math.random() * 10)
         ),
-      ];
+        new Actions.AddMessage(
+          "You find a bunch of bones just beneath the surface."
+        ),
+      ]);
+    } else {
+      result = result.concat([
+        new Actions.AddResourceValue(
+          Resources.Dirt,
+          Math.floor(Math.random() * 10 + 1)
+        ),
+        new Actions.AddResourceValue(
+          Resources.Bones,
+          Math.round(Math.random())
+        ),
+      ]);
     }
-    return [
-      new Actions.AddResourceValue(
-        Resources.Dirt,
-        Math.floor(Math.random() * 10 + 1)
-      ),
-      new Actions.AddResourceValue(Resources.Bones, Math.round(Math.random())),
-    ];
+    return result;
   }
 }
 
