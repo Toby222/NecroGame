@@ -21,6 +21,8 @@ import React from "react";
 import { version } from "../package.json";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+let mainLoop: NodeJS.Timeout;
+
 export class Model extends React.Component {
   // Example values
   actionsQueue: Actions.DelayedAction[] = [
@@ -49,15 +51,19 @@ export class Model extends React.Component {
   time: Time = new Time();
 
   togglePause() {
-    if(!this.flags.has(Flags.Paused)) {
-      setInterval(this.tick.bind(this), 1000)
+    if (!this.flags.has(Flags.Paused)) {
+      mainLoop = setInterval(this.tick.bind(this), 1000);
     }
     this.flags.set(Flags.Paused, !(this.flags.get(Flags.Paused) ?? true));
-    this.forceUpdate()
+    this.forceUpdate();
+  }
+
+  componentWillUnmount() {
+    clearInterval(mainLoop);
   }
 
   tick() {
-    if(this.flags.get(Flags.Paused)) return
+    if (this.flags.get(Flags.Paused)) return;
     this.time.seconds++;
     for (const [flag, value] of this.flags) {
       if (Flags.TransformationFlag.is(flag) && Boolean(value)) {
@@ -70,6 +76,9 @@ export class Model extends React.Component {
       if (!delayedAction.perform(this)) {
         this.actionsQueue.push(delayedAction);
       }
+    }
+    for (const button of this.buttons) {
+      button.currentCooldown = Math.max(0, --button.currentCooldown);
     }
     this.forceUpdate();
   }
@@ -84,8 +93,20 @@ export class Model extends React.Component {
   }
 
   performActions(...actions: Actions.Action[]) {
-    for (const action of actions) {
-      action.perform(this);
+    if (this.flags.get(Flags.Paused) ?? true) {
+      for (const action of actions) {
+        if (
+          action instanceof Actions.SetFlag &&
+          action.flag === Flags.Paused &&
+          Boolean(action.value) === false
+        ) {
+          action.perform(this);
+        }
+      }
+    } else {
+      for (const action of actions) {
+        action.perform(this);
+      }
     }
   }
 

@@ -2,6 +2,7 @@ import { BaseButton } from "../types/Buttons";
 import { Model } from "./Model";
 
 import * as React from "react";
+import * as Flags from "../types/Flags";
 
 interface ControlContainerProps {
   buttons: typeof BaseButton[];
@@ -30,9 +31,12 @@ export class ControlContainer extends React.Component<ControlContainerProps> {
           key={ControlContainer.bId++}
           className="btn flex-fill"
           onClick={() => {
+            if (model.flags.get(Flags.Paused) ?? true) return;
             model.performActions(...button.actions);
+            button.currentCooldown = button.cooldown;
             model.forceUpdate();
           }}
+          disabled={button.currentCooldown !== 0}
         >
           {button.toString()}
         </button>

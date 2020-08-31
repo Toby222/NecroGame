@@ -75,8 +75,8 @@ export class DelayedAction extends Action {
 }
 
 export class SetFlag extends Action {
-  private flag: Flags.AnyFlag;
-  private value: any;
+  flag: Flags.AnyFlag;
+  value: any;
 
   constructor(flag: Flags.AnyFlag, value: any) {
     super();

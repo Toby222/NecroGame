@@ -3,6 +3,8 @@ import * as Actions from "./Actions";
 import * as Flags from "./Flags";
 
 export class BaseButton {
+  static readonly cooldown: number = 0;
+  static currentCooldown = 0;
   static visible = false;
   static toString(): string {
     throw new Error("Not implemented.");
@@ -43,6 +45,7 @@ export class UnAlterTime extends BaseButton {
 }
 
 export class Dig extends BaseButton {
+  static readonly cooldown = 10;
   static visible = true;
   static toString() {
     return "Dig in the dirt";
@@ -54,7 +57,6 @@ export class Dig extends BaseButton {
         Resources.Dirt,
         Math.floor(Math.random() * 10 + 1)
       ),
-      new Actions.PassTime(300),
       new Actions.AddResourceValue(Resources.Bones, Math.round(Math.random())),
     ];
   }
