@@ -19,6 +19,7 @@ import Modal from "./Modal";
 import React from "react";
 
 import { version } from "../package.json";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export class Model extends React.Component {
   // Example values
@@ -76,9 +77,14 @@ export class Model extends React.Component {
         </div>
         <div className="page-wrapper with-sidebar">
           <div className="sidebar">
-            <Modal display="button" className="row p-0" modalId="settings">
-              Settings
-            </Modal>
+            <div className="row">
+              <Modal display="button" className="col-auto" modalId="settings">
+                <FontAwesomeIcon icon="cog" />
+              </Modal>
+              <button className="btn btn-primary col-auto" onClick={() => {}}>
+                <FontAwesomeIcon icon="pause"/>
+              </button>
+            </div>
             {this.flags.get(Flags.AlterTime) ?? false ? (
               <>
                 <div className="sidebar-divider" />
