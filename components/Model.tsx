@@ -110,21 +110,3 @@ export class Model extends React.Component {
     );
   }
 }
-
-class TimeAction {
-  time: number;
-  action: Actions.Action;
-
-  constructor(ticks: number, action: Actions.Action) {
-    this.time = ticks;
-    this.action = action;
-  }
-
-  trigger(model: Model): boolean {
-    if (this.time <= model.time.seconds) {
-      this.action.perform(model);
-      return true;
-    }
-    return false;
-  }
-}
