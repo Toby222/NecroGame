@@ -37,11 +37,11 @@ export class Time {
   }
 
   toString() {
-    const days = `${Math.abs(this.days)}`.padStart(1, "0");
-    const hours = `${Math.abs(this.hours % 24)}`.padStart(2, "0");
-    const minutes = `${Math.abs(this.minutes % 60)}`.padStart(2, "0");
-    const seconds = `${Math.abs(this.seconds % 60)}`.padStart(2, "0");
     const prefix = this.seconds < 0 ? "-" : "";
+    const seconds = `${Math.abs(this.seconds % 60)}`.padStart(2, "0");
+    const minutes = `${Math.abs(this.minutes % 60)}`.padStart(2, "0");
+    const hours = `${Math.abs(this.hours % 24)}`.padStart(2, "0");
+    const days = `${Math.abs(this.days)}`.padStart(1, "0");
 
     return `${prefix}${days}d ${hours}h ${minutes}m ${seconds}s`;
   }

@@ -6,6 +6,7 @@ import * as Flags from "../types/Flags";
 import * as Actions from "../types/Actions";
 import * as Buttons from "../types/Buttons";
 import * as Resources from "../types/Resources";
+import * as Conditions from "../types/Conditions";
 
 import { halfmoon } from "../util/HalfMoon";
 
@@ -19,26 +20,16 @@ import Modal from "./Modal";
 import React from "react";
 
 import { version } from "../package.json";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+let mainLoop: NodeJS.Timeout;
 
 export class Model extends React.Component {
   // Example values
-  actionsQueue: Actions.DelayedAction[] = [
-    new Actions.DelayedAction(
-      new Actions.BulkAction(
-        new Actions.AddMessage("It's been 15 seconds"),
-        new Actions.EnqueueAction(
-          new Actions.DelayedAction(
-            new Actions.AddMessage("It's been another 15 seconds"),
-            15
-          )
-        )
-      ),
-      15
-    ),
-  ];
+  actionsQueue: Actions.DelayedAction[] = [];
+  conditions = new Array<Conditions.Condition>();
   flags = new Flags.Flags();
   buttons: typeof Buttons.BaseButton[] = [
-    Buttons.Wait,
     Buttons.AlterTime,
     Buttons.UnAlterTime,
     Buttons.Dig,
@@ -47,6 +38,59 @@ export class Model extends React.Component {
   player: Player = new Player();
   resources: typeof Resources.BaseResource[] = [];
   time: Time = new Time();
+
+  togglePause() {
+    this.flags.set(Flags.Paused, !this.flags.get(Flags.Paused));
+    this.forceUpdate();
+  }
+
+  // Basically constructor for order purposes
+  componentDidMount() {
+    this.flags.set(Flags.Paused, false);
+    mainLoop = setInterval(this.tick.bind(this), 1000);
+  }
+
+  // Basically deconstructor for order purposes
+  componentWillUnmount() {
+    clearInterval(mainLoop);
+  }
+
+  tick() {
+    if (this.flags.get(Flags.Paused)) return;
+    this.time.seconds++;
+    for (const [flag, value] of this.flags) {
+      if (Flags.TransformationFlag.is(flag) && Boolean(value)) {
+        flag.performEffects(this);
+      }
+    }
+
+    for (const resource of this.resources) {
+      resource.amount += resource.delta;
+    }
+
+    const oldQueue = this.actionsQueue;
+    this.actionsQueue = [];
+    for (const delayedAction of oldQueue) {
+      if (!delayedAction.perform(this)) {
+        this.actionsQueue.push(delayedAction);
+      }
+    }
+
+    const oldConditions = this.conditions;
+    this.conditions = [];
+    for (const condition of oldConditions) {
+      if (condition.check(this)) {
+        condition.action.perform(this);
+      } else {
+        this.conditions.push(condition);
+      }
+    }
+
+    for (const button of this.buttons) {
+      button.currentCooldown = Math.max(0, --button.currentCooldown);
+    }
+    this.forceUpdate();
+  }
 
   trySetTimeFactor(event: React.FormEvent<HTMLInputElement>) {
     const val = Math.trunc(parseInt(event.currentTarget.value));
@@ -58,8 +102,20 @@ export class Model extends React.Component {
   }
 
   performActions(...actions: Actions.Action[]) {
-    for (const action of actions) {
-      action.perform(this);
+    if (this.flags.get(Flags.Paused) ?? true) {
+      for (const action of actions) {
+        if (
+          action instanceof Actions.SetFlag &&
+          action.flag === Flags.Paused &&
+          Boolean(action.value) === false
+        ) {
+          action.perform(this);
+        }
+      }
+    } else {
+      for (const action of actions) {
+        action.perform(this);
+      }
     }
   }
 
@@ -76,22 +132,38 @@ export class Model extends React.Component {
         </div>
         <div className="page-wrapper with-sidebar">
           <div className="sidebar">
-            <Modal display="button" className="row p-0" modalId="settings">
-              Settings
-            </Modal>
-            {this.flags.get(Flags.AlterTime) ?? false ? (
-              <>
-                <div className="sidebar-divider" />
-                <input
-                  className="form-control"
-                  type="number"
-                  placeholder="Time factor"
-                  onInput={this.trySetTimeFactor.bind(this)}
-                />
-              </>
-            ) : (
-              <></>
-            )}
+            <div className="row">
+              <Modal display="button" className="col-auto" modalId="settings">
+                <FontAwesomeIcon icon="cog" />
+              </Modal>
+              <button
+                className="btn btn-primary col-auto"
+                onClick={this.togglePause.bind(this)}
+              >
+                <>
+                  {Boolean(this.flags.get(Flags.Paused)) ? (
+                    <FontAwesomeIcon icon="play" />
+                  ) : (
+                    <FontAwesomeIcon icon="pause" />
+                  )}
+                </>
+              </button>
+            </div>
+            <>
+              {this.flags.get(Flags.AlterTime) ?? false ? (
+                <>
+                  <div className="sidebar-divider" />
+                  <input
+                    className="form-control"
+                    type="number"
+                    placeholder="Time factor"
+                    onInput={this.trySetTimeFactor.bind(this)}
+                  />
+                </>
+              ) : (
+                <></>
+              )}
+            </>
             <div className="sidebar-divider" />
             <ResourceContainer resources={this.resources} />
             <div className="sidebar-divider" />
@@ -108,23 +180,5 @@ export class Model extends React.Component {
         </div>
       </main>
     );
-  }
-}
-
-class TimeAction {
-  time: number;
-  action: Actions.Action;
-
-  constructor(ticks: number, action: Actions.Action) {
-    this.time = ticks;
-    this.action = action;
-  }
-
-  trigger(model: Model): boolean {
-    if (this.time <= model.time.seconds) {
-      this.action.perform(model);
-      return true;
-    }
-    return false;
   }
 }

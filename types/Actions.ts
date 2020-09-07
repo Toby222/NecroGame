@@ -4,6 +4,7 @@ import { BaseResource } from "./Resources";
 import { Message } from "./Messages";
 
 import { Model } from "../components/Model";
+import { Condition } from "./Conditions";
 
 export abstract class Action {
   abstract perform(model: Model): void;
@@ -18,19 +19,7 @@ export class PassTime extends Action {
 
   perform(model: Model) {
     for (let i = 0; i < this.delay; i++) {
-      model.time.seconds++;
-      for (const [flag, value] of model.flags) {
-        if (Flags.TransformationFlag.is(flag) && Boolean(value)) {
-          flag.performEffects(model);
-        }
-      }
-      const oldQueue = model.actionsQueue;
-      model.actionsQueue = [];
-      for (const delayedAction of oldQueue) {
-        if (!delayedAction.perform(model)) {
-          model.actionsQueue.push(delayedAction);
-        }
-      }
+      model.tick();
     }
   }
 }
@@ -87,10 +76,10 @@ export class DelayedAction extends Action {
 }
 
 export class SetFlag extends Action {
-  private flag: Flags.StaticFlag;
-  private value: any;
+  flag: Flags.AnyFlag;
+  value: any;
 
-  constructor(flag: Flags.StaticFlag, value: any) {
+  constructor(flag: Flags.AnyFlag, value: any) {
     super();
 
     this.value = value;
@@ -104,9 +93,9 @@ export class SetFlag extends Action {
 }
 
 export class ClearFlag extends Action {
-  private flag: Flags.StaticFlag;
+  private flag: Flags.AnyFlag;
 
-  constructor(flag: Flags.StaticFlag) {
+  constructor(flag: Flags.AnyFlag) {
     super();
 
     this.flag = flag;
@@ -215,5 +204,21 @@ export class DisableButton<T extends typeof BaseButton> extends Action {
 
   perform(model: Model) {
     this.button.visible = false;
+  }
+}
+
+export class AddCondition extends Action {
+  private condition: Condition;
+  action: Action;
+
+  constructor(condition: Condition, action: Action) {
+    super();
+
+    this.condition = condition;
+    this.action = action;
+  }
+
+  perform(model: Model) {
+    model.conditions.push(this.condition);
   }
 }

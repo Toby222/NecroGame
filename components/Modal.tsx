@@ -12,7 +12,7 @@ export default class Modal extends React.Component<Props> {
       case "modal":
         return (
           <div
-            className={"modal " + this.props.className ?? ""}
+            className={"modal " + (this.props.className ?? "")}
             id="settings"
             tabIndex={-1}
             role="dialog"
@@ -26,7 +26,7 @@ export default class Modal extends React.Component<Props> {
         return (
           <a
             href={`#${this.props.modalId}`}
-            className={"btn btn-primary p-0" + this.props.className ?? ""}
+            className={"btn btn-primary " + (this.props.className ?? "")}
             role="button"
           >
             {this.props.children}

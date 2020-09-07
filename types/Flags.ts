@@ -2,12 +2,12 @@ import * as Transformations from "./Transformations";
 
 import { Model } from "../components/Model";
 
-export class Flags extends Map<StaticFlag, any> {
-  get(flag: StaticFlag) {
+export class Flags extends Map<AnyFlag, any> {
+  get(flag: AnyFlag) {
     return super.get(flag);
   }
 
-  set(flag: StaticFlag, value: any) {
+  set(flag: AnyFlag, value: any) {
     return super.set(flag, value);
   }
 }
@@ -17,7 +17,7 @@ export class Flags extends Map<StaticFlag, any> {
  *
  * Equal to `typeof Flag`
  */
-export type StaticFlag = typeof Flag;
+export type AnyFlag = typeof Flag;
 
 /**
  * Generic Type of a Flag
@@ -73,8 +73,12 @@ export class TransformationFlag extends Flag {
   }
 }
 
+// Game flags
+
 export class AlterTimeFactor extends Flag {}
 
 export class AlterTime extends TransformationFlag {
   static transformations = [new Transformations.AlterTime()];
 }
+
+export class Paused extends Flag {}
