@@ -2,7 +2,13 @@
 .next
 .now
 node_modules/
-.yarn/
+
+.yarn/*
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
+.pnp.*
 
 # Environment Variables
 .env
