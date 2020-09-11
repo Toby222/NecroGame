@@ -3,11 +3,11 @@ import * as Transformations from "./Transformations";
 import { Model } from "../components/Model";
 
 export class Flags extends Map<AnyFlag, any> {
-  get(flag: AnyFlag) {
-    return super.get(flag);
+  get<T = any>(flag: AnyFlag) {
+    return super.get(flag) as T;
   }
 
-  set(flag: AnyFlag, value: any) {
+  set<T = any>(flag: AnyFlag, value: T) {
     return super.set(flag, value);
   }
 }

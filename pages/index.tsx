@@ -19,7 +19,7 @@ export default class extends React.Component {
           <meta name="author" content="Toby, deciduously" />
           <link rel="icon" href="favicon.svg" />
           <link rel="stylesheet" type="text/css" href="normalize.css" />
-          <link rel="stylesheet" type="text/css" href="fira-code.css" />
+          <link rel="stylesheet" type="text/css" href="fonts.css" />
           <link rel="stylesheet" type="text/css" href="halfmoon.css" />
           <link rel="stylesheet" type="text/css" href="necro.css" />
           {/* TODO: Replace with non-cdn version somehow */}

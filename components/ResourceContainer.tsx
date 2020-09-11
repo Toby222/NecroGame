@@ -34,7 +34,7 @@ export class ResourceContainer<
       );
     }
     return (
-      <div className="container">
+      <div className="container us-none">
         <h1 className="sidebar-title">Resources</h1>
         <div className="container">
           {this.props.resources.map((res, idx) => renderResource(idx, res))}

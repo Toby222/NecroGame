@@ -19,10 +19,10 @@ export class MessagesContainer extends React.Component<MessagesContainerProps> {
     function renderMessage(messageId: number, message: Message) {
       return (
         <div key={messageId} className="row">
-          <span className="col-auto pr-15 text-right">
+          <span className="col-auto pr-15 text-right us-none">
             {message.time.toString()}
           </span>
-          <span className="col w-full">{message.content}</span>
+          <span className="col w-full cursor-default">{message.content}</span>
         </div>
       );
     }
@@ -30,7 +30,7 @@ export class MessagesContainer extends React.Component<MessagesContainerProps> {
     return (
       <div className="container flex-column d-flex justify-content-start row messages-container overflow-hidden">
         <div className="col-auto">
-          <h4 className="row">Messages</h4>
+          <h4 className="us-none">Messages</h4>
           {this.props.messages
             .slice(0, MessagesContainer.messageCount)
             .map((msg, idx) => renderMessage(idx, msg))}

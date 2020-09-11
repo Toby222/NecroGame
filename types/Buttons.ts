@@ -116,3 +116,39 @@ export class SummonSkeleton extends BaseButton {
     ];
   }
 }
+
+export class TestDelayedActions extends BaseButton {
+  static toString() {
+    return "[DEBUG]";
+  }
+  static visible = true;
+
+  static presses = 0;
+
+  static get actions() {
+    this.presses++;
+    return [
+      new Actions.BulkAction(
+        new Actions.AddMessage("Pressed"),
+        new Actions.EnqueueAction(
+          new Actions.DelayedAction(
+            new Actions.BulkAction(
+              new Actions.AddMessage(
+                "15 seconds since press " + this.presses.toString()
+              ),
+              new Actions.EnqueueAction(
+                new Actions.DelayedAction(
+                  new Actions.AddMessage(
+                    "30 seconds since press " + this.presses.toString()
+                  ),
+                  15
+                )
+              )
+            ),
+            15
+          )
+        )
+      ),
+    ];
+  }
+}

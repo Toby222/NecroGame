@@ -19,3 +19,11 @@ footer {
   left: 0;
   bottom: 0;
 }
+
+.us-none {
+  user-select: none;
+}
+
+.cursor-default {
+  cursor: default;
+}

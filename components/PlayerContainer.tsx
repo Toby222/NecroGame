@@ -11,7 +11,7 @@ interface PlayerContainerProps {
 export class PlayerContainer extends React.Component<PlayerContainerProps> {
   render() {
     return (
-      <div className="container">
+      <div className="container us-none">
         <h1 className="sidebar-title">{this.props.player.name}</h1>
         <div className="text-right">{this.props.time.toString()}</div>
         <div>Magic~~</div>

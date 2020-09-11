@@ -93,7 +93,10 @@ export class Consume<ResourceType extends typeof Resources.BaseResource>
  */
 export class AlterTime implements Transformation {
   perform(model: Model) {
-    model.time.seconds += (model.flags.get(Flags.AlterTimeFactor) ?? 0) - 1;
+    const ticks = model.flags.get<number>(Flags.AlterTimeFactor) ?? 0
+    for (let i = ticks ; i > 0; i-- ) {
+      model.tick();
+    }
   }
 
   apply(_model: Model) {}

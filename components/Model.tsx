@@ -33,6 +33,7 @@ export class Model extends React.Component {
     Buttons.AlterTime,
     Buttons.UnAlterTime,
     Buttons.Dig,
+    Buttons.TestDelayedActions,
   ];
   messages: Message[] = [];
   player: Player = new Player();
@@ -50,7 +51,7 @@ export class Model extends React.Component {
     mainLoop = setInterval(this.tick.bind(this), 1000);
   }
 
-  // Basically deconstructor for order purposes
+  // Basically destructor for order purposes
   componentWillUnmount() {
     clearInterval(mainLoop);
   }

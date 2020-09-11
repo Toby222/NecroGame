@@ -9,7 +9,7 @@
     "start": "next start",
     "lint": "prettier . --check",
     "format": "prettier . --write",
-    "test": "tsc && npm run lint"
+    "test": "tsc && yarn run lint"
   },
   "devDependencies": {
     "@types/node": "^14.6.2",
