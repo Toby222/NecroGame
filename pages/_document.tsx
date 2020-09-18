@@ -5,7 +5,7 @@ import Document, { Html, Head, Main, NextScript } from "next/document";
 export default class MyDocument extends Document {
   render() {
     return (
-      <Html>
+      <Html className="auto-scaling-disabled">
         <Head />
         <body data-set-preferred-theme-onload="true">
           <Main />

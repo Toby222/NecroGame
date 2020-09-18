@@ -45,9 +45,9 @@ export class ControlContainer extends React.Component<ControlContainerProps> {
     }
 
     return (
-      <div className="container row">
+      <div className="container-auto">
         <h4 className="us-none">Controls</h4>
-        <div className="container">
+        <div className="container-auto">
           {this.props.buttons.map((button) =>
             renderButton(button, this.props.model)
           )}

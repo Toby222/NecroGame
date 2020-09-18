@@ -22,7 +22,7 @@ import React from "react";
 import { version } from "../package.json";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-let mainLoop: NodeJS.Timeout;
+let mainLoop: any; //NodeJS.Timeout; // Weird bug, Type doesn't exist?
 
 export class Model extends React.Component {
   // Example values
@@ -169,14 +169,15 @@ export class Model extends React.Component {
             <ResourceContainer resources={this.resources} />
             <div className="sidebar-divider" />
             <PlayerContainer time={this.time} player={this.player} />
+            <div className="sidebar-divider" />
+            <MessagesContainer messages={this.messages} />
             <footer>
               <a href="https://github.com/toman222/NecroGame">source</a>
               <div>Version: {version}</div>
             </footer>
           </div>
-          <div className="content-wrapper d-flex flex-column justify-content-between">
+          <div className="content-wrapper">
             <ControlContainer buttons={this.buttons} model={this} />
-            <MessagesContainer messages={this.messages} />
           </div>
         </div>
       </main>
