@@ -28,7 +28,7 @@ export class ControlContainer extends React.Component<ControlContainerProps> {
       }
       return (
         <button
-          key={ControlContainer.bId++}
+          key={button.toString()}
           className="btn flex-fill"
           onClick={() => {
             if (model.flags.get(Flags.Paused) ?? true) return;
