@@ -1,11 +1,11 @@
 # Necromancy Game (Working Title)
 
-Dev: ![Code quality dev branch](https://github.com/toman222/NecroGame/workflows/Code%20quality%20check/badge.svg?branch=dev)  
-Main: ![Code quality main branch](https://github.com/toman222/NecroGame/workflows/Code%20quality%20check/badge.svg)
+Dev: ![Code quality dev branch](https://github.com/Toby222/NecroGame/workflows/Code%20quality%20check/badge.svg?branch=dev)  
+Main: ![Code quality main branch](https://github.com/Toby222/NecroGame/workflows/Code%20quality%20check/badge.svg)
 
 An incremental game skeleton. Very much WIP.
 
-![screenshot](/.github/images/screenshot_1.png?raw=true)
+![screenshot](https://github.com/Toby222/NecroGame/blob/main/.github/images/screenshot_1.png?raw=true)
 
 Play the current version [here](https://necro.tobot.tech/).
 Play around with the development version [here](https://dev.necro.tobot.tech/).

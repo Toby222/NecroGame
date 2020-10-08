@@ -33,6 +33,7 @@ export class Model extends React.Component {
     Buttons.AlterTime,
     Buttons.UnAlterTime,
     Buttons.Dig,
+    Buttons.TestDelayedActions,
   ];
   messages: Message[] = [];
   player: Player = new Player();
@@ -50,7 +51,7 @@ export class Model extends React.Component {
     mainLoop = setInterval(this.tick.bind(this), 1000);
   }
 
-  // Basically deconstructor for order purposes
+  // Basically destructor for order purposes
   componentWillUnmount() {
     clearInterval(mainLoop);
   }
@@ -168,14 +169,15 @@ export class Model extends React.Component {
             <ResourceContainer resources={this.resources} />
             <div className="sidebar-divider" />
             <PlayerContainer time={this.time} player={this.player} />
+            <div className="sidebar-divider" />
+            <MessagesContainer messages={this.messages} />
             <footer>
-              <a href="https://github.com/toman222/NecroGame">source</a>
+              <a href="https://github.com/Toby222/NecroGame">source</a>
               <div>Version: {version}</div>
             </footer>
           </div>
-          <div className="content-wrapper d-flex flex-column justify-content-between">
+          <div className="content-wrapper">
             <ControlContainer buttons={this.buttons} model={this} />
-            <MessagesContainer messages={this.messages} />
           </div>
         </div>
       </main>

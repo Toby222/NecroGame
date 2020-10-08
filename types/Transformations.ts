@@ -92,8 +92,15 @@ export class Consume<ResourceType extends typeof Resources.BaseResource>
  * Changes by how the Model's Time gets changed whenever one second passes
  */
 export class AlterTime implements Transformation {
+  private static fast = false;
   perform(model: Model) {
-    model.time.seconds += (model.flags.get(Flags.AlterTimeFactor) ?? 0) - 1;
+    if (AlterTime.fast) return;
+    const ticks = model.flags.get<number>(Flags.AlterTimeFactor) ?? 0;
+    for (let i = ticks - 1; i > 0; i--) {
+      AlterTime.fast = true;
+      model.tick();
+      AlterTime.fast = false;
+    }
   }
 
   apply(_model: Model) {}

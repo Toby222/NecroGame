@@ -28,7 +28,7 @@ export class ControlContainer extends React.Component<ControlContainerProps> {
       }
       return (
         <button
-          key={ControlContainer.bId++}
+          key={button.toString()}
           className="btn flex-fill"
           onClick={() => {
             if (model.flags.get(Flags.Paused) ?? true) return;
@@ -45,9 +45,9 @@ export class ControlContainer extends React.Component<ControlContainerProps> {
     }
 
     return (
-      <div className="container row">
-        <h4>Controls</h4>
-        <div className="container">
+      <div className="container-auto">
+        <h4 className="us-none">Controls</h4>
+        <div className="container-auto">
           {this.props.buttons.map((button) =>
             renderButton(button, this.props.model)
           )}
