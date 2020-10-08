@@ -172,7 +172,7 @@ export class Model extends React.Component {
             <div className="sidebar-divider" />
             <MessagesContainer messages={this.messages} />
             <footer>
-              <a href="https://github.com/toman222/NecroGame">source</a>
+              <a href="https://github.com/Toby222/NecroGame">source</a>
               <div>Version: {version}</div>
             </footer>
           </div>
