@@ -22,7 +22,7 @@ import React from "react";
 import { version } from "../package.json";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-let mainLoop: any; //NodeJS.Timeout; // Weird bug, Type doesn't exist?
+let mainLoop: NodeJS.Timeout;
 
 export class Model extends React.Component {
   // Example values
