@@ -11,28 +11,25 @@ import * as Conditions from "../types/Conditions";
 import { halfmoon } from "../util/HalfMoon";
 
 import ButtonContainer from "./ButtonContainer";
-import ResourceContainer from "./ResourceContainer";
-import PlayerContainer from "./PlayerContainer";
-import MessagesContainer from "./MessagesContainer";
 
+import Sidebar from "./Sidebar";
 import Modal from "./Modal";
 
 import React from "react";
-
-import { version } from "../package.json";
 
 let mainLoop: NodeJS.Timeout;
 
 export class Game extends React.Component {
   // Example values
   actionsQueue: Actions.DelayedAction[] = [];
-  conditions = new Array<Conditions.Condition>();
-  flags = new Flags.Flags();
   buttons: typeof Buttons.BaseButton[] = [Buttons.AlterTime, Buttons.UnAlterTime, Buttons.Dig, Buttons.TestDelayedActions];
+  conditions: Conditions.Condition[] = [];
   messages: Message[] = [];
-  player: Player = new Player();
   resources: typeof Resources.BaseResource[] = [];
-  time: Time = new Time();
+
+  flags = new Flags.Flags();
+  player = new Player();
+  time = new Time();
 
   togglePause() {
     this.flags.set(Flags.Paused, !this.flags.get(Flags.Paused));
@@ -122,36 +119,7 @@ export class Game extends React.Component {
           </Modal>
         </div>
         <div className="page-wrapper with-sidebar">
-          <div className="sidebar">
-            <div className="row">
-              <Modal display="button" className="col-auto" modalId="settings">
-                <i className="nf nf-cogs" />
-              </Modal>
-              <button className={"btn btn-primary col-auto"} onClick={this.togglePause.bind(this)}>
-                <i className={"nf nf-" + (Boolean(this.flags.get(Flags.Paused)) ? "play" : "pause")} />
-              </button>
-            </div>
-            <>
-              {this.flags.get(Flags.AlterTime) ?? false ? (
-                <>
-                  <div className="sidebar-divider" />
-                  <input className="form-control" type="number" placeholder="Time factor" onInput={this.trySetTimeFactor.bind(this)} />
-                </>
-              ) : (
-                <></>
-              )}
-            </>
-            <div className="sidebar-divider" />
-            <ResourceContainer resources={this.resources} />
-            <div className="sidebar-divider" />
-            <PlayerContainer time={this.time} player={this.player} />
-            <div className="sidebar-divider" />
-            <MessagesContainer messages={this.messages} />
-            <footer>
-              <a href="https://github.com/Toby222/NecroGame">source</a>
-              <div>Version: {version}</div>
-            </footer>
-          </div>
+          <Sidebar game={this} />
           <div className="content-wrapper">
             <ButtonContainer buttons={this.buttons} model={this} />
           </div>
@@ -160,3 +128,5 @@ export class Game extends React.Component {
     );
   }
 }
+
+export default Game;
