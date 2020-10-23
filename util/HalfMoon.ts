@@ -464,7 +464,7 @@ function halfmoonOnDOMContentLoaded() {
 
     // Add the event listener that will update the contents of the file name container element on change
     customFile.addEventListener("change", function (event) {
-      const target = event.target as HTMLInputElement
+      const target = event.target as HTMLInputElement;
       fileNamesContainer = target.parentNode!.querySelector(".file-names")! as HTMLDivElement;
       if ((target.files?.length ?? 0) === 1) {
         fileNamesContainer.innerHTML = target.files![0].name;
