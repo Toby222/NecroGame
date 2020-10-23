@@ -24,7 +24,11 @@ export class Sidebar extends React.Component<SidebarProps> {
           <Modal display="button" className="col-auto" modalId="settings">
             <i className="nf nf-cogs" />
           </Modal>
-          <button aria-label={(game.flags.get<boolean>(Flags.Paused) ? "resume" : "pause")} className={"btn btn-primary col-auto"} onClick={game.togglePause.bind(game)}>
+          <button
+            aria-label={game.flags.get<boolean>(Flags.Paused) ? "resume" : "pause"}
+            className={"btn btn-primary col-auto"}
+            onClick={game.togglePause.bind(game)}
+          >
             <i className={"nf nf-" + (game.flags.get<boolean>(Flags.Paused) ? "play" : "pause")} />
           </button>
         </div>
