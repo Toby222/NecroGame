@@ -14,7 +14,8 @@ export class StatsContainer extends React.Component<StatsContainerProps> {
       <div id="playerContainer" className="us-none row-auto">
         <h4>Statistics</h4>
         <div className="row">
-          <span className="col">Time:</span><div className="text-right col-auto">{this.props.time.toString()}</div>
+          <span className="col">Time:</span>
+          <div className="text-right col-auto">{this.props.time.toString()}</div>
         </div>
       </div>
     );
