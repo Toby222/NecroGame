@@ -170,7 +170,7 @@ CSS variables (CSS custom properties)
   --dark-color-dark: #111417;
 
   /* Gray colors */
-
+  
   --gray-color: #dadfe1;
   --gray-color-light: #ecf0f1;
   --gray-color-very-light: #f7f7f7;
@@ -211,6 +211,7 @@ CSS variables (CSS custom properties)
   --lm-muted-text-color: rgba(0, 0, 0, 0.6);
 
   --dm-muted-text-color: rgba(255, 255, 255, 0.6);
+
 
   /*
   ---------------------------------------------------------------------------
@@ -310,6 +311,7 @@ CSS variables (CSS custom properties)
   --pink-box-shadow-color-darker: rgba(237, 100, 166, 0.6);
   --text-color-on-pink-color-bg: #ffffff;
 
+  
   /*
   ---------------------------------------------------------------------------
   3.  Context colors [hmv-03]
@@ -365,6 +367,7 @@ CSS variables (CSS custom properties)
   --danger-box-shadow-color-darker: var(--red-box-shadow-color-darker);
   --text-color-on-danger-color-bg: var(--text-color-on-red-color-bg);
 
+
   /*
   ---------------------------------------------------------------------------
   4.  Box shadows [hmv-04]
@@ -383,6 +386,7 @@ CSS variables (CSS custom properties)
   --lm-large-shadow: 0 0.4rem 0.8rem var(--lm-shadow-color);
   --dm-large-shadow: 0 0.4rem 1.2rem var(--dm-shadow-color);
 
+
   /*
   ---------------------------------------------------------------------------
   5.  Scrollbars [hmv-05]
@@ -393,7 +397,7 @@ CSS variables (CSS custom properties)
       ~ The custom CSS scrollbars work only on Firefox as of 2020.
   ---------------------------------------------------------------------------
   */
-
+  
   --webkit-scrollbar-width-height: 1.4rem;
   --webkit-scrollbar-track-border-width: var(--base-border-width);
   --webkit-scrollbar-thumb-min-width-height: 3rem;
@@ -563,6 +567,7 @@ CSS variables (CSS custom properties)
   --lm-utility-transparent-track-css-scrollbar-color: var(--lm-webkit-scrollbar-thumb-bg-color) transparent;
   --dm-utility-transparent-track-css-scrollbar-color: var(--dm-webkit-scrollbar-thumb-bg-color) transparent;
 
+
   /*
   ---------------------------------------------------------------------------
   6.  Layout (Sticky alerts, navbar, sidebar) [hmv-06]
@@ -617,6 +622,7 @@ CSS variables (CSS custom properties)
 
   --sidebar-overlay-bg-color: rgba(0, 0, 0, 0.75);
 
+
   /*
   ---------------------------------------------------------------------------
   7.  Page building (containers, content, card, v-spacer) [hmv-07]
@@ -664,6 +670,7 @@ CSS variables (CSS custom properties)
   --v-spacer-height: var(--content-and-card-spacing);
   --v-spacer-height-xs: var(--content-and-card-spacing-xs);
 
+
   /*
   ---------------------------------------------------------------------------
   8.  Links [hmv-08]
@@ -675,6 +682,7 @@ CSS variables (CSS custom properties)
 
   --dm-link-text-color: var(--primary-color);
   --dm-link-text-color-hover: var(--primary-color-light);
+
 
   /*
   ---------------------------------------------------------------------------
@@ -984,6 +992,7 @@ CSS variables (CSS custom properties)
   --dm-kbd-bg-color: transparent;
   --dm-kbd-border-color: rgba(255, 255, 255, 0.2);
 
+
   /*
   ---------------------------------------------------------------------------
   11. Tables [hmv-11]
@@ -1063,6 +1072,7 @@ CSS variables (CSS custom properties)
   --dm-table-danger-row-border-color: var(--danger-color-dark);
   --dm-table-danger-cell-border-color: var(--dm-table-border-color);
 
+
   /*
   ---------------------------------------------------------------------------
   12. Form helpers (form-groups, labels, form-text, etc.) [hmv-12]
@@ -1102,6 +1112,7 @@ CSS variables (CSS custom properties)
   --dm-invalid-feedback-text-color: var(--danger-color);
 
   --form-inline-horizontal-margin: 1rem;
+
 
   /*
   ---------------------------------------------------------------------------
@@ -1241,6 +1252,7 @@ CSS variables (CSS custom properties)
   --select-bg-position: calc(100% - 1rem) center;
   --select-padding-right: 3.6rem; /* Makes room for the arrow */
 
+
   /*
   ---------------------------------------------------------------------------
   14. Checkbox [hmv-14]
@@ -1292,6 +1304,7 @@ CSS variables (CSS custom properties)
 
   --dm-checkbox-checkmark-color: #ffffff;
 
+  
   /*
   ---------------------------------------------------------------------------
   15. Radio [hmv-15]
@@ -1343,6 +1356,7 @@ CSS variables (CSS custom properties)
 
   --dm-radio-checkmark-color: #ffffff;
 
+  
   /*
   ---------------------------------------------------------------------------
   16. Switch [hmv-16]
@@ -1401,6 +1415,7 @@ CSS variables (CSS custom properties)
   --dm-switch-slider-border-color: var(--dm-switch-slider-bg-color);
   --dm-switch-slider-bg-color-checked: #ffffff;
   --dm-switch-slider-border-color-checked: var(--dm-switch-slider-bg-color-checked);
+
 
   /*
   ---------------------------------------------------------------------------
@@ -1482,7 +1497,10 @@ CSS variables (CSS custom properties)
   --dm-input-file-button-invalid-bg-color-focus: var(--dm-input-file-button-bg-color-focus);
   --dm-input-file-button-invalid-bg-image-focus: var(--dm-input-file-button-bg-image-focus);
   --dm-input-file-button-invalid-border-color-focus: var(--dm-input-invalid-border-color-focus); /* From input */
-  --dm-input-file-button-invalid-box-shadow-focus: var(--dm-input-invalid-box-shadow-focus); /* From input */  /*
+  --dm-input-file-button-invalid-box-shadow-focus: var(--dm-input-invalid-box-shadow-focus); /* From input */
+
+
+  /*
   ---------------------------------------------------------------------------
   18. Input group [hmv-18]
   ---------------------------------------------------------------------------
@@ -1556,6 +1574,7 @@ CSS variables (CSS custom properties)
   --dm-input-group-button-danger-border-color-hover: var(--dm-button-danger-border-color-hover);
   --dm-input-group-button-danger-border-color-focus: var(--dm-button-danger-border-color-focus);
 
+
   /*
   ---------------------------------------------------------------------------
   19. Dropdown [hmv-19]
@@ -1620,6 +1639,7 @@ CSS variables (CSS custom properties)
   --lm-dropdown-header-text-color: var(--lm-muted-text-color);
 
   --dm-dropdown-header-text-color: var(--dm-muted-text-color);
+
 
   /*
   ---------------------------------------------------------------------------
@@ -1687,6 +1707,7 @@ CSS variables (CSS custom properties)
   --dm-modal-close-text-color-hover: #ffffff;
   --dm-modal-close-bg-color-hover: rgba(255, 255, 255, 0.2);
   --dm-modal-close-outline-color-focus: var(--primary-box-shadow-color);
+
 
   /*
   ---------------------------------------------------------------------------
@@ -1820,6 +1841,7 @@ CSS variables (CSS custom properties)
   --dm-alert-filled-danger-bg-image: none;
   --dm-alert-filled-danger-border-color: var(--danger-color);
 
+
   /*
   ---------------------------------------------------------------------------
   22. Navbar content [hmv-22]
@@ -1875,6 +1897,7 @@ CSS variables (CSS custom properties)
   --navbar-input-min-width-xs: 10rem;
   --navbar-input-group-min-width-xs: 18rem;
 
+
   /*
   ---------------------------------------------------------------------------
   23. Sidebar content [hmv-23]
@@ -1885,7 +1908,7 @@ CSS variables (CSS custom properties)
 
   --sidebar-item-horizontal-spacing: 2.5rem;
   --sidebar-item-vertical-spacing: 0.5rem;
-
+  
   --sidebar-content-padding: 0;
   --sidebar-content-margin: var(--sidebar-menu-vertical-margin) var(--sidebar-item-horizontal-spacing);
 
@@ -1983,6 +2006,7 @@ CSS variables (CSS custom properties)
   --dm-sidebar-brand-text-color: var(--dm-base-text-color);
   --dm-sidebar-brand-text-color-hover: var(--dm-base-text-color-light);
 
+
   /*
   ---------------------------------------------------------------------------
   24. Pagination [hmv-24]
@@ -2047,6 +2071,7 @@ CSS variables (CSS custom properties)
   --dm-pagination-item-border-color-active: var(--dm-button-primary-border-color);
   --dm-pagination-item-box-shadow-active: var(--dm-button-primary-box-shadow);
 
+
   /*
   ---------------------------------------------------------------------------
   25. Breadcrumb [hmv-25]
@@ -2066,6 +2091,7 @@ CSS variables (CSS custom properties)
   --breadcrumb-separator-content: "\002F";
   --breadcrumb-separator-margin-left: 1rem;
   --breadcrumb-separator-margin-right: 1.5rem;
+
 
   /*
   ---------------------------------------------------------------------------
@@ -2088,6 +2114,7 @@ CSS variables (CSS custom properties)
 
   --dm-tooltip-text-color: var(--lm-base-text-color);
   --dm-tooltip-bg-color: var(--white-bg-color);
+
 
   /*
   ---------------------------------------------------------------------------
@@ -2194,6 +2221,7 @@ CSS variables (CSS custom properties)
   --dm-link-badge-danger-bg-color-hover: var(--danger-color-light);
   --dm-link-badge-danger-border-color-hover: var(--danger-color-light);
 
+
   /*
   ---------------------------------------------------------------------------
   28. Button group [hmv-28]
@@ -2254,6 +2282,7 @@ CSS variables (CSS custom properties)
 
   --button-toolbar-input-group-min-width: 20rem;
   --button-toolbar-input-group-min-width-xs: 18rem;
+
 
   /*
   ---------------------------------------------------------------------------
@@ -2357,6 +2386,7 @@ CSS variables (CSS custom properties)
   --dm-collapse-content-border-color: var(--dm-collapse-header-border-color);
   --dm-collapse-content-box-shadow: none;
 
+
   /*
   ---------------------------------------------------------------------------
   30. Progress [hmv-30]
@@ -2393,6 +2423,7 @@ CSS variables (CSS custom properties)
   --dm-progress-bar-animated-highlight-bg-color: var(--lm-progress-bar-animated-highlight-bg-color);
   --dm-progress-bar-animated-highlight-dark-bg-color: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.2));
 }
+
 
 /*
 -------------------------------------------------------------------------------
@@ -2564,6 +2595,7 @@ th {
   padding: 0;
 }
 
+
 /*
 -------------------------------------------------------------------------------
 1.  Base styles [hm-01]
@@ -2684,6 +2716,7 @@ h5 {
 h6 {
   font-size: 1.5rem;
 }
+
 
 /*
 -------------------------------------------------------------------------------
@@ -2984,6 +3017,7 @@ Notes:
       scrollbar-color: var(--dm-utility-transparent-track-css-scrollbar-color) !important;
   }
 }
+
 
 /*
 -------------------------------------------------------------------------------
@@ -3305,6 +3339,7 @@ body {
 .sidebar {
   -webkit-overflow-scrolling: touch;
 }
+
 
 /*
 -------------------------------------------------------------------------------
@@ -5014,6 +5049,7 @@ body {
   }
 }
 
+
 /*
 -------------------------------------------------------------------------------
 6.  Links [hm-06]
@@ -5842,6 +5878,7 @@ Notes:
   border-radius: var(--large-button-rounded-border-radius);
 }
 
+
 /*
 -------------------------------------------------------------------------------
 8.  List [hm-08]
@@ -5868,6 +5905,7 @@ ol ul {
 li {
   margin-bottom: 1rem;
 }
+
 
 /*
 -------------------------------------------------------------------------------
@@ -5917,6 +5955,7 @@ kbd {
   background-color: var(--dm-kbd-bg-color);
   border-color: var(--dm-kbd-border-color);
 }
+
 
 /*
 -------------------------------------------------------------------------------
@@ -6155,6 +6194,7 @@ kbd {
 .dark-mode .table-inner-bordered tbody tr.table-danger td {
   border-color: var(--dm-table-danger-cell-border-color);
 }
+
 
 /*
 -------------------------------------------------------------------------------
@@ -8039,6 +8079,7 @@ select.form-control[multiple] > option:disabled {
   border-color: var(--dm-input-group-button-danger-border-color-focus);
 }
 
+
 /*
 -------------------------------------------------------------------------------
 12. Dropdown [hm-12]
@@ -8463,6 +8504,7 @@ select.form-control[multiple] > option:disabled {
   bottom: var(--dropdown-arrow-horizontal-spacing);
 }
 
+
 /*
 -------------------------------------------------------------------------------
 13. Modal [hm-13]
@@ -8634,6 +8676,7 @@ select.form-control[multiple] > option:disabled {
 .modal.show .modal-content .close {
   top: 1rem;
 }
+
 
 /*
 -------------------------------------------------------------------------------
@@ -8854,6 +8897,7 @@ display: none;
   border-color: var(--dm-alert-danger-border-color);
 }
 
+
 /*
 -------------------------------------------------------------------------------
 15. Navbar content [hm-15]
@@ -9033,6 +9077,7 @@ display: none;
       min-width: var(--navbar-input-group-min-width-xs);
   }
 }
+
 
 /*
 -------------------------------------------------------------------------------
@@ -9222,6 +9267,7 @@ display: none;
   margin-right: var(--sidebar-brand-image-margin-right);
 }
 
+
 /*
 -------------------------------------------------------------------------------
 17. Pagination [hm-17]
@@ -9397,6 +9443,7 @@ display: none;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
 
 /*
 -------------------------------------------------------------------------------
@@ -9640,6 +9687,7 @@ display: none;
   }
 }
 
+
 /*
 -------------------------------------------------------------------------------
 20. Badges [hm-20]
@@ -9810,6 +9858,7 @@ a.badge-group:hover > .badge.badge-danger {
   border-color: var(--dm-link-badge-danger-border-color-hover);
 }
 
+
 /*
 -------------------------------------------------------------------------------
 21. Image [hm-21]
@@ -9820,6 +9869,7 @@ a.badge-group:hover > .badge.badge-danger {
   max-width: 100%;
   height: auto;
 }
+
 
 /*
 -------------------------------------------------------------------------------
@@ -10138,6 +10188,7 @@ a.badge-group:hover > .badge.badge-danger {
   border-color: var(--dm-button-group-button-danger-border-color-focus);
 }
 
+
 /*
 -------------------------------------------------------------------------------
 23. Collapse [hm-23]
@@ -10399,6 +10450,7 @@ details * {
   }
 }
 
+
 /*
 -------------------------------------------------------------------------------
 24. Progress [hm-24]
@@ -10517,6 +10569,7 @@ details * {
       opacity: 0.1;
   }
 }
+
 
 /*
 -------------------------------------------------------------------------------
@@ -11828,6 +11881,7 @@ Notes:
   }
 }
 
+
 /*
 -------------------------------------------------------------------------------
 26. Display utilities [hm-26]
@@ -12070,6 +12124,7 @@ body:not(.dark-mode) .hidden-lm {
 .dark-mode .hidden-dm {
   display: none !important;
 }
+
 
 /*
 -------------------------------------------------------------------------------
@@ -13395,6 +13450,7 @@ body:not(.dark-mode) .hidden-lm {
   }
 }
 
+
 /*
 -------------------------------------------------------------------------------
 29. Position utilities [hm-29]
@@ -13609,6 +13665,7 @@ body:not(.dark-mode) .hidden-lm {
       right: auto !important;
   }
 }
+
 
 /*
 -------------------------------------------------------------------------------

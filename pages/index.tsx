@@ -18,7 +18,7 @@ export default class extends React.Component {
           <link rel="stylesheet" type="text/css" href="/styles/halfmoon.css" />
           <link rel="stylesheet" type="text/css" href="/styles/necro.css" />
           {/* TODO: Replace with non-cdn version somehow */}
-          <script src="https://cdn.jsdelivr.net/npm/halfmoon@1.1.0/js/halfmoon.min.js" />
+          <script src="https://cdn.jsdelivr.net/npm/halfmoon@1.1.1/js/halfmoon.min.js" />
           <title>NecroGame</title>
         </Head>
         <Game />

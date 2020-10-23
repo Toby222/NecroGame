@@ -1,16 +1,23 @@
+// halfmoon.js v1.1.1
+// (badly) written into TS
+
 export class halfmoon {
   // Getting the required elements
   // Re-initialized once the DOM is loaded (to avoid issues with virtual DOM)
-  static pageWrapper?: Element;
-  static stickyAlerts?: Element;
+  static pageWrapper: Element;
+  static stickyAlerts: Element;
 
-  static darkModeOn: "yes" | "no" = "no"; // Also re-initialized once the DOM is loaded (see below)
+  static darkModeOn = false; // Also re-initialized once the DOM is loaded (see below)
 
   // Create cookie
-  static createCookie(name: string, value: string, days?: number) {
-    let expires = "";
-    if (days !== undefined) {
-      expires = "; expires=" + new Date(Date.now() + days * 24 * 60 * 60 * 1000).toUTCString();
+  static createCookie(name: string, value: string, days: number) {
+    let expires;
+    if (days) {
+      let date = new Date();
+      date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+      expires = "; expires=" + date.toUTCString();
+    } else {
+      expires = "";
     }
     document.cookie = name + "=" + value + expires + "; path=/";
   }
@@ -18,17 +25,21 @@ export class halfmoon {
   // Read cookie
   static readCookie(name: string) {
     let nameEQ = name + "=";
-    let cookies = document.cookie.split(";").map((cookie) => cookie.trimLeft());
-    for (const cookie of cookies) {
-      if (cookie.indexOf(nameEQ) === 0) {
-        return cookie.substring(nameEQ.length);
+    let ca = document.cookie.split(";");
+    for (let i = 0; i < ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) === " ") {
+        c = c.substring(1, c.length);
+      }
+      if (c.indexOf(nameEQ) === 0) {
+        return c.substring(nameEQ.length, c.length);
       }
     }
     return null;
   }
 
   // Erase cookie
-  static eraseCookie(name: any) {
+  static eraseCookie(name: string) {
     halfmoon.createCookie(name, "", -1);
   }
 
@@ -36,12 +47,22 @@ export class halfmoon {
   static toggleDarkMode() {
     if (document.body.classList.contains("dark-mode")) {
       document.body.classList.remove("dark-mode");
-      halfmoon.darkModeOn = "no";
+      halfmoon.darkModeOn = false;
+      halfmoon.createCookie("halfmoon_preferredMode", "light-mode", 365);
     } else {
       document.body.classList.add("dark-mode");
-      halfmoon.darkModeOn = "yes";
+      halfmoon.darkModeOn = true;
+      halfmoon.createCookie("halfmoon_preferredMode", "dark-mode", 365);
     }
-    halfmoon.createCookie("darkModeOn", halfmoon.darkModeOn, 365);
+  }
+
+  // Get preferred mode
+  static getPreferredMode() {
+    if (halfmoon.readCookie("halfmoon_preferredMode")) {
+      return halfmoon.readCookie("halfmoon_preferredMode");
+    } else {
+      return "not-set";
+    }
   }
 
   // Toggles sidebar
@@ -58,15 +79,19 @@ export class halfmoon {
   // Deactivate all the dropdown toggles when another one is active
   static deactivateAllDropdownToggles() {
     let activeDropdownToggles = document.querySelectorAll("[data-toggle='dropdown'].active");
-    for (const activeDropdownToggle of activeDropdownToggles) {
-      activeDropdownToggle.classList.remove("active");
-      activeDropdownToggle.closest(".dropdown")?.classList.remove("show");
+    for (let i = 0; i < activeDropdownToggles.length; i++) {
+      activeDropdownToggles[i].classList.remove("active");
+      activeDropdownToggles[i].closest(".dropdown")?.classList.remove("show");
     }
   }
 
   // Toggle modal (using Javascript)
   static toggleModal(modalId: string) {
-    document.getElementById(modalId)?.classList.toggle("show");
+    let modal = document.getElementById(modalId);
+
+    if (modal) {
+      modal.classList.toggle("show");
+    }
   }
 
   /* Code block for handling sticky alerts */
@@ -83,8 +108,15 @@ export class halfmoon {
   }
 
   // Toast an alert (show, fade, dispose)
-  static toastAlert(alertId: string, timeShown: number = 5000) {
-    let alertElement = document.getElementById(alertId)!;
+  static toastAlert(alertId: string, timeShown?: number) {
+    const alertElement = document.getElementById(alertId);
+
+    if (alertElement === null) return;
+
+    // Setting the default timeShown
+    if (timeShown === undefined) {
+      timeShown = 5000;
+    }
 
     // Alert is only toasted if it does not have the .show class
     if (!alertElement.classList.contains("show")) {
@@ -109,7 +141,7 @@ export class halfmoon {
       // Again, the extra delay is for the animation
       // Remove the .show and .fade classes (so the alert can be toasted again)
       let timeToDestroy = timeToFade + 500;
-      setTimeout(() => {
+      setTimeout(function () {
         alertElement.classList.remove("alert-block");
         alertElement.classList.remove("show");
         alertElement.classList.remove("fade");
@@ -128,11 +160,11 @@ export class halfmoon {
   }) {
     // Setting the letiables from the param
     let content = param.content ?? "";
-    let title = param.title ?? "";
-    let alertType = param.alertType ?? "";
-    let fillType = param.fillType ?? "";
-    let hasDismissButton = param.hasDismissButton ?? true;
-    let timeShown = param.timeShown ?? 5000;
+    const title = param.title ?? "";
+    const alertType = param.alertType ?? "";
+    const fillType = param.fillType ?? "";
+    const hasDismissButton = param.hasDismissButton ?? true;
+    const timeShown = param.timeShown ?? 5000;
 
     // Create the alert element
     let alertElement = document.createElement("div");
@@ -147,8 +179,12 @@ export class halfmoon {
 
     // Add the classes to the alert element
     alertElement.classList.add("alert");
-    alertElement.classList.add(alertType);
-    alertElement.classList.add(fillType);
+    if (alertType) {
+      alertElement.classList.add(alertType);
+    }
+    if (fillType) {
+      alertElement.classList.add(fillType);
+    }
 
     // Add the close button to the content (if required)
     if (hasDismissButton) {
@@ -160,7 +196,7 @@ export class halfmoon {
     alertElement.innerHTML = content;
 
     // Append the alert element to the sticky alerts
-    halfmoon.stickyAlerts?.insertBefore(alertElement, halfmoon.stickyAlerts.childNodes[0] ?? null);
+    halfmoon.stickyAlerts.insertBefore(alertElement, halfmoon.stickyAlerts.childNodes[0]);
 
     // Toast the alert
     halfmoon.toastAlert(alertElement.getAttribute("id")!, timeShown);
@@ -169,49 +205,51 @@ export class halfmoon {
   /* End code block for handling sticky alerts */
 
   // Click handler that can be overridden by users if needed
-  static clickHandler: (event: any) => void;
+  static clickHandler: (event: MouseEvent) => void;
 
   // Keydown handler that can be overridden by users if needed
-  static keydownHandler: (event: any) => void;
+  static keydownHandler: (event: KeyboardEvent) => void;
 
   static onDomContentLoaded: () => void;
 }
 
 /* Things done once the DOM is loaded */
 
-function HalfMoonOnDOMContentLoaded() {
+function halfmoonOnDOMContentLoaded() {
   // Re-initializing the required elements (to avoid issues with virtual DOM)
-  if (halfmoon.pageWrapper === undefined) {
+  if (!halfmoon.pageWrapper) {
     halfmoon.pageWrapper = document.getElementsByClassName("page-wrapper")[0];
   }
-  if (halfmoon.stickyAlerts === undefined) {
+  if (!halfmoon.stickyAlerts) {
     halfmoon.stickyAlerts = document.getElementsByClassName("sticky-alerts")[0];
   }
 
-  // Handle the cookie and letiable for dark mode
+  // Handle the cookie and variable for dark mode
   // 1. First preference is given to the cookie if it exists
-  if (halfmoon.readCookie("darkModeOn")) {
-    halfmoon.darkModeOn = (halfmoon.readCookie("darkModeOn") as "yes" | "no" | null) ?? "no";
+  if (halfmoon.readCookie("halfmoon_preferredMode")) {
+    if (halfmoon.readCookie("halfmoon_preferredMode") == "dark-mode") {
+      halfmoon.darkModeOn = true;
+    } else {
+      halfmoon.darkModeOn = false;
+    }
   } else {
     // 2. If cookie does not exist, next preference is for the dark mode setting
     if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
-      halfmoon.darkModeOn = "yes";
+      halfmoon.darkModeOn = true;
     } else {
       // 3. If all else fails, re-initialize the dark mode preference depending on the .dark-mode class
       if (document.body.classList.contains("dark-mode")) {
-        halfmoon.darkModeOn = "yes";
+        halfmoon.darkModeOn = true;
       } else {
-        halfmoon.darkModeOn = "no";
+        halfmoon.darkModeOn = false;
       }
     }
-    // 4. Set the cookie where the letiable is the value
-    halfmoon.createCookie("darkModeOn", halfmoon.darkModeOn, 365);
   }
 
   // Automatically set preferred theme
-  // But only if the data-attribute is provided
-  if (document.body.getAttribute("data-set-preferred-theme-onload")) {
-    if (halfmoon.darkModeOn == "yes") {
+  // But only if one of the data-attribute is provided
+  if (document.body.getAttribute("data-set-preferred-mode-onload") || document.body.getAttribute("data-set-preferred-theme-onload")) {
+    if (halfmoon.darkModeOn) {
       if (!document.body.classList.contains("dark-mode")) {
         document.body.classList.add("dark-mode");
       }
@@ -243,20 +281,25 @@ function HalfMoonOnDOMContentLoaded() {
     "click",
     function (event) {
       let eventCopy = event;
-      let target: Element | null = event.target as Element;
+      let target = event.target as Element | null;
+
+      if (target === null) {
+        halfmoon.clickHandler(eventCopy);
+        return;
+      }
 
       // Handle clicks on dropdown toggles
       if (target !== null && (target.matches("[data-toggle='dropdown']") || target.matches("[data-toggle='dropdown'] *"))) {
         if (target.matches("[data-toggle='dropdown'] *")) {
           target = target.closest("[data-toggle='dropdown']");
         }
-        if (target !== null && target.classList.contains("active")) {
+        if (target?.classList.contains("active")) {
           target.classList.remove("active");
-          target.closest(".dropdown")!.classList.remove("show");
-        } else if (target !== null) {
+          target.closest(".dropdown")?.classList.remove("show");
+        } else {
           halfmoon.deactivateAllDropdownToggles();
-          target.classList.add("active");
-          target.closest(".dropdown")!.classList.add("show");
+          target?.classList.add("active");
+          target?.closest(".dropdown")?.classList.add("show");
         }
       } else {
         if (!target.matches(".dropdown-menu *")) {
@@ -269,9 +312,7 @@ function HalfMoonOnDOMContentLoaded() {
         if (target.matches(".alert [data-dismiss='alert'] *")) {
           target = target.closest(".alert [data-dismiss='alert']");
         }
-        if (target?.parentElement) {
-          target?.parentElement?.classList.add("dispose");
-        }
+        target?.parentElement?.classList.add("dispose");
       }
 
       // Handle clicks on modal toggles
@@ -279,11 +320,12 @@ function HalfMoonOnDOMContentLoaded() {
         if (target.matches("[data-toggle='modal'] *")) {
           target = target.closest("[data-toggle='modal']");
         }
+        if (target?.hasAttribute("data-target")) {
+          let targetModal = document.getElementById(target.getAttribute("data-target")!);
 
-        const dataTarget = target?.getAttribute("data-target") ?? null;
-        const targetModal = target !== null && dataTarget !== null ? document.getElementById(dataTarget) : null;
-        if (targetModal?.classList.contains("modal") && dataTarget !== null) {
-          halfmoon.toggleModal(dataTarget);
+          if (targetModal?.classList.contains("modal")) {
+            halfmoon.toggleModal(target?.getAttribute("data-target")!);
+          }
         }
       }
 
@@ -299,8 +341,8 @@ function HalfMoonOnDOMContentLoaded() {
       if (target !== null && target.matches(".modal-dialog")) {
         let parentModal = target.closest(".modal");
 
-        if (parentModal !== null && parentModal.getAttribute("data-overlay-dismissal-disabled") !== null) {
-          if (parentModal.classList.contains("show")) {
+        if (!parentModal?.getAttribute("data-overlay-dismissal-disabled")) {
+          if (parentModal?.classList.contains("show")) {
             parentModal.classList.remove("show");
           } else {
             window.location.hash = "#";
@@ -322,11 +364,13 @@ function HalfMoonOnDOMContentLoaded() {
     // If the control key or command key is not pressed down,
     // And if the enabling data attribute is present on the DOM's body
     if (!(document.querySelector("input:focus") || document.querySelector("textarea:focus") || document.querySelector("select:focus"))) {
+      event = event || window.event;
+
       if (!(event.ctrlKey || event.metaKey)) {
         // Toggle sidebar when [shift] + [S] keys are pressed
         if (document.body.getAttribute("data-sidebar-shortcut-enabled")) {
           if (event.shiftKey && event.key === "s") {
-            // letiable to store whether a modal is open or not
+            // Variable to store whether a modal is open or not
             let modalOpen = false;
 
             // Hash exists, so we check if it belongs to a modal
@@ -403,9 +447,9 @@ function HalfMoonOnDOMContentLoaded() {
   });
 
   // Handling custom file inputs
-  let HalfMoonCustomFileInputs = document.querySelectorAll(".custom-file input") as NodeListOf<HTMLInputElement>;
-  for (let i = 0; i < HalfMoonCustomFileInputs.length; i++) {
-    let customFile = HalfMoonCustomFileInputs[i];
+  let halfmoonCustomFileInputs = document.querySelectorAll(".custom-file input");
+  for (let i = 0; i < halfmoonCustomFileInputs.length; i++) {
+    let customFile = halfmoonCustomFileInputs[i] as HTMLInputElement;
     // Create file name container element, add the class name, and set default value
     // Append it to the custom file element
     let fileNamesContainer = document.createElement("div");
@@ -416,12 +460,12 @@ function HalfMoonOnDOMContentLoaded() {
     } else {
       fileNamesContainer.innerHTML = "No file chosen";
     }
-    customFile.parentElement?.appendChild(fileNamesContainer);
+    customFile.parentNode!.appendChild(fileNamesContainer);
 
     // Add the event listener that will update the contents of the file name container element on change
     customFile.addEventListener("change", function (event) {
-      const target = event.target as HTMLInputElement;
-      fileNamesContainer = target.parentElement?.querySelector(".file-names") as HTMLDivElement;
+      const target = event.target as HTMLInputElement
+      fileNamesContainer = target.parentNode!.querySelector(".file-names")! as HTMLDivElement;
       if ((target.files?.length ?? 0) === 1) {
         fileNamesContainer.innerHTML = target.files![0].name;
       } else if ((target.files?.length ?? 0) > 1) {
@@ -439,4 +483,4 @@ function HalfMoonOnDOMContentLoaded() {
   }
 }
 // Call the function when the DOM is loaded
-halfmoon.onDomContentLoaded = HalfMoonOnDOMContentLoaded;
+halfmoon.onDomContentLoaded = halfmoonOnDOMContentLoaded;
