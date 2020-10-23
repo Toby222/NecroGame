@@ -2,4 +2,4 @@
 .vercel/**
 .yarn/**
 
-halfmoon.css
+*.min.*

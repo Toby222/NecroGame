@@ -24,12 +24,17 @@ export class ResourceContainer<T extends typeof BaseResource> extends React.Comp
         </div>
       );
     }
+    if(this.props.resources.length > 0) {
     return (
       <div className="us-none row-auto">
-        <h1 className="sidebar-title">Resources</h1>
+        <h4>Resources</h4>
         <div className="container">{this.props.resources.map((res, idx) => renderResource(idx, res))}</div>
       </div>
     );
+    }
+    else {
+      return <></>
+    }
   }
 }
 export default ResourceContainer;

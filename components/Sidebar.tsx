@@ -1,7 +1,7 @@
 import * as Flags from "../types/Flags";
 
 import ResourceContainer from "./ResourceContainer";
-import PlayerContainer from "./PlayerContainer";
+import StatsContainer from "./PlayerContainer";
 import MessagesContainer from "./MessagesContainer";
 import Game from "./Game";
 
@@ -24,8 +24,8 @@ export class Sidebar extends React.Component<SidebarProps> {
           <Modal display="button" className="col-auto" modalId="settings">
             <i className="nf nf-cogs" />
           </Modal>
-          <button className={"btn btn-primary col-auto"} onClick={game.togglePause.bind(game)}>
-            <i className={"nf nf-" + (Boolean(game.flags.get(Flags.Paused)) ? "play" : "pause")} />
+          <button aria-label={(game.flags.get<boolean>(Flags.Paused) ? "resume" : "pause")} className={"btn btn-primary col-auto"} onClick={game.togglePause.bind(game)}>
+            <i className={"nf nf-" + (game.flags.get<boolean>(Flags.Paused) ? "play" : "pause")} />
           </button>
         </div>
         <>
@@ -38,15 +38,15 @@ export class Sidebar extends React.Component<SidebarProps> {
             <></>
           )}
         </>
-        <div className="sidebar-divider row" />
+        {this.props.game.resources.length > 0 ? <div className="sidebar-divider row" /> : <></>}
         <ResourceContainer resources={game.resources} />
         <div className="sidebar-divider row" />
-        <PlayerContainer time={game.time} player={game.player} />
+        <StatsContainer time={game.time} player={game.player} />
         <div className="sidebar-divider row" />
         <MessagesContainer messages={game.messages} />
         <footer>
           <a href="https://github.com/Toby222/NecroGame">source</a>
-          <div className="us-none">Version: {version}</div>
+          <div className="us-none">{`Version: ${version}`}</div>
         </footer>
       </div>
     );

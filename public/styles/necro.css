@@ -1,12 +1,3 @@
-@import url("./nerd-font-icons.css");
-
-@font-face {
-  font-family: "DaddyTimeMono";
-  font-style: normal;
-  font-weight: normal;
-  src: url("/fonts/DaddyTimeMonoNerd.ttf") format("truetype");
-}
-
 :root {
   --base-font-size: 1.6rem;
 }
@@ -54,4 +45,30 @@ footer {
   100% {
     width: 100%;
   }
+}
+
+/* Nerd Font Icons */
+@font-face {
+  font-family: "DaddyTimeMono";
+  font-style: normal;
+  font-weight: normal;
+  src: url("/fonts/DaddyTimeMonoNerd.ttf") format("truetype");
+  font-display: swap;
+}
+
+i.nf {
+  font-style: inherit;
+}
+
+i.nf.nf-cog:before {
+  content: "\f013";
+}
+i.nf.nf-cogs:before {
+  content: "\f085";
+}
+i.nf.nf-pause:before {
+  content: "\f04c";
+}
+i.nf.nf-play:before {
+  content: "\f04b";
 }

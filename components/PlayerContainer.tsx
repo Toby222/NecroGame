@@ -3,20 +3,21 @@ import { Player } from "../types/Player";
 import * as React from "react";
 import { Time } from "../types/Time";
 
-interface PlayerContainerProps {
+interface StatsContainerProps {
   player: Player;
   time: Time;
 }
 
-export class PlayerContainer extends React.Component<PlayerContainerProps> {
+export class StatsContainer extends React.Component<StatsContainerProps> {
   render() {
     return (
       <div id="playerContainer" className="us-none row-auto">
-        <h1 className="sidebar-title">{this.props.player.name}</h1>
-        <div className="text-right">{this.props.time.toString()}</div>
-        <div>Magic~~</div>
+        <h4>Statistics</h4>
+        <div className="row">
+          <span className="col">Time:</span><div className="text-right col-auto">{this.props.time.toString()}</div>
+        </div>
       </div>
     );
   }
 }
-export default PlayerContainer;
+export default StatsContainer;
