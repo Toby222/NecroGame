@@ -7,7 +7,7 @@ interface MessagesContainerProps {
 }
 
 export class MessagesContainer extends React.Component<MessagesContainerProps> {
-  private static readonly messageCount = 30;
+  private static readonly messageCount = 10;
   render() {
     /**
      * Helper function to turn Messages into Elements.
@@ -27,11 +27,9 @@ export class MessagesContainer extends React.Component<MessagesContainerProps> {
     }
 
     return (
-      <div className="container flex-column d-flex justify-content-start row-auto messages-container overflow-y-scroll">
-        <div className="col-auto">
-          <h4 className="us-none">Messages</h4>
-          {this.props.messages.slice(0, MessagesContainer.messageCount).map((msg, idx) => renderMessage(idx, msg))}
-        </div>
+      <div className="d-flex flex-column justify-content-start h-auto overflow-hide">
+        <h4 className="row us-none">Messages</h4>
+        {this.props.messages.slice(0, MessagesContainer.messageCount).map((msg, idx) => renderMessage(idx, msg))}
       </div>
     );
   }
