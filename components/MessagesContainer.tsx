@@ -21,7 +21,9 @@ export class MessagesContainer extends React.Component<MessagesContainerProps> {
         <div key={messageId} className="row font-size-12">
           <span className="row pr-15 text-right us-none text-decoration-underline">{message.time.toString()}</span>
           <span className="row w-full cursor-default">{message.content}</span>
-          <span className="row w-full"><br/></span>
+          <span className="row w-full">
+            <br />
+          </span>
         </div>
       );
     }
