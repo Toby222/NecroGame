@@ -16,20 +16,20 @@ Built with Node.js.
 
 Developed with the help of [vercel](https://vercel.com/), and its command line tool.
 
-## Usage
+## Development scripts
 
-- `npm run format` - Auto-format the codebase.
-  - `npm run lint` - Check if codebase conforms to prettier standard.
-  - `npm run test` - Check if codebase is ready for commit.
-- `npm run dev` - Start a development server at `localhost:3000` and watch for code changes.
-  - `npm run build` - Create a production build.
-  - `npm run start` - Host the latest production build at `localhost:3000`
+- `yarn run format` - Auto-format the codebase.
+  - `yarn run lint` - Check if codebase conforms to prettier standard.
+  - `yarn run test` - Check if codebase is ready for commit.
+- `yarn run dev` - Start a development server at `localhost:3000` and watch for code changes.
+  - `yarn run build` - Create a production build.
+  - `yarn run start` - Host the latest production build at `localhost:3000`
 
 ## Dependencies
 
 - [Next.js](https://nextjs.org/) - React framework
 - [typescript](https://www.typescriptlang.org/) - JS, but typesafe
-- ["Fira Code" font family](https://fonts.google.com/specimen/Fira+Code) - Console font
+- [DaddyTimeMono Nerd Font](https://www.nerdfonts.com/) - A "wibbly-wobbly handwriting-like"\[sic\] font patched with icons
 
 ## Acknowledgements
 

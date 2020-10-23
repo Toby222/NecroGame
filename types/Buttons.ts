@@ -29,11 +29,7 @@ export class AlterTime extends BaseButton {
   }
 
   static get actions(): Actions.Action[] {
-    return [
-      new Actions.SetFlag(Flags.AlterTime, true),
-      new Actions.DisableButton(this),
-      new Actions.EnableButton(UnAlterTime),
-    ];
+    return [new Actions.SetFlag(Flags.AlterTime, true), new Actions.DisableButton(this), new Actions.EnableButton(UnAlterTime)];
   }
 }
 
@@ -43,11 +39,7 @@ export class UnAlterTime extends BaseButton {
   }
 
   static get actions(): Actions.Action[] {
-    return [
-      new Actions.SetFlag(Flags.AlterTime, false),
-      new Actions.DisableButton(this),
-      new Actions.EnableButton(AlterTime),
-    ];
+    return [new Actions.SetFlag(Flags.AlterTime, false), new Actions.DisableButton(this), new Actions.EnableButton(AlterTime)];
   }
 }
 
@@ -61,38 +53,19 @@ export class Dig extends BaseButton {
   static get actions() {
     let result: Actions.Action[] = [];
     if (this.stats.timesUsed === 0) {
-      result.push(
-        new Actions.AddCondition(
-          new Conditions.ResourceValue(Resources.Bones, 2),
-          new Actions.EnableButton(SummonSkeleton)
-        )
-      );
+      result.push(new Actions.AddCondition(new Conditions.ResourceValue(Resources.Bones, 2), new Actions.EnableButton(SummonSkeleton)));
     }
 
     if (Math.random() <= 0.04) {
       result = result.concat([
-        new Actions.AddResourceValue(
-          Resources.Dirt,
-          Math.floor(Math.random() * 10 + 1)
-        ),
-        new Actions.AddResourceValue(
-          Resources.Bones,
-          Math.trunc(Math.random() * 10)
-        ),
-        new Actions.AddMessage(
-          "You find a bunch of bones just beneath the surface."
-        ),
+        new Actions.AddResourceValue(Resources.Dirt, Math.floor(Math.random() * 10 + 1)),
+        new Actions.AddResourceValue(Resources.Bones, Math.trunc(Math.random() * 10)),
+        new Actions.AddMessage("You find a bunch of bones just beneath the surface."),
       ]);
     } else {
       result = result.concat([
-        new Actions.AddResourceValue(
-          Resources.Dirt,
-          Math.floor(Math.random() * 10 + 1)
-        ),
-        new Actions.AddResourceValue(
-          Resources.Bones,
-          Math.round(Math.random())
-        ),
+        new Actions.AddResourceValue(Resources.Dirt, Math.floor(Math.random() * 10 + 1)),
+        new Actions.AddResourceValue(Resources.Bones, Math.round(Math.random())),
       ]);
     }
     return result;
@@ -110,10 +83,7 @@ export class SummonSkeleton extends BaseButton {
   }
 
   static get actions() {
-    return [
-      new Actions.AddResourceValue(Resources.Bones, -5),
-      new Actions.AddResourceDelta(Resources.Dirt, 0.1),
-    ];
+    return [new Actions.AddResourceValue(Resources.Bones, -5), new Actions.AddResourceDelta(Resources.Dirt, 0.1)];
   }
 }
 
@@ -133,17 +103,8 @@ export class TestDelayedActions extends BaseButton {
         new Actions.EnqueueAction(
           new Actions.DelayedAction(
             new Actions.BulkAction(
-              new Actions.AddMessage(
-                "15 seconds since press " + this.presses.toString()
-              ),
-              new Actions.EnqueueAction(
-                new Actions.DelayedAction(
-                  new Actions.AddMessage(
-                    "30 seconds since press " + this.presses.toString()
-                  ),
-                  15
-                )
-              )
+              new Actions.AddMessage("15 seconds since press " + this.presses.toString()),
+              new Actions.EnqueueAction(new Actions.DelayedAction(new Actions.AddMessage("30 seconds since press " + this.presses.toString()), 15))
             ),
             15
           )

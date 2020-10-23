@@ -2,7 +2,7 @@ import * as Resources from "./Resources";
 import * as Actions from "./Actions";
 import * as Flags from "./Flags";
 
-import { Model } from "../components/Model";
+import { Game } from "../components/Game";
 
 export interface Transformation {
   /**
@@ -12,7 +12,7 @@ export interface Transformation {
    *
    * @param model Model to use for the Transformation
    */
-  perform(model: Model): void;
+  perform(model: Game): void;
   /**
    * Initialize this transformation.
    *
@@ -20,7 +20,7 @@ export interface Transformation {
    *
    * @param model Model to use for the Transformation
    */
-  apply(model: Model): void;
+  apply(model: Game): void;
   /**
    * Clear this transformation.
    *
@@ -28,11 +28,10 @@ export interface Transformation {
    *
    * @param model Model to use for the Transformation
    */
-  clear(model: Model): void;
+  clear(model: Game): void;
 }
 
-export class Generate<T extends typeof Resources.BaseResource>
-  implements Transformation {
+export class Generate<T extends typeof Resources.BaseResource> implements Transformation {
   private resource: T;
   private delta: number;
 
@@ -46,15 +45,15 @@ export class Generate<T extends typeof Resources.BaseResource>
     this.delta = delta;
   }
 
-  perform(model: Model) {
+  perform(model: Game) {
     new Actions.AddResourceValue(this.resource, this.delta).perform(model);
   }
 
-  apply(model: Model) {
+  apply(model: Game) {
     new Actions.AddResourceDelta(this.resource, this.delta).perform(model);
   }
 
-  clear(model: Model) {
+  clear(model: Game) {
     new Actions.AddResourceDelta(this.resource, -this.delta).perform(model);
   }
 }
@@ -65,8 +64,7 @@ export class Generate<T extends typeof Resources.BaseResource>
  * @param delta The amount to generate
  * @typeParam ResourceType (inferred from parameter resource)
  */
-export class Consume<ResourceType extends typeof Resources.BaseResource>
-  implements Transformation {
+export class Consume<ResourceType extends typeof Resources.BaseResource> implements Transformation {
   private resource: ResourceType;
   private delta: number;
 
@@ -75,15 +73,15 @@ export class Consume<ResourceType extends typeof Resources.BaseResource>
     this.delta = -delta;
   }
 
-  perform(model: Model) {
+  perform(model: Game) {
     new Actions.AddResourceValue(this.resource, this.delta).perform(model);
   }
 
-  apply(model: Model) {
+  apply(model: Game) {
     new Actions.AddResourceDelta(this.resource, this.delta).perform(model);
   }
 
-  clear(model: Model) {
+  clear(model: Game) {
     new Actions.AddResourceDelta(this.resource, -this.delta).perform(model);
   }
 }
@@ -93,7 +91,7 @@ export class Consume<ResourceType extends typeof Resources.BaseResource>
  */
 export class AlterTime implements Transformation {
   private static fast = false;
-  perform(model: Model) {
+  perform(model: Game) {
     if (AlterTime.fast) return;
     const ticks = model.flags.get<number>(Flags.AlterTimeFactor) ?? 0;
     for (let i = ticks - 1; i > 0; i--) {
@@ -103,7 +101,7 @@ export class AlterTime implements Transformation {
     }
   }
 
-  apply(_model: Model) {}
+  apply(_model: Game) {}
 
-  clear(_model: Model) {}
+  clear(_model: Game) {}
 }

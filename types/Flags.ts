@@ -1,6 +1,6 @@
 import * as Transformations from "./Transformations";
 
-import { Model } from "../components/Model";
+import { Game } from "../components/Game";
 
 export class Flags extends Map<AnyFlag, any> {
   get<T = any>(flag: AnyFlag) {
@@ -31,13 +31,13 @@ export abstract class Flag {
    * @param model The model that the Flag was applied to
    * @param value The value that the Flag was assigned
    */
-  static onSet(model: Model, value: any) {}
+  static onSet(model: Game, value: any) {}
   /**
    * Called when the Flag gets reset
    *
    * @param model The model that the Flag was reset on
    */
-  static onClear(model: Model) {}
+  static onClear(model: Game) {}
 }
 
 /**
@@ -48,7 +48,7 @@ export class TransformationFlag extends Flag {
     return (flag as any).transformations !== undefined;
   }
   protected static transformations: Transformations.Transformation[];
-  static onSet(model: Model, value: any) {
+  static onSet(model: Game, value: any) {
     if (Boolean(value)) {
       for (const transformation of this.transformations) {
         transformation.apply(model);
@@ -56,7 +56,7 @@ export class TransformationFlag extends Flag {
     }
   }
 
-  static onClear(model: Model) {
+  static onClear(model: Game) {
     for (const transformation of this.transformations) {
       transformation.clear(model);
     }
@@ -66,7 +66,7 @@ export class TransformationFlag extends Flag {
    * Perform all of the transformations of this Flag
    * @param model The Model to perform the effects on
    */
-  static performEffects(model: Model) {
+  static performEffects(model: Game) {
     for (const transformation of this.transformations) {
       transformation.perform(model);
     }

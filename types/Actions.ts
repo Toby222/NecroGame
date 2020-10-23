@@ -3,11 +3,11 @@ import * as Flags from "./Flags";
 import { BaseResource } from "./Resources";
 import { Message } from "./Messages";
 
-import { Model } from "../components/Model";
+import { Game } from "../components/Game";
 import { Condition } from "./Conditions";
 
 export abstract class Action {
-  abstract perform(model: Model): void;
+  abstract perform(model: Game): void;
 }
 
 export class PassTime extends Action {
@@ -17,7 +17,7 @@ export class PassTime extends Action {
     this.delay = delay;
   }
 
-  perform(model: Model) {
+  perform(model: Game) {
     for (let i = 0; i < this.delay; i++) {
       model.tick();
     }
@@ -33,7 +33,7 @@ export class BulkAction extends Action {
     this.actions = actions;
   }
 
-  perform(model: Model) {
+  perform(model: Game) {
     model.performActions(...this.actions);
   }
 }
@@ -47,7 +47,7 @@ export class EnqueueAction extends Action {
     this.delayedAction = delayedAction;
   }
 
-  perform(model: Model) {
+  perform(model: Game) {
     model.actionsQueue.push(this.delayedAction);
   }
 }
@@ -66,7 +66,7 @@ export class DelayedAction extends Action {
   /**
    * @returns Wether or not the delayed Action was called
    */
-  perform(model: Model) {
+  perform(model: Game) {
     if (--this.delay <= 0) {
       this.action.perform(model);
       return true;
@@ -86,7 +86,7 @@ export class SetFlag extends Action {
     this.flag = flag;
   }
 
-  perform(model: Model) {
+  perform(model: Game) {
     model.flags.set(this.flag, this.value);
     this.flag.onSet(model, this.value);
   }
@@ -101,7 +101,7 @@ export class ClearFlag extends Action {
     this.flag = flag;
   }
 
-  perform(model: Model) {
+  perform(model: Game) {
     model.flags.delete(this.flag);
     this.flag.onClear(model);
   }
@@ -116,7 +116,7 @@ export class SetResourceValue<T extends typeof BaseResource> extends Action {
     this.amount = amount;
     this.resource = resource;
   }
-  perform(model: Model) {
+  perform(model: Game) {
     this.resource.amount = this.amount;
 
     model.resources.push(this.resource);
@@ -135,7 +135,7 @@ export class AddResourceValue<T extends typeof BaseResource> extends Action {
     this.delta = delta;
   }
 
-  perform(model: Model) {
+  perform(model: Game) {
     if (this.delta !== 0 && !model.resources.includes(this.resource)) {
       new SetResourceValue(this.resource, this.resource.amount).perform(model);
     }
@@ -154,7 +154,7 @@ export class AddResourceDelta<T extends typeof BaseResource> extends Action {
     this.delta = delta;
   }
 
-  perform(model: Model) {
+  perform(model: Game) {
     if (this.delta !== 0 && !model.resources.includes(this.resource)) {
       new SetResourceValue(this.resource, this.resource.amount).perform(model);
     }
@@ -171,7 +171,7 @@ export class AddMessage extends Action {
     this.message = message;
   }
 
-  perform(model: Model) {
+  perform(model: Game) {
     model.messages.unshift(new Message(this.message, model.time));
   }
 }
@@ -185,7 +185,7 @@ export class EnableButton<T extends typeof BaseButton> extends Action {
     this.button = button;
   }
 
-  perform(model: Model) {
+  perform(model: Game) {
     if (!model.buttons.includes(this.button)) {
       model.buttons.push(this.button);
     }
@@ -202,7 +202,7 @@ export class DisableButton<T extends typeof BaseButton> extends Action {
     this.button = button;
   }
 
-  perform(model: Model) {
+  perform(model: Game) {
     this.button.visible = false;
   }
 }
@@ -218,7 +218,7 @@ export class AddCondition extends Action {
     this.action = action;
   }
 
-  perform(model: Model) {
+  perform(model: Game) {
     model.conditions.push(this.condition);
   }
 }
