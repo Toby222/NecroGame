@@ -29,7 +29,7 @@ export class MessagesContainer extends React.Component<MessagesContainerProps> {
     }
 
     return (
-      <div className="justify-content-start us-none overflow-hidden">
+      <div id="messagesContainer" className="justify-content-start us-none overflow-hidden">
         <h4>Messages</h4>
         {this.props.messages.slice(0, MessagesContainer.messageCount).map((msg, idx) => renderMessage(idx, msg))}
       </div>

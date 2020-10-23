@@ -15,28 +15,29 @@ export class Button extends React.Component<ButtonProps> {
       return <></>;
     }
     let button = (
-      <button
-        className="btn"
-        data-cooldown="0"
-        onClick={() => {
-          if (this.props.model.flags.get(Flags.Paused) ?? true) return;
-          this.props.model.performActions(...this.props.button.actions);
-          this.props.button.currentCooldown = this.props.button.cooldown;
-          this.props.button.stats.timesUsed++;
-          this.props.model.forceUpdate();
-        }}
-        disabled={this.props.button.currentCooldown !== 0 || !this.props.button.active}
-      >
-        {this.props.button.toString()}
+      <div className="flex-column">
+        <button
+          className="btn row"
+          onClick={() => {
+            if (this.props.model.flags.get(Flags.Paused) ?? true) return;
+            this.props.model.performActions(...this.props.button.actions);
+            this.props.button.currentCooldown = this.props.button.cooldown;
+            this.props.button.stats.timesUsed++;
+            this.props.model.forceUpdate();
+          }}
+          disabled={this.props.button.currentCooldown !== 0 || !this.props.button.active}
+        >
+          {this.props.button.toString()}
+        </button>
         {this.props.button.cooldown !== 0 && this.props.button.currentCooldown !== 0 ? (
           <div
-            className="progress progress-bar"
+            className="row progress progress-bar"
             style={{ width: `${100 * (1 - this.props.button.currentCooldown / this.props.button.cooldown)}%` }}
           />
         ) : (
-          <div />
+          <div className="row" />
         )}
-      </button>
+      </div>
     );
 
     return button;
