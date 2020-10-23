@@ -14,8 +14,11 @@ export default class extends React.Component {
           <meta name="viewport" content="width=device-width, initial-scale=1.0" />
           <meta name="description" content="This description is TODO UmU" />
           <meta name="author" content="Toby, deciduously" />
+          <meta name="theme-color" content="#25282C"/>
+
           <link rel="icon" href="favicon.svg" />
-          <link rel="stylesheet" type="text/css" href="/styles/halfmoon.css" />
+          <link rel="preload" href="/fonts/DaddyTimeMonoNerd.ttf" as="font" type="font/ttf" crossOrigin="anonymous"/>
+          <link rel="stylesheet" type="text/css" href="/styles/halfmoon.min.css" />
           <link rel="stylesheet" type="text/css" href="/styles/necro.css" />
           {/* TODO: Replace with non-cdn version somehow */}
           <script src="https://cdn.jsdelivr.net/npm/halfmoon@1.1.1/js/halfmoon.min.js" />

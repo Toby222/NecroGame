@@ -19,7 +19,7 @@ export default class Modal extends React.Component<Props> {
         );
       case "button":
         return (
-          <a href={`#${this.props.modalId}`} className={"btn btn-primary " + (this.props.className ?? "")} role="button">
+          <a aria-label={this.props.modalId} href={`#${this.props.modalId}`} className={"btn btn-primary " + (this.props.className ?? "")} role="button">
             {this.props.children}
           </a>
         );
