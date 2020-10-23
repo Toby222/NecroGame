@@ -11,12 +11,7 @@ export default class Modal extends React.Component<Props> {
     switch (this.props.display) {
       case "modal":
         return (
-          <div
-            className={"modal " + (this.props.className ?? "")}
-            id="settings"
-            tabIndex={-1}
-            role="dialog"
-          >
+          <div className={"modal " + (this.props.className ?? "")} id="settings" tabIndex={-1} role="dialog">
             <div className="modal-dialog" role="document">
               <div className="modal-content">{this.props.children}</div>
             </div>
@@ -24,11 +19,7 @@ export default class Modal extends React.Component<Props> {
         );
       case "button":
         return (
-          <a
-            href={`#${this.props.modalId}`}
-            className={"btn btn-primary " + (this.props.className ?? "")}
-            role="button"
-          >
+          <a href={`#${this.props.modalId}`} className={"btn btn-primary " + (this.props.className ?? "")} role="button">
             {this.props.children}
           </a>
         );

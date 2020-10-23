@@ -1,9 +1,18 @@
+@import url("./nerd-font-icons.css");
+
+@font-face {
+  font-family: "DaddyTimeMono";
+  font-style: normal;
+  font-weight: normal;
+  src: url("./DaddyTimeMonoNerd.ttf") format("truetype");
+}
+
 :root {
   --base-font-size: 1.6rem;
 }
 
 body {
-  font-family: "Fira Code" !important;
+  font-family: "DaddyTimeMono" !important;
 }
 
 .messages-container {
@@ -30,4 +39,17 @@ footer {
 
 .cursor-default {
   cursor: default;
+}
+
+.btn > .progress-bar {
+  transition: width 0.1s linear;
+}
+
+@keyframes progress-anim {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
 }

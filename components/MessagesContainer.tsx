@@ -18,22 +18,19 @@ export class MessagesContainer extends React.Component<MessagesContainerProps> {
      */
     function renderMessage(messageId: number, message: Message) {
       return (
-        <div key={messageId} className="row">
-          <span className="col-auto pr-15 text-right us-none">
-            {message.time.toString()}
-          </span>
-          <span className="col w-full cursor-default">{message.content}</span>
+        <div key={messageId} className="row font-size-12">
+          <span className="row pr-15 text-right us-none text-decoration-underline">{message.time.toString()}</span>
+          <span className="row w-full cursor-default">{message.content}</span>
+          <span className="row w-full"><br/></span>
         </div>
       );
     }
 
     return (
-      <div className="container flex-column d-flex justify-content-start row messages-container overflow-hidden">
+      <div className="container flex-column d-flex justify-content-start row-auto messages-container overflow-y-scroll">
         <div className="col-auto">
           <h4 className="us-none">Messages</h4>
-          {this.props.messages
-            .slice(0, MessagesContainer.messageCount)
-            .map((msg, idx) => renderMessage(idx, msg))}
+          {this.props.messages.slice(0, MessagesContainer.messageCount).map((msg, idx) => renderMessage(idx, msg))}
         </div>
       </div>
     );

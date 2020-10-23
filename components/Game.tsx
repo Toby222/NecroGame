@@ -10,7 +10,7 @@ import * as Conditions from "../types/Conditions";
 
 import { halfmoon } from "../util/HalfMoon";
 
-import ControlContainer from "./ControlContainer";
+import ButtonContainer from "./ButtonContainer";
 import ResourceContainer from "./ResourceContainer";
 import PlayerContainer from "./PlayerContainer";
 import MessagesContainer from "./MessagesContainer";
@@ -20,21 +20,15 @@ import Modal from "./Modal";
 import React from "react";
 
 import { version } from "../package.json";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 let mainLoop: NodeJS.Timeout;
 
-export class Model extends React.Component {
+export class Game extends React.Component {
   // Example values
   actionsQueue: Actions.DelayedAction[] = [];
   conditions = new Array<Conditions.Condition>();
   flags = new Flags.Flags();
-  buttons: typeof Buttons.BaseButton[] = [
-    Buttons.AlterTime,
-    Buttons.UnAlterTime,
-    Buttons.Dig,
-    Buttons.TestDelayedActions,
-  ];
+  buttons: typeof Buttons.BaseButton[] = [Buttons.AlterTime, Buttons.UnAlterTime, Buttons.Dig, Buttons.TestDelayedActions];
   messages: Message[] = [];
   player: Player = new Player();
   resources: typeof Resources.BaseResource[] = [];
@@ -105,11 +99,7 @@ export class Model extends React.Component {
   performActions(...actions: Actions.Action[]) {
     if (this.flags.get(Flags.Paused) ?? true) {
       for (const action of actions) {
-        if (
-          action instanceof Actions.SetFlag &&
-          action.flag === Flags.Paused &&
-          Boolean(action.value) === false
-        ) {
+        if (action instanceof Actions.SetFlag && action.flag === Flags.Paused && Boolean(action.value) === false) {
           action.perform(this);
         }
       }
@@ -135,31 +125,17 @@ export class Model extends React.Component {
           <div className="sidebar">
             <div className="row">
               <Modal display="button" className="col-auto" modalId="settings">
-                <FontAwesomeIcon icon="cog" />
+                <i className="nf nf-cogs" />
               </Modal>
-              <button
-                className="btn btn-primary col-auto"
-                onClick={this.togglePause.bind(this)}
-              >
-                <>
-                  {Boolean(this.flags.get(Flags.Paused)) ? (
-                    <FontAwesomeIcon icon="play" />
-                  ) : (
-                    <FontAwesomeIcon icon="pause" />
-                  )}
-                </>
+              <button className={"btn btn-primary col-auto"} onClick={this.togglePause.bind(this)}>
+                <i className={"nf nf-" + (Boolean(this.flags.get(Flags.Paused)) ? "play" : "pause")} />
               </button>
             </div>
             <>
               {this.flags.get(Flags.AlterTime) ?? false ? (
                 <>
                   <div className="sidebar-divider" />
-                  <input
-                    className="form-control"
-                    type="number"
-                    placeholder="Time factor"
-                    onInput={this.trySetTimeFactor.bind(this)}
-                  />
+                  <input className="form-control" type="number" placeholder="Time factor" onInput={this.trySetTimeFactor.bind(this)} />
                 </>
               ) : (
                 <></>
@@ -177,7 +153,7 @@ export class Model extends React.Component {
             </footer>
           </div>
           <div className="content-wrapper">
-            <ControlContainer buttons={this.buttons} model={this} />
+            <ButtonContainer buttons={this.buttons} model={this} />
           </div>
         </div>
       </main>

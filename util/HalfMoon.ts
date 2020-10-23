@@ -10,9 +10,7 @@ export class halfmoon {
   static createCookie(name: string, value: string, days?: number) {
     let expires = "";
     if (days !== undefined) {
-      expires =
-        "; expires=" +
-        new Date(Date.now() + days * 24 * 60 * 60 * 1000).toUTCString();
+      expires = "; expires=" + new Date(Date.now() + days * 24 * 60 * 60 * 1000).toUTCString();
     }
     document.cookie = name + "=" + value + expires + "; path=/";
   }
@@ -59,9 +57,7 @@ export class halfmoon {
 
   // Deactivate all the dropdown toggles when another one is active
   static deactivateAllDropdownToggles() {
-    let activeDropdownToggles = document.querySelectorAll(
-      "[data-toggle='dropdown'].active"
-    );
+    let activeDropdownToggles = document.querySelectorAll("[data-toggle='dropdown'].active");
     for (const activeDropdownToggle of activeDropdownToggles) {
       activeDropdownToggle.classList.remove("active");
       activeDropdownToggle.closest(".dropdown")?.classList.remove("show");
@@ -78,8 +74,7 @@ export class halfmoon {
   // Make an ID for an element
   static makeId(length: number) {
     let result = "";
-    let characters =
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    let characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     let charactersLength = characters.length;
     for (let i = 0; i < length; i++) {
       result += characters.charAt(Math.floor(Math.random() * charactersLength));
@@ -158,18 +153,14 @@ export class halfmoon {
     // Add the close button to the content (if required)
     if (hasDismissButton) {
       content =
-        "<button class='close' data-dismiss='alert' type='button' aria-label='Close'><span aria-hidden='true'>&times;</span></button>" +
-        content;
+        "<button class='close' data-dismiss='alert' type='button' aria-label='Close'><span aria-hidden='true'>&times;</span></button>" + content;
     }
 
     // Add the content to the alert element
     alertElement.innerHTML = content;
 
     // Append the alert element to the sticky alerts
-    halfmoon.stickyAlerts?.insertBefore(
-      alertElement,
-      halfmoon.stickyAlerts.childNodes[0] ?? null
-    );
+    halfmoon.stickyAlerts?.insertBefore(alertElement, halfmoon.stickyAlerts.childNodes[0] ?? null);
 
     // Toast the alert
     halfmoon.toastAlert(alertElement.getAttribute("id")!, timeShown);
@@ -200,14 +191,10 @@ function HalfMoonOnDOMContentLoaded() {
   // Handle the cookie and letiable for dark mode
   // 1. First preference is given to the cookie if it exists
   if (halfmoon.readCookie("darkModeOn")) {
-    halfmoon.darkModeOn =
-      (halfmoon.readCookie("darkModeOn") as "yes" | "no" | null) ?? "no";
+    halfmoon.darkModeOn = (halfmoon.readCookie("darkModeOn") as "yes" | "no" | null) ?? "no";
   } else {
     // 2. If cookie does not exist, next preference is for the dark mode setting
-    if (
-      window.matchMedia &&
-      window.matchMedia("(prefers-color-scheme: dark)").matches
-    ) {
+    if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
       halfmoon.darkModeOn = "yes";
     } else {
       // 3. If all else fails, re-initialize the dark mode preference depending on the .dark-mode class
@@ -239,20 +226,13 @@ function HalfMoonOnDOMContentLoaded() {
   // Or on larger screens when sidebar type is overlayed-all
   if (document.documentElement.clientWidth <= 768) {
     if (halfmoon.pageWrapper) {
-      if (
-        !halfmoon.pageWrapper.getAttribute(
-          "data-show-sidebar-onload-sm-and-down"
-        )
-      ) {
+      if (!halfmoon.pageWrapper.getAttribute("data-show-sidebar-onload-sm-and-down")) {
         halfmoon.pageWrapper.setAttribute("data-sidebar-hidden", "hidden");
       }
     }
   } else {
     if (halfmoon.pageWrapper) {
-      if (
-        halfmoon.pageWrapper.getAttribute("data-sidebar-type") ===
-        "overlayed-all"
-      ) {
+      if (halfmoon.pageWrapper.getAttribute("data-sidebar-type") === "overlayed-all") {
         halfmoon.pageWrapper.setAttribute("data-sidebar-hidden", "hidden");
       }
     }
@@ -266,11 +246,7 @@ function HalfMoonOnDOMContentLoaded() {
       let target: Element | null = event.target as Element;
 
       // Handle clicks on dropdown toggles
-      if (
-        target !== null &&
-        (target.matches("[data-toggle='dropdown']") ||
-          target.matches("[data-toggle='dropdown'] *"))
-      ) {
+      if (target !== null && (target.matches("[data-toggle='dropdown']") || target.matches("[data-toggle='dropdown'] *"))) {
         if (target.matches("[data-toggle='dropdown'] *")) {
           target = target.closest("[data-toggle='dropdown']");
         }
@@ -289,11 +265,7 @@ function HalfMoonOnDOMContentLoaded() {
       }
 
       // Handle clicks on alert dismiss buttons
-      if (
-        target !== null &&
-        (target.matches(".alert [data-dismiss='alert']") ||
-          target.matches(".alert [data-dismiss='alert'] *"))
-      ) {
+      if (target !== null && (target.matches(".alert [data-dismiss='alert']") || target.matches(".alert [data-dismiss='alert'] *"))) {
         if (target.matches(".alert [data-dismiss='alert'] *")) {
           target = target.closest(".alert [data-dismiss='alert']");
         }
@@ -303,31 +275,20 @@ function HalfMoonOnDOMContentLoaded() {
       }
 
       // Handle clicks on modal toggles
-      if (
-        target !== null &&
-        (target.matches("[data-toggle='modal']") ||
-          target.matches("[data-toggle='modal'] *"))
-      ) {
+      if (target !== null && (target.matches("[data-toggle='modal']") || target.matches("[data-toggle='modal'] *"))) {
         if (target.matches("[data-toggle='modal'] *")) {
           target = target.closest("[data-toggle='modal']");
         }
 
         const dataTarget = target?.getAttribute("data-target") ?? null;
-        const targetModal =
-          target !== null && dataTarget !== null
-            ? document.getElementById(dataTarget)
-            : null;
+        const targetModal = target !== null && dataTarget !== null ? document.getElementById(dataTarget) : null;
         if (targetModal?.classList.contains("modal") && dataTarget !== null) {
           halfmoon.toggleModal(dataTarget);
         }
       }
 
       // Handle clicks on modal dismiss buttons
-      if (
-        target !== null &&
-        (target.matches(".modal [data-dismiss='modal']") ||
-          target.matches(".modal [data-dismiss='modal'] *"))
-      ) {
+      if (target !== null && (target.matches(".modal [data-dismiss='modal']") || target.matches(".modal [data-dismiss='modal'] *"))) {
         if (target.matches(".modal [data-dismiss='modal'] *")) {
           target = target.closest(".modal [data-dismiss='modal']");
         }
@@ -338,10 +299,7 @@ function HalfMoonOnDOMContentLoaded() {
       if (target !== null && target.matches(".modal-dialog")) {
         let parentModal = target.closest(".modal");
 
-        if (
-          parentModal !== null &&
-          parentModal.getAttribute("data-overlay-dismissal-disabled") !== null
-        ) {
+        if (parentModal !== null && parentModal.getAttribute("data-overlay-dismissal-disabled") !== null) {
           if (parentModal.classList.contains("show")) {
             parentModal.classList.remove("show");
           } else {
@@ -363,13 +321,7 @@ function HalfMoonOnDOMContentLoaded() {
     // Shortcuts are triggered only if no input, textarea, or select has focus,
     // If the control key or command key is not pressed down,
     // And if the enabling data attribute is present on the DOM's body
-    if (
-      !(
-        document.querySelector("input:focus") ||
-        document.querySelector("textarea:focus") ||
-        document.querySelector("select:focus")
-      )
-    ) {
+    if (!(document.querySelector("input:focus") || document.querySelector("textarea:focus") || document.querySelector("select:focus"))) {
       if (!(event.ctrlKey || event.metaKey)) {
         // Toggle sidebar when [shift] + [S] keys are pressed
         if (document.body.getAttribute("data-sidebar-shortcut-enabled")) {
@@ -438,10 +390,7 @@ function HalfMoonOnDOMContentLoaded() {
         // Check for a modal with the .show class
         if (document.querySelector(".modal.show")) {
           let elem = document.querySelector(".modal.show");
-          if (
-            elem !== null &&
-            !elem.getAttribute("data-esc-dismissal-disabled")
-          ) {
+          if (elem !== null && !elem.getAttribute("data-esc-dismissal-disabled")) {
             elem.classList.remove("show");
             event.preventDefault();
           }
@@ -454,9 +403,7 @@ function HalfMoonOnDOMContentLoaded() {
   });
 
   // Handling custom file inputs
-  let HalfMoonCustomFileInputs = document.querySelectorAll(
-    ".custom-file input"
-  ) as NodeListOf<HTMLInputElement>;
+  let HalfMoonCustomFileInputs = document.querySelectorAll(".custom-file input") as NodeListOf<HTMLInputElement>;
   for (let i = 0; i < HalfMoonCustomFileInputs.length; i++) {
     let customFile = HalfMoonCustomFileInputs[i];
     // Create file name container element, add the class name, and set default value
@@ -474,9 +421,7 @@ function HalfMoonOnDOMContentLoaded() {
     // Add the event listener that will update the contents of the file name container element on change
     customFile.addEventListener("change", function (event) {
       const target = event.target as HTMLInputElement;
-      fileNamesContainer = target.parentElement?.querySelector(
-        ".file-names"
-      ) as HTMLDivElement;
+      fileNamesContainer = target.parentElement?.querySelector(".file-names") as HTMLDivElement;
       if ((target.files?.length ?? 0) === 1) {
         fileNamesContainer.innerHTML = target.files![0].name;
       } else if ((target.files?.length ?? 0) > 1) {
