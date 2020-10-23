@@ -7,7 +7,7 @@ interface MessagesContainerProps {
 }
 
 export class MessagesContainer extends React.Component<MessagesContainerProps> {
-  private static readonly messageCount = 10;
+  private static readonly messageCount = 50;
   render() {
     /**
      * Helper function to turn Messages into Elements.
@@ -18,10 +18,10 @@ export class MessagesContainer extends React.Component<MessagesContainerProps> {
      */
     function renderMessage(messageId: number, message: Message) {
       return (
-        <div key={messageId} className="row font-size-12">
-          <span className="row pr-15 text-right us-none text-decoration-underline">{message.time.toString()}</span>
-          <span className="row w-full cursor-default">{message.content}</span>
-          <span className="row w-full">
+        <div key={messageId} className="row flex-column w-full font-size-14">
+          <span className="row pr-15 text-right text-decoration-underline">{message.time.toString()}</span>
+          <span className="row">{message.content}</span>
+          <span className="row h-1">
             <br />
           </span>
         </div>
@@ -29,8 +29,8 @@ export class MessagesContainer extends React.Component<MessagesContainerProps> {
     }
 
     return (
-      <div className="d-flex flex-column justify-content-start h-auto overflow-hide">
-        <h4 className="row us-none">Messages</h4>
+      <div className="justify-content-start us-none overflow-hidden">
+        <h4>Messages</h4>
         {this.props.messages.slice(0, MessagesContainer.messageCount).map((msg, idx) => renderMessage(idx, msg))}
       </div>
     );

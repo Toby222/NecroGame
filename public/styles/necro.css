@@ -27,6 +27,12 @@ footer {
   position: fixed;
   left: 0;
   bottom: 0;
+  width: var(--sidebar-width);
+  background: var(--lm-sidebar-bg-color);
+}
+
+.dark-mode footer {
+  background: var(--dm-sidebar-bg-color);
 }
 
 .us-none {

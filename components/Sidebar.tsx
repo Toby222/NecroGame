@@ -19,7 +19,7 @@ export class Sidebar extends React.Component<SidebarProps> {
   render() {
     const game = this.props.game;
     return (
-      <div className="sidebar flex-column">
+      <div className="sidebar d-flex flex-column">
         <div className="row flex-row">
           <Modal display="button" className="col-auto" modalId="settings">
             <i className="nf nf-cogs" />

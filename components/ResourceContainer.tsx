@@ -25,7 +25,7 @@ export class ResourceContainer<T extends typeof BaseResource> extends React.Comp
       );
     }
     return (
-      <div className="container us-none">
+      <div className="us-none row-auto">
         <h1 className="sidebar-title">Resources</h1>
         <div className="container">{this.props.resources.map((res, idx) => renderResource(idx, res))}</div>
       </div>
