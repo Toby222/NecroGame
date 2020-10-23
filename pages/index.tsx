@@ -15,8 +15,8 @@ export default class extends React.Component {
           <meta name="description" content="This description is TODO UmU" />
           <meta name="author" content="Toby, deciduously" />
           <link rel="icon" href="favicon.svg" />
-          <link rel="stylesheet" type="text/css" href="halfmoon.css" />
-          <link rel="stylesheet" type="text/css" href="necro.css" />
+          <link rel="stylesheet" type="text/css" href="/styles/halfmoon.css" />
+          <link rel="stylesheet" type="text/css" href="/styles/necro.css" />
           {/* TODO: Replace with non-cdn version somehow */}
           <script src="https://cdn.jsdelivr.net/npm/halfmoon@1.1.0/js/halfmoon.min.js" />
           <title>NecroGame</title>

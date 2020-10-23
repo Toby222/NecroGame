@@ -4,7 +4,7 @@
   font-family: "DaddyTimeMono";
   font-style: normal;
   font-weight: normal;
-  src: url("./DaddyTimeMonoNerd.ttf") format("truetype");
+  src: url("/fonts/DaddyTimeMonoNerd.ttf") format("truetype");
 }
 
 :root {
@@ -16,7 +16,7 @@ body {
 }
 
 .messages-container {
-  height: 33%;
+  
 }
 
 .w-20 {
