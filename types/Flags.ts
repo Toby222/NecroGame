@@ -2,65 +2,54 @@ import * as Transformations from "./Transformations";
 
 import { Game } from "../components/Game";
 
-export class Flags extends Map<AnyFlag, any> {
-  get<T extends any>(flag: AnyFlag) {
-    return super.get(flag) as T;
+export class Flags extends Map<Flag<unknown>, unknown> {
+  get<T>(flag: Flag<T>) {
+    return super.get(flag) as T | undefined;
   }
 
-  set<T extends any>(flag: AnyFlag, value: T) {
+  set<T>(flag: Flag<T>, value: T) {
     return super.set(flag, value);
   }
 }
-
-/**
- * Type used to reference a generic Flag more easily
- *
- * Equal to `typeof Flag`
- */
-export type AnyFlag = typeof Flag;
 
 /**
  * Generic Type of a Flag
  *
  * Should not be used on its own, only to be extended on!
  */
-export abstract class Flag {
+export abstract class Flag<T> {
   /**
    * Called when the Flag gets assigned a new value
    *
    * @param game The game that the Flag was applied to
    * @param value The value that the Flag was assigned
    */
-  static onSet(game: Game, value: any) {
-    return;
-  }
+  abstract onSet(game: Game, value: T): void;
   /**
    * Called when the Flag gets reset
    *
    * @param game The game that the Flag was reset on
    */
-  static onClear(game: Game) {
-    return;
-  }
+  abstract onClear(game: Game): void;
 }
 
 /**
- * A {@link Flag} with an additional list of {@link Transformation}s that get applied when its value is true-ish
+ * A {@link Flag} with an additional list of {@link Transformation}s that get applied when its value is true
  */
-export class TransformationFlag extends Flag {
-  static is(flag: typeof Flag): flag is typeof TransformationFlag {
-    return (flag as any).transformations !== undefined;
+export abstract class TransformationFlag extends Flag<boolean> {
+  protected abstract transformations: Transformations.Transformation[];
+  static is(flag: Flag<unknown>): flag is TransformationFlag {
+    return Object.keys(flag).includes("transformations");
   }
-  protected static transformations: Transformations.Transformation[];
-  static onSet(model: Game, value: any) {
-    if (Boolean(value)) {
+  onSet(model: Game, value: boolean) {
+    if (value) {
       for (const transformation of this.transformations) {
         transformation.apply(model);
       }
     }
   }
 
-  static onClear(model: Game) {
+  onClear(model: Game) {
     for (const transformation of this.transformations) {
       transformation.clear(model);
     }
@@ -70,7 +59,7 @@ export class TransformationFlag extends Flag {
    * Perform all of the transformations of this Flag
    * @param model The Model to perform the effects on
    */
-  static performEffects(model: Game) {
+  performEffects(model: Game) {
     for (const transformation of this.transformations) {
       transformation.perform(model);
     }
@@ -79,10 +68,36 @@ export class TransformationFlag extends Flag {
 
 // Game flags
 
-export class AlterTimeFactor extends Flag {}
-
-export class AlterTime extends TransformationFlag {
-  static transformations = [new Transformations.AlterTime()];
+export class AlterTimeFactor extends Flag<number> {
+  private static _instance: AlterTimeFactor;
+  static get Instance(): Flag<number> {
+    return this._instance || (this._instance = new this());
+  }
+  onSet(): void {
+    return;
+  }
+  onClear(): void {
+    return;
+  }
 }
 
-export class Paused extends Flag {}
+export class AlterTime extends TransformationFlag {
+  private static _instance: AlterTime;
+  static get Instance(): TransformationFlag {
+    return this._instance || (this._instance = new this());
+  }
+  transformations = [new Transformations.AlterTime()];
+}
+
+export class Paused extends Flag<boolean> {
+  private static _instance: Paused;
+  static get Instance(): Flag<boolean> {
+    return this._instance || (this._instance = new this());
+  }
+  onSet(): void {
+    return;
+  }
+  onClear(): void {
+    return;
+  }
+}

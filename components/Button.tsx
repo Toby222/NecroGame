@@ -19,7 +19,7 @@ export class Button extends React.Component<ButtonProps> {
         <button
           className="btn row"
           onClick={() => {
-            if (this.props.model.flags.get(Flags.Paused) ?? true) return;
+            if (this.props.model.flags.get(Flags.Paused.Instance) ?? true) return;
             this.props.model.performActions(...this.props.button.actions);
             this.props.button.currentCooldown = this.props.button.cooldown;
             this.props.button.stats.timesUsed++;

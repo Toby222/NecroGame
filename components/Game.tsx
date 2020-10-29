@@ -32,13 +32,13 @@ export class Game extends React.Component {
   time = new Time();
 
   togglePause() {
-    this.flags.set(Flags.Paused, !this.flags.get(Flags.Paused));
+    this.flags.set(Flags.Paused.Instance, !this.flags.get(Flags.Paused.Instance));
     this.forceUpdate();
   }
 
   // Basically constructor for order purposes
   componentDidMount() {
-    this.flags.set(Flags.Paused, false);
+    this.flags.set(Flags.Paused.Instance, false);
     mainLoop = setInterval(this.tick.bind(this), 1000);
   }
 
@@ -48,7 +48,7 @@ export class Game extends React.Component {
   }
 
   tick() {
-    if (this.flags.get(Flags.Paused)) return;
+    if (this.flags.get(Flags.Paused.Instance)) return;
     this.time.seconds++;
     for (const [flag, value] of this.flags) {
       if (Flags.TransformationFlag.is(flag) && Boolean(value)) {
@@ -87,16 +87,16 @@ export class Game extends React.Component {
   trySetTimeFactor(event: React.FormEvent<HTMLInputElement>) {
     const val = Math.trunc(parseInt(event.currentTarget.value));
     if (!isNaN(val)) {
-      this.flags.set(Flags.AlterTimeFactor, val);
+      this.flags.set(Flags.AlterTimeFactor.Instance, val);
     } else {
-      this.flags.delete(Flags.AlterTimeFactor);
+      this.flags.delete(Flags.AlterTimeFactor.Instance);
     }
   }
 
   performActions(...actions: Actions.Action[]) {
-    if (this.flags.get(Flags.Paused) ?? true) {
+    if (this.flags.get(Flags.Paused.Instance) ?? true) {
       for (const action of actions) {
-        if (action instanceof Actions.SetFlag && action.flag === Flags.Paused && Boolean(action.value) === false) {
+        if (action instanceof Actions.SetFlag && action.flag === Flags.Paused.Instance && Boolean(action.value) === false) {
           action.perform(this);
         }
       }

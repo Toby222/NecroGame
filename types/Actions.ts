@@ -75,11 +75,11 @@ export class DelayedAction extends Action {
   }
 }
 
-export class SetFlag extends Action {
-  flag: Flags.AnyFlag;
-  value: any;
+export class SetFlag<T> extends Action {
+  flag: Flags.Flag<T>;
+  value: T;
 
-  constructor(flag: Flags.AnyFlag, value: any) {
+  constructor(flag: Flags.Flag<T>, value: T) {
     super();
 
     this.value = value;
@@ -92,18 +92,18 @@ export class SetFlag extends Action {
   }
 }
 
-export class ClearFlag extends Action {
-  private flag: Flags.AnyFlag;
+export class ClearFlag<T> extends Action {
+  private flag: Flags.Flag<T>;
 
-  constructor(flag: Flags.AnyFlag) {
+  constructor(flag: Flags.Flag<T>) {
     super();
 
     this.flag = flag;
   }
 
-  perform(model: Game) {
-    model.flags.delete(this.flag);
-    this.flag.onClear(model);
+  perform(game: Game) {
+    game.flags.delete(this.flag);
+    this.flag.onClear(game);
   }
 }
 
@@ -116,10 +116,10 @@ export class SetResourceValue<T extends typeof BaseResource> extends Action {
     this.amount = amount;
     this.resource = resource;
   }
-  perform(model: Game) {
+  perform(game: Game) {
     this.resource.amount = this.amount;
 
-    model.resources.push(this.resource);
+    game.resources.push(this.resource);
   }
 }
 
