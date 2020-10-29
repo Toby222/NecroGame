@@ -18,12 +18,11 @@ Developed with the help of [vercel](https://vercel.com/), and its command line t
 
 ## Development scripts
 
-- `yarn run format` - Auto-format the codebase.
-  - `yarn run lint` - Check if codebase conforms to prettier standard.
-  - `yarn run test` - Check if codebase is ready for commit.
-- `yarn run dev` - Start a development server at `localhost:3000` and watch for code changes.
-  - `yarn run build` - Create a production build.
-  - `yarn run start` - Host the latest production build at `localhost:3000`
+- `yarn format` - Auto-format the codebase.
+  - `yarn lint` - Check if codebase conforms to codestandards.
+  - `yarn test` - Check if codebase is ready for commit, including tsc and eslint warnings.
+- `yarn run dev` - Start a development server at `localhost` and watch for code changes.
+  - `yarn start` - Create a production build and host it at `localhost`
 
 ## Dependencies
 
