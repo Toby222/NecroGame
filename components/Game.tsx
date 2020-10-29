@@ -151,8 +151,8 @@ export class Game extends React.Component {
               <button className="tablink btn" data-tabid="buttonContainer" onClick={(event)=>this.switchTab(event)}>Controls</button>
               <button className="tablink btn" data-tabid="summoningContainer" onClick={(event)=>this.switchTab(event)}>Summoning</button>
             </nav>
-            <ButtonContainer buttons={this.buttons} model={this} />
-            <SummoningContainer />
+            <ButtonContainer buttons={this.buttons} game={this} />
+            <SummoningContainer game={this} />
           </div>
         </div>
         <footer className="z-10">

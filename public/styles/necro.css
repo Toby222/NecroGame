@@ -59,7 +59,7 @@ button > div.progress {
 }
 
 .progress-bar {
-  transition: width 1s linear;
+  transition: width 0.5s linear;
 }
 
 @keyframes progress-anim {

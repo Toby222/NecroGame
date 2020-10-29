@@ -6,7 +6,7 @@ import { Button } from "./Button";
 
 interface ButtonContainerProps {
   buttons: typeof BaseButton[];
-  model: Game;
+  game: Game;
 }
 
 export class ButtonContainer extends React.Component<ButtonContainerProps> {
@@ -15,7 +15,7 @@ export class ButtonContainer extends React.Component<ButtonContainerProps> {
       <div id="buttonContainer" className="tabcontent">
         <h4 className="us-none">Controls</h4>
         {this.props.buttons.map((button) => (
-          <Button key={button.toString()} button={button} model={this.props.model} />
+          <Button key={button.toString()} button={button} model={this.props.game} />
         ))}
       </div>
     );
