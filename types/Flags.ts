@@ -14,10 +14,16 @@ export class Flags extends Map<Flag<unknown>, unknown> {
 
 /**
  * Generic Type of a Flag
- *
- * Should not be used on its own, only to be extended on!
  */
 export abstract class Flag<T> {
+  /**
+   * Get the static instance of the Flag
+   *
+   * needed as static classes aren't a thing in TS
+   */
+  static get Instance(): Flag<unknown> {
+    throw new Error("Not implemented on base class!");
+  }
   /**
    * Called when the Flag gets assigned a new value
    *
@@ -38,7 +44,7 @@ export abstract class Flag<T> {
  */
 export abstract class TransformationFlag extends Flag<boolean> {
   protected abstract transformations: Transformations.Transformation[];
-  static is(flag: Flag<unknown>): flag is TransformationFlag {
+  static is(flag: Flag<boolean>): flag is TransformationFlag {
     return Object.keys(flag).includes("transformations");
   }
   onSet(model: Game, value: boolean) {
