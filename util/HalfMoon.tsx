@@ -154,14 +154,16 @@ export class halfmoon {
   }
 
   // Create a sticky alert, display it, and then remove it
-  static initStickyAlert(param: {
-    content?: string;
-    title?: string;
-    alertType?: string;
-    fillType?: string;
-    hasDismissButton?: boolean;
-    timeShown?: number;
-  }) {
+  static initStickyAlert(
+    param: Partial<{
+      content: string | JSX.Element;
+      title: string;
+      alertType: "" | "alert-primary" | "alert-success" | "alert-secondary" | "alert-danger";
+      fillType: "" | "filled-lm" | "filled-dm" | "filled";
+      hasDismissButton: boolean;
+      timeShown: number;
+    }>
+  ) {
     if (!halfmoon.stickyAlerts) throw new Error("sticky-alerts element not initiated");
     // Setting the letiables from the param
     let content = <>{param.content ?? ""}</>;
@@ -204,7 +206,8 @@ export class halfmoon {
     );
 
     // Append the alert element to the sticky alerts
-    ReactDOM.render(alertElement, halfmoon.stickyAlerts);
+    const newNode = halfmoon.stickyAlerts.insertBefore(document.createElement("div"), null);
+    ReactDOM.render(alertElement, newNode);
 
     // Toast the alert
     halfmoon.toastAlert(alertElement.props.id, timeShown);
@@ -240,14 +243,8 @@ declare global {
 function halfmoonOnDOMContentLoaded() {
   global.halfmoon = halfmoon;
   // Re-initializing the required elements (to avoid issues with virtual DOM)
-  if (!halfmoon.pageWrapper) {
-    halfmoon.pageWrapper = document.getElementsByClassName("page-wrapper")[0];
-  }
-  if (!halfmoon.stickyAlerts) {
-    if (document.getElementsByClassName("sticky-alerts")[0] !== undefined) {
-      halfmoon.stickyAlerts = document.getElementsByClassName("sticky-alerts")[0];
-    }
-  }
+  halfmoon.pageWrapper = document.getElementsByClassName("page-wrapper")[0];
+  halfmoon.stickyAlerts = document.getElementsByClassName("sticky-alerts")[0];
 
   // Handle the cookie and variable for dark mode
   // 1. First preference is given to the cookie if it exists
