@@ -60,7 +60,12 @@ export class Dig extends BaseButton {
       result = result.concat([
         new Actions.AddResourceValue(Resources.Dirt, Math.floor(Math.random() * 10 + 1)),
         new Actions.AddResourceValue(Resources.Bones, Math.trunc(Math.random() * 10)),
-        new Actions.AddMessage("You find a bunch of bones just beneath the surface."),
+        new Actions.AddMessage("You find a bunch of bones just beneath the surface.", {
+          content: "Found some bones!",
+          title: "Bones!",
+          alertType: "alert-success",
+          hasDismissButton: false,
+        }),
       ]);
     } else {
       result = result.concat([
