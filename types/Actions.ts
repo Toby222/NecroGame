@@ -5,6 +5,7 @@ import { Message } from "./Messages";
 
 import { Game } from "../components/Game";
 import { Condition } from "./Conditions";
+import { halfmoon } from "../util/HalfMoon";
 
 export abstract class Action {
   abstract perform(model: Game): void;
@@ -162,17 +163,31 @@ export class AddResourceDelta<T extends typeof BaseResource> extends Action {
   }
 }
 
+interface halfmoonToastOptions {
+  content: string;
+  title: string;
+  alertType: "" | "alert-primary" | "alert-success" | "alert-secondary" | "alert-danger";
+  fillType: "" | "filled-lm" | "filled-dm" | "filled";
+  hasDismissButton: boolean;
+  timeShown: number;
+}
+
 export class AddMessage extends Action {
   private message: string;
+  private toastOptions?: Partial<halfmoonToastOptions>;
 
-  constructor(message: string) {
+  constructor(message: string, toastOptions?: Partial<halfmoonToastOptions>) {
     super();
 
     this.message = message;
+    this.toastOptions = toastOptions;
   }
 
   perform(model: Game) {
     model.messages.unshift(new Message(this.message, model.time));
+    if (this.toastOptions) {
+      halfmoon.initStickyAlert(this.toastOptions);
+    }
   }
 }
 
