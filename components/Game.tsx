@@ -12,8 +12,8 @@ import { halfmoon } from "../util/HalfMoon";
 
 import ButtonContainer from "./ButtonContainer";
 
-import Sidebar from "./Sidebar";
-import Modal from "./Modal";
+import Sidebar from "./HalfMoon/Sidebar";
+import Modal from "./HalfMoon/Modal";
 
 import React from "react";
 

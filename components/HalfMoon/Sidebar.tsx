@@ -1,15 +1,15 @@
-import * as Flags from "../types/Flags";
+import * as Flags from "../../types/Flags";
 
-import ResourceContainer from "./ResourceContainer";
-import StatsContainer from "./PlayerContainer";
-import MessagesContainer from "./MessagesContainer";
-import Game from "./Game";
+import ResourceContainer from "../ResourceContainer";
+import StatsContainer from "../PlayerContainer";
+import MessagesContainer from "../MessagesContainer";
+import Game from "../Game";
 
 import Modal from "./Modal";
 
 import React from "react";
 
-import { version } from "../package.json";
+import { version } from "../../package.json";
 
 interface SidebarProps {
   game: Game;

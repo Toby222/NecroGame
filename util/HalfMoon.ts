@@ -206,17 +206,26 @@ export class halfmoon {
   /* End code block for handling sticky alerts */
 
   // Click handler that can be overridden by users if needed
-  static clickHandler: (event: MouseEvent) => void;
+  static clickHandler: (event: MouseEvent) => void = ()=>{};
 
   // Keydown handler that can be overridden by users if needed
-  static keydownHandler: (event: KeyboardEvent) => void;
+  static keydownHandler: (event: KeyboardEvent) => void = ()=>{};
 
-  static onDomContentLoaded: () => void;
+  static onDomContentLoaded: () => void = ()=>{};
 }
 
 /* Things done once the DOM is loaded */
 
+
+declare global {
+  namespace NodeJS {
+    interface Global {
+      halfmoon: halfmoon
+    }
+  }
+}
 function halfmoonOnDOMContentLoaded() {
+  global.halfmoon = halfmoon;
   // Re-initializing the required elements (to avoid issues with virtual DOM)
   if (!halfmoon.pageWrapper) {
     halfmoon.pageWrapper = document.getElementsByClassName("page-wrapper")[0];
