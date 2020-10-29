@@ -43,7 +43,7 @@ export class Game extends React.Component {
     halfmoon.onDomContentLoaded();
     this.flags.set(Flags.Paused.Instance, false);
     mainLoop = setInterval(this.tick.bind(this), 1000);
-    this.setActiveTab("buttonContainer")
+    this.setActiveTab("buttonContainer");
   }
 
   // Basically destructor for order purposes
@@ -111,25 +111,21 @@ export class Game extends React.Component {
     }
   }
 
-  private switchTab(event: React.MouseEvent<HTMLButtonElement, MouseEvent>){
-    const targetID = event.currentTarget.getAttribute("data-tabid")
-    if(!targetID) return console.warn(`Tried switching tabs without ID`)
-    this.setActiveTab(targetID)
+  private switchTab(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+    const targetID = event.currentTarget.getAttribute("data-tabid");
+    if (!targetID) return console.warn(`Tried switching tabs without ID`);
+    this.setActiveTab(targetID);
   }
 
-  private setActiveTab(id: string){
-    const targetTab = document.querySelector<HTMLDivElement>(`.tabcontent#${id}`)
-    if(!targetTab) return console.warn(`Tried to switch to unknown tab "${id}"`)
+  private setActiveTab(id: string) {
+    const targetTab = document.querySelector<HTMLDivElement>(`.tabcontent#${id}`);
+    if (!targetTab) return console.warn(`Tried to switch to unknown tab "${id}"`);
 
-    document.querySelectorAll<HTMLDivElement>("div.tabcontent").forEach(
-      tab => tab.style.display = "none"
-    )
+    document.querySelectorAll<HTMLDivElement>("div.tabcontent").forEach((tab) => (tab.style.display = "none"));
 
-    document.querySelectorAll<HTMLDivElement>("div.tabs > button.tablink").forEach(
-      tablink => tablink.toggleAttribute("active")
-    )
-    
-    targetTab.style.display = "block"
+    document.querySelectorAll<HTMLDivElement>("div.tabs > button.tablink").forEach((tablink) => tablink.toggleAttribute("active"));
+
+    targetTab.style.display = "block";
   }
 
   render() {
@@ -148,8 +144,12 @@ export class Game extends React.Component {
           <Sidebar game={this} />
           <div className="content-wrapper">
             <nav className="tabs">
-              <button className="tablink btn" data-tabid="buttonContainer" onClick={(event)=>this.switchTab(event)}>Controls</button>
-              <button className="tablink btn" data-tabid="summoningContainer" onClick={(event)=>this.switchTab(event)}>Summoning</button>
+              <button className="tablink btn" data-tabid="buttonContainer" onClick={(event) => this.switchTab(event)}>
+                Controls
+              </button>
+              <button className="tablink btn" data-tabid="summoningContainer" onClick={(event) => this.switchTab(event)}>
+                Summoning
+              </button>
             </nav>
             <ButtonContainer buttons={this.buttons} game={this} />
             <SummoningContainer game={this} />
