@@ -3,7 +3,6 @@ import { Game } from "../components/Game";
 import Head from "next/head";
 
 import * as React from "react";
-import { halfmoon } from "../util/HalfMoon";
 
 export default class NecroGame extends React.Component {
   render() {
