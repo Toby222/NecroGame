@@ -21,7 +21,11 @@ export class ResourceContainer<T extends typeof BaseResource> extends React.Comp
           <div className="col-sm-5">{resource.resourceName}</div>
           <div className="dropdown dropup toggle-on-hover col-sm-7 text-right">
             {Math.round(resource.amount * 100) / 100}
-            {resource.delta > 0 ? <div className="dropdown-menu dropdown-menu-right w-auto mw-0">{`${Math.round(resource.delta * 100) / 100}/sec`}</div> : <></>}
+            {resource.delta > 0 ? (
+              <div className="dropdown-menu dropdown-menu-right w-auto mw-0">{`${Math.round(resource.delta * 100) / 100}/sec`}</div>
+            ) : (
+              <></>
+            )}
           </div>
           {/*<div className="col-sm-3 text-right">{resource.delta > 0 ? `${Math.round(resource.delta * 100) / 100}/sec` : ''}</div>*/}
         </div>
