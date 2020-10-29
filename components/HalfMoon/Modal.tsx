@@ -17,7 +17,8 @@ export default class Modal extends React.Component<Props> {
                 <a href="#" className="close" role="button" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </a>
-                {this.props.children}</div>
+                {this.props.children}
+              </div>
             </div>
           </div>
         );

@@ -6,9 +6,6 @@ import * as React from "react";
 import { halfmoon } from "../util/HalfMoon";
 
 export default class NecroGame extends React.Component {
-  componentDidMount(){
-    halfmoon.onDomContentLoaded()
-  }
   render() {
     return (
       <>

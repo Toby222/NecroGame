@@ -2,11 +2,14 @@
 // halfmoon.js v1.1.1
 // (badly) written into TS
 
+import ReactDOM from "react-dom";
+import * as React from "react";
+
 export class halfmoon {
   // Getting the required elements
   // Re-initialized once the DOM is loaded (to avoid issues with virtual DOM)
   static pageWrapper: Element;
-  static stickyAlerts: Element;
+  static stickyAlerts?: Element;
 
   static darkModeOn = false; // Also re-initialized once the DOM is loaded (see below)
 
@@ -159,68 +162,78 @@ export class halfmoon {
     hasDismissButton?: boolean;
     timeShown?: number;
   }) {
+    if (!halfmoon.stickyAlerts) throw new Error("sticky-alerts element not initiated");
     // Setting the letiables from the param
-    let content = param.content ?? "";
+    let content = <>{param.content ?? ""}</>;
     const title = param.title ?? "";
     const alertType = param.alertType ?? "";
     const fillType = param.fillType ?? "";
     const hasDismissButton = param.hasDismissButton ?? true;
     const timeShown = param.timeShown ?? 5000;
 
-    // Create the alert element
-    const alertElement = document.createElement("div");
-
-    // Set ID to the alert element
-    alertElement.setAttribute("id", halfmoon.makeId(6));
-
     // Add the title
     if (title) {
-      content = "<h4 class='alert-heading'>" + title + "</h4>" + content;
-    }
-
-    // Add the classes to the alert element
-    alertElement.classList.add("alert");
-    if (alertType) {
-      alertElement.classList.add(alertType);
-    }
-    if (fillType) {
-      alertElement.classList.add(fillType);
+      content = (
+        <>
+          <h4 className="alert-heading">{title}</h4>
+          {content}
+        </>
+      );
     }
 
     // Add the close button to the content (if required)
     if (hasDismissButton) {
-      content =
-        "<button class='close' data-dismiss='alert' type='button' aria-label='Close'><span aria-hidden='true'>&times;</span></button>" + content;
+      content = (
+        <>
+          <button className="close" data-dismiss="alert" type="button" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          {content}
+        </>
+      );
     }
 
+    // Create the alert element
+    // Set ID to the alert element
+    // Add the classes to the alert element
     // Add the content to the alert element
-    alertElement.innerHTML = content;
+    const alertElement = (
+      <div id={halfmoon.makeId(6)} className={["alert", alertType, fillType].join(" ")}>
+        {content}
+      </div>
+    );
 
     // Append the alert element to the sticky alerts
-    halfmoon.stickyAlerts.insertBefore(alertElement, halfmoon.stickyAlerts.childNodes[0]);
+    ReactDOM.render(alertElement, halfmoon.stickyAlerts);
 
     // Toast the alert
-    halfmoon.toastAlert(alertElement.getAttribute("id")!, timeShown);
+    halfmoon.toastAlert(alertElement.props.id, timeShown);
   }
 
   /* End code block for handling sticky alerts */
 
   // Click handler that can be overridden by users if needed
-  static clickHandler: (event: MouseEvent) => void = ()=>{};
+  static clickHandler: (event: MouseEvent) => void = () => {
+    return;
+  };
 
   // Keydown handler that can be overridden by users if needed
-  static keydownHandler: (event: KeyboardEvent) => void = ()=>{};
+  static keydownHandler: (event: KeyboardEvent) => void = () => {
+    return;
+  };
 
-  static onDomContentLoaded: () => void = ()=>{};
+  static onDomContentLoaded: () => void = () => {
+    return;
+  };
 }
 
 /* Things done once the DOM is loaded */
 
-
 declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace NodeJS {
     interface Global {
-      halfmoon: halfmoon
+      halfmoon: halfmoon;
     }
   }
 }
@@ -231,7 +244,9 @@ function halfmoonOnDOMContentLoaded() {
     halfmoon.pageWrapper = document.getElementsByClassName("page-wrapper")[0];
   }
   if (!halfmoon.stickyAlerts) {
-    halfmoon.stickyAlerts = document.getElementsByClassName("sticky-alerts")[0];
+    if (document.getElementsByClassName("sticky-alerts")[0] !== undefined) {
+      halfmoon.stickyAlerts = document.getElementsByClassName("sticky-alerts")[0];
+    }
   }
 
   // Handle the cookie and variable for dark mode

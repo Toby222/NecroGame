@@ -38,6 +38,7 @@ export class Game extends React.Component {
 
   // Basically constructor for order purposes
   componentDidMount() {
+    halfmoon.onDomContentLoaded();
     this.flags.set(Flags.Paused.Instance, false);
     mainLoop = setInterval(this.tick.bind(this), 1000);
   }
@@ -119,6 +120,7 @@ export class Game extends React.Component {
           </Modal>
         </div>
         <div className="page-wrapper with-sidebar">
+          <div className="sticky-alerts" />
           <Sidebar game={this} />
           <div className="content-wrapper">
             <ButtonContainer buttons={this.buttons} model={this} />
