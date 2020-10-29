@@ -20,7 +20,7 @@ export class ResourceValue<T extends typeof Resources.BaseResource> extends Cond
     this.value = value;
   }
 
-  check(model: Game): boolean {
+  check(_game: Game): boolean {
     return this.resource.amount >= this.value;
   }
 }

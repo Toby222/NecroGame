@@ -4,7 +4,7 @@ import Head from "next/head";
 
 import * as React from "react";
 
-export default class extends React.Component {
+export default class NecroGame extends React.Component {
   render() {
     return (
       <>
@@ -20,8 +20,6 @@ export default class extends React.Component {
           <link rel="preload" href="/fonts/DaddyTimeMonoNerd.ttf" as="font" type="font/ttf" crossOrigin="anonymous" />
           <link rel="stylesheet" type="text/css" href="/styles/halfmoon.min.css" />
           <link rel="stylesheet" type="text/css" href="/styles/necro.css" />
-          {/* TODO: Replace with non-cdn version somehow */}
-          <script src="https://cdn.jsdelivr.net/npm/halfmoon@1.1.1/js/halfmoon.min.js" />
           <title>NecroGame</title>
         </Head>
         <Game />

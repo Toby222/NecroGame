@@ -1,11 +1,15 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 // halfmoon.js v1.1.1
 // (badly) written into TS
+
+import ReactDOM from "react-dom";
+import * as React from "react";
 
 export class halfmoon {
   // Getting the required elements
   // Re-initialized once the DOM is loaded (to avoid issues with virtual DOM)
   static pageWrapper: Element;
-  static stickyAlerts: Element;
+  static stickyAlerts?: Element;
 
   static darkModeOn = false; // Also re-initialized once the DOM is loaded (see below)
 
@@ -13,7 +17,7 @@ export class halfmoon {
   static createCookie(name: string, value: string, days: number) {
     let expires;
     if (days) {
-      let date = new Date();
+      const date = new Date();
       date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
       expires = "; expires=" + date.toUTCString();
     } else {
@@ -24,8 +28,8 @@ export class halfmoon {
 
   // Read cookie
   static readCookie(name: string) {
-    let nameEQ = name + "=";
-    let ca = document.cookie.split(";");
+    const nameEQ = name + "=";
+    const ca = document.cookie.split(";");
     for (let i = 0; i < ca.length; i++) {
       let c = ca[i];
       while (c.charAt(0) === " ") {
@@ -78,7 +82,7 @@ export class halfmoon {
 
   // Deactivate all the dropdown toggles when another one is active
   static deactivateAllDropdownToggles() {
-    let activeDropdownToggles = document.querySelectorAll("[data-toggle='dropdown'].active");
+    const activeDropdownToggles = document.querySelectorAll("[data-toggle='dropdown'].active");
     for (let i = 0; i < activeDropdownToggles.length; i++) {
       activeDropdownToggles[i].classList.remove("active");
       activeDropdownToggles[i].closest(".dropdown")?.classList.remove("show");
@@ -87,7 +91,7 @@ export class halfmoon {
 
   // Toggle modal (using Javascript)
   static toggleModal(modalId: string) {
-    let modal = document.getElementById(modalId);
+    const modal = document.getElementById(modalId);
 
     if (modal) {
       modal.classList.toggle("show");
@@ -99,8 +103,8 @@ export class halfmoon {
   // Make an ID for an element
   static makeId(length: number) {
     let result = "";
-    let characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    let charactersLength = characters.length;
+    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    const charactersLength = characters.length;
     for (let i = 0; i < length; i++) {
       result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
@@ -132,7 +136,7 @@ export class halfmoon {
       }, 250);
 
       // Wait some time (timeShown + 250) and fade out the alert
-      let timeToFade = timeShown + 250;
+      const timeToFade = timeShown + 250;
       setTimeout(function () {
         alertElement.classList.add("fade");
       }, timeToFade);
@@ -140,7 +144,7 @@ export class halfmoon {
       // Wait some more time (timeToFade + 500) and dispose the alert (by removing the .alert-block class)
       // Again, the extra delay is for the animation
       // Remove the .show and .fade classes (so the alert can be toasted again)
-      let timeToDestroy = timeToFade + 500;
+      const timeToDestroy = timeToFade + 500;
       setTimeout(function () {
         alertElement.classList.remove("alert-block");
         alertElement.classList.remove("show");
@@ -158,70 +162,91 @@ export class halfmoon {
     hasDismissButton?: boolean;
     timeShown?: number;
   }) {
+    if (!halfmoon.stickyAlerts) throw new Error("sticky-alerts element not initiated");
     // Setting the letiables from the param
-    let content = param.content ?? "";
+    let content = <>{param.content ?? ""}</>;
     const title = param.title ?? "";
     const alertType = param.alertType ?? "";
     const fillType = param.fillType ?? "";
     const hasDismissButton = param.hasDismissButton ?? true;
     const timeShown = param.timeShown ?? 5000;
 
-    // Create the alert element
-    let alertElement = document.createElement("div");
-
-    // Set ID to the alert element
-    alertElement.setAttribute("id", halfmoon.makeId(6));
-
     // Add the title
     if (title) {
-      content = "<h4 class='alert-heading'>" + title + "</h4>" + content;
-    }
-
-    // Add the classes to the alert element
-    alertElement.classList.add("alert");
-    if (alertType) {
-      alertElement.classList.add(alertType);
-    }
-    if (fillType) {
-      alertElement.classList.add(fillType);
+      content = (
+        <>
+          <h4 className="alert-heading">{title}</h4>
+          {content}
+        </>
+      );
     }
 
     // Add the close button to the content (if required)
     if (hasDismissButton) {
-      content =
-        "<button class='close' data-dismiss='alert' type='button' aria-label='Close'><span aria-hidden='true'>&times;</span></button>" + content;
+      content = (
+        <>
+          <button className="close" data-dismiss="alert" type="button" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          {content}
+        </>
+      );
     }
 
+    // Create the alert element
+    // Set ID to the alert element
+    // Add the classes to the alert element
     // Add the content to the alert element
-    alertElement.innerHTML = content;
+    const alertElement = (
+      <div id={halfmoon.makeId(6)} className={["alert", alertType, fillType].join(" ")}>
+        {content}
+      </div>
+    );
 
     // Append the alert element to the sticky alerts
-    halfmoon.stickyAlerts.insertBefore(alertElement, halfmoon.stickyAlerts.childNodes[0]);
+    ReactDOM.render(alertElement, halfmoon.stickyAlerts);
 
     // Toast the alert
-    halfmoon.toastAlert(alertElement.getAttribute("id")!, timeShown);
+    halfmoon.toastAlert(alertElement.props.id, timeShown);
   }
 
   /* End code block for handling sticky alerts */
 
   // Click handler that can be overridden by users if needed
-  static clickHandler: (event: MouseEvent) => void;
+  static clickHandler: (event: MouseEvent) => void = () => {
+    return;
+  };
 
   // Keydown handler that can be overridden by users if needed
-  static keydownHandler: (event: KeyboardEvent) => void;
+  static keydownHandler: (event: KeyboardEvent) => void = () => {
+    return;
+  };
 
-  static onDomContentLoaded: () => void;
+  static onDomContentLoaded: () => void = () => {
+    return;
+  };
 }
 
 /* Things done once the DOM is loaded */
 
+declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  namespace NodeJS {
+    interface Global {
+      halfmoon: halfmoon;
+    }
+  }
+}
 function halfmoonOnDOMContentLoaded() {
+  global.halfmoon = halfmoon;
   // Re-initializing the required elements (to avoid issues with virtual DOM)
   if (!halfmoon.pageWrapper) {
     halfmoon.pageWrapper = document.getElementsByClassName("page-wrapper")[0];
   }
   if (!halfmoon.stickyAlerts) {
-    halfmoon.stickyAlerts = document.getElementsByClassName("sticky-alerts")[0];
+    if (document.getElementsByClassName("sticky-alerts")[0] !== undefined) {
+      halfmoon.stickyAlerts = document.getElementsByClassName("sticky-alerts")[0];
+    }
   }
 
   // Handle the cookie and variable for dark mode
@@ -280,7 +305,7 @@ function halfmoonOnDOMContentLoaded() {
   document.addEventListener(
     "click",
     function (event) {
-      let eventCopy = event;
+      const eventCopy = event;
       let target = event.target as Element | null;
 
       if (target === null) {
@@ -321,10 +346,10 @@ function halfmoonOnDOMContentLoaded() {
           target = target.closest("[data-toggle='modal']");
         }
         if (target?.hasAttribute("data-target")) {
-          let targetModal = document.getElementById(target.getAttribute("data-target")!);
+          const targetModal = document.getElementById(target.getAttribute("data-target")!);
 
           if (targetModal?.classList.contains("modal")) {
-            halfmoon.toggleModal(target?.getAttribute("data-target")!);
+            halfmoon.toggleModal(target.getAttribute("data-target")!);
           }
         }
       }
@@ -339,7 +364,7 @@ function halfmoonOnDOMContentLoaded() {
 
       // Handle clicks on modal overlays
       if (target !== null && target.matches(".modal-dialog")) {
-        let parentModal = target.closest(".modal");
+        const parentModal = target.closest(".modal");
 
         if (!parentModal?.getAttribute("data-overlay-dismissal-disabled")) {
           if (parentModal?.classList.contains("show")) {
@@ -358,7 +383,7 @@ function halfmoonOnDOMContentLoaded() {
 
   // Adding the key down event listener (for shortcuts and accessibility)
   document.addEventListener("keydown", function (event) {
-    let eventCopy = event;
+    const eventCopy = event;
 
     // Shortcuts are triggered only if no input, textarea, or select has focus,
     // If the control key or command key is not pressed down,
@@ -375,8 +400,8 @@ function halfmoonOnDOMContentLoaded() {
 
             // Hash exists, so we check if it belongs to a modal
             if (window.location.hash) {
-              let hash = window.location.hash.substring(1);
-              let elem = document.getElementById(hash);
+              const hash = window.location.hash.substring(1);
+              const elem = document.getElementById(hash);
               if (elem) {
                 if (elem.classList.contains("modal")) {
                   modalOpen = true;
@@ -410,7 +435,7 @@ function halfmoonOnDOMContentLoaded() {
     if (event.key === "Escape") {
       // Close dropdown menu (if one is open) when [esc] key is pressed
       if (document.querySelector("[data-toggle='dropdown'].active")) {
-        let elem = document.querySelector("[data-toggle='dropdown'].active");
+        const elem = document.querySelector("[data-toggle='dropdown'].active");
         elem?.classList.remove("active");
         elem?.closest(".dropdown")?.classList.remove("show");
         event.preventDefault();
@@ -420,8 +445,8 @@ function halfmoonOnDOMContentLoaded() {
       else {
         // Hash exists, so we check if it belongs to a modal
         if (window.location.hash) {
-          let hash = window.location.hash.substring(1);
-          let elem = document.getElementById(hash);
+          const hash = window.location.hash.substring(1);
+          const elem = document.getElementById(hash);
           if (elem) {
             if (elem.classList.contains("modal")) {
               if (!elem.getAttribute("data-esc-dismissal-disabled")) {
@@ -433,7 +458,7 @@ function halfmoonOnDOMContentLoaded() {
         }
         // Check for a modal with the .show class
         if (document.querySelector(".modal.show")) {
-          let elem = document.querySelector(".modal.show");
+          const elem = document.querySelector(".modal.show");
           if (elem !== null && !elem.getAttribute("data-esc-dismissal-disabled")) {
             elem.classList.remove("show");
             event.preventDefault();
@@ -447,14 +472,14 @@ function halfmoonOnDOMContentLoaded() {
   });
 
   // Handling custom file inputs
-  let halfmoonCustomFileInputs = document.querySelectorAll(".custom-file input");
+  const halfmoonCustomFileInputs = document.querySelectorAll(".custom-file input");
   for (let i = 0; i < halfmoonCustomFileInputs.length; i++) {
-    let customFile = halfmoonCustomFileInputs[i] as HTMLInputElement;
+    const customFile = halfmoonCustomFileInputs[i] as HTMLInputElement;
     // Create file name container element, add the class name, and set default value
     // Append it to the custom file element
     let fileNamesContainer = document.createElement("div");
     fileNamesContainer.classList.add("file-names");
-    let dataDefaultValue = customFile.getAttribute("data-default-value");
+    const dataDefaultValue = customFile.getAttribute("data-default-value");
     if (dataDefaultValue) {
       fileNamesContainer.innerHTML = dataDefaultValue;
     } else {

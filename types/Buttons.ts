@@ -29,7 +29,7 @@ export class AlterTime extends BaseButton {
   }
 
   static get actions(): Actions.Action[] {
-    return [new Actions.SetFlag(Flags.AlterTime, true), new Actions.DisableButton(this), new Actions.EnableButton(UnAlterTime)];
+    return [new Actions.SetFlag(Flags.AlterTime.Instance, true), new Actions.DisableButton(this), new Actions.EnableButton(UnAlterTime)];
   }
 }
 
@@ -39,7 +39,7 @@ export class UnAlterTime extends BaseButton {
   }
 
   static get actions(): Actions.Action[] {
-    return [new Actions.SetFlag(Flags.AlterTime, false), new Actions.DisableButton(this), new Actions.EnableButton(AlterTime)];
+    return [new Actions.SetFlag(Flags.AlterTime.Instance, false), new Actions.DisableButton(this), new Actions.EnableButton(AlterTime)];
   }
 }
 

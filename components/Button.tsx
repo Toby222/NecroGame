@@ -14,12 +14,12 @@ export class Button extends React.Component<ButtonProps> {
     if (!this.props.button.visible) {
       return <></>;
     }
-    let button = (
+    const button = (
       <div className="flex-column">
         <button
           className="btn row"
           onClick={() => {
-            if (this.props.model.flags.get(Flags.Paused) ?? true) return;
+            if (this.props.model.flags.get(Flags.Paused.Instance) ?? true) return;
             this.props.model.performActions(...this.props.button.actions);
             this.props.button.currentCooldown = this.props.button.cooldown;
             this.props.button.stats.timesUsed++;

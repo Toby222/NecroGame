@@ -93,7 +93,7 @@ export class AlterTime implements Transformation {
   private static fast = false;
   perform(model: Game) {
     if (AlterTime.fast) return;
-    const ticks = model.flags.get<number>(Flags.AlterTimeFactor) ?? 0;
+    const ticks = model.flags.get(Flags.AlterTimeFactor.Instance) ?? 0;
     for (let i = ticks - 1; i > 0; i--) {
       AlterTime.fast = true;
       model.tick();
@@ -101,7 +101,11 @@ export class AlterTime implements Transformation {
     }
   }
 
-  apply(_model: Game) {}
+  apply(_model: Game) {
+    return;
+  }
 
-  clear(_model: Game) {}
+  clear(_model: Game) {
+    return;
+  }
 }

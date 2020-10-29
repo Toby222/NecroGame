@@ -1,3 +1,5 @@
+import * as React from "react";
+
 import Document, { Html, Head, Main, NextScript } from "next/document";
 
 // Custom document for data-set-preferred-theme-onload
