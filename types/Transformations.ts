@@ -101,7 +101,11 @@ export class AlterTime implements Transformation {
     }
   }
 
-  apply(_model: Game) {}
+  apply(_model: Game) {
+    return;
+  }
 
-  clear(_model: Game) {}
+  clear(_model: Game) {
+    return;
+  }
 }

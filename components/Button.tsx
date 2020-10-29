@@ -14,7 +14,7 @@ export class Button extends React.Component<ButtonProps> {
     if (!this.props.button.visible) {
       return <></>;
     }
-    let button = (
+    const button = (
       <div className="flex-column">
         <button
           className="btn row"

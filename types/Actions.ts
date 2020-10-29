@@ -202,7 +202,7 @@ export class DisableButton<T extends typeof BaseButton> extends Action {
     this.button = button;
   }
 
-  perform(model: Game) {
+  perform(_game: Game) {
     this.button.visible = false;
   }
 }

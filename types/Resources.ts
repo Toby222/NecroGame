@@ -1,14 +1,14 @@
 export class BaseResource {
   /** Optional minimum value */
-  static min: number = 0;
+  static min = 0;
   /** Optional maximum value */
-  static max: number = Infinity;
+  static max = Infinity;
   /** Initial amount */
-  static amount: number = 0;
+  static amount = 0;
   /** Initial increase (negative values for initial loss) */
-  static delta: number = 0;
+  static delta = 0;
   /** Name of the resource */
-  static resourceName: string = "MISSINGNO.";
+  static resourceName = "MISSINGNO.";
 }
 
 export class Dirt extends BaseResource {

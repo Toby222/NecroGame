@@ -1,4 +1,3 @@
-import { MessagesContainer } from "../components/MessagesContainer";
 import { Time } from "./Time";
 
 export class Message {

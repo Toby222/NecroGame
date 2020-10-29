@@ -3,11 +3,11 @@ import * as Transformations from "./Transformations";
 import { Game } from "../components/Game";
 
 export class Flags extends Map<AnyFlag, any> {
-  get<T = any>(flag: AnyFlag) {
+  get<T extends any>(flag: AnyFlag) {
     return super.get(flag) as T;
   }
 
-  set<T = any>(flag: AnyFlag, value: T) {
+  set<T extends any>(flag: AnyFlag, value: T) {
     return super.set(flag, value);
   }
 }
@@ -28,16 +28,20 @@ export abstract class Flag {
   /**
    * Called when the Flag gets assigned a new value
    *
-   * @param model The model that the Flag was applied to
+   * @param game The game that the Flag was applied to
    * @param value The value that the Flag was assigned
    */
-  static onSet(model: Game, value: any) {}
+  static onSet(game: Game, value: any) {
+    return;
+  }
   /**
    * Called when the Flag gets reset
    *
-   * @param model The model that the Flag was reset on
+   * @param game The game that the Flag was reset on
    */
-  static onClear(model: Game) {}
+  static onClear(game: Game) {
+    return;
+  }
 }
 
 /**

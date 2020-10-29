@@ -4,7 +4,7 @@ import Head from "next/head";
 
 import * as React from "react";
 
-export default class extends React.Component {
+export default class NecroGame extends React.Component {
   render() {
     return (
       <>
