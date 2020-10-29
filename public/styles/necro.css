@@ -32,12 +32,14 @@ footer {
   position: fixed;
   left: 0;
   bottom: 0;
-  width: var(--sidebar-width);
+  width: 100%;
   background: var(--lm-sidebar-bg-color);
+  border-top: var(--sidebar-border-width) solid var(--lm-sidebar-border-color);
 }
 
 .dark-mode footer {
   background: var(--dm-sidebar-bg-color);
+  border-color: var(--dm-sidebar-border-color);
 }
 
 .us-none {

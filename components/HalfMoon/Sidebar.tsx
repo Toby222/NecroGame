@@ -9,8 +9,6 @@ import Modal from "./Modal";
 
 import React from "react";
 
-import { version } from "../../package.json";
-
 interface SidebarProps {
   game: Game;
 }
@@ -19,7 +17,7 @@ export class Sidebar extends React.Component<SidebarProps> {
   render() {
     const game = this.props.game;
     return (
-      <div id="sidebar" className="sidebar d-flex flex-column">
+      <div id="sidebar" className="sidebar d-flex flex-column z-0">
         <div className="row flex-row">
           <Modal display="button" className="col-auto" modalId="settings">
             <i className="nf nf-cogs" />
@@ -46,10 +44,6 @@ export class Sidebar extends React.Component<SidebarProps> {
         <StatsContainer time={game.time} player={game.player} />
         <div className="sidebar-divider row" />
         <MessagesContainer messages={game.messages} />
-        <footer>
-          <a href="https://github.com/Toby222/NecroGame">source</a>
-          <div className="us-none">{`Version: ${version}`}</div>
-        </footer>
       </div>
     );
   }
