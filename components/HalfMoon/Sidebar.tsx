@@ -32,16 +32,14 @@ export class Sidebar extends React.Component<SidebarProps> {
             <i className={"nf nf-" + (game.flags.get(Flags.Paused.Instance) ? "play" : "pause")} />
           </button>
         </div>
-        <>
-          {game.flags.get(Flags.AlterTime.Instance) ? (
-            <>
-              <div className="sidebar-divider row" />
-              <input className="form-control row" type="number" placeholder="Time factor" onInput={game.trySetTimeFactor.bind(game)} />
-            </>
-          ) : (
-            <></>
-          )}
-        </>
+        {game.flags.get(Flags.AlterTime.Instance) ? (
+          <>
+            <div className="sidebar-divider row" />
+            <input className="form-control row" type="number" placeholder="Time factor" onInput={game.trySetTimeFactor.bind(game)} />
+          </>
+        ) : (
+          <></>
+        )}
         {this.props.game.resources.length > 0 ? <div className="sidebar-divider row" /> : <></>}
         <ResourceContainer resources={game.resources} />
         <div className="sidebar-divider row" />
