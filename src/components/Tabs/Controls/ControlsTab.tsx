@@ -1,13 +1,12 @@
-import { BaseButton } from "../../../types/Buttons";
-import { Game } from "../../Game";
-
 import React from "react";
-import { Button } from "../../Button";
-import { Tab } from "../Tabs";
+
+import { Button } from "src/components/Button";
+import { Tab } from "src/components/Tabs/Tab";
+
+import { BaseButton } from "src/types/Button";
 
 interface ControlsTabProps {
   buttons: typeof BaseButton[];
-  game: Game;
 }
 
 export class ControlsTab extends Tab<ControlsTabProps> {
@@ -16,7 +15,7 @@ export class ControlsTab extends Tab<ControlsTabProps> {
       <>
         <h4 className="us-none">Controls</h4>
         {this.props.buttons.map((button) => (
-          <Button key={button.toString()} button={button} model={this.props.game} />
+          <Button key={button.toString()} button={button} game={this.props.game} />
         ))}
       </>
     );

@@ -1,6 +1,6 @@
-import { Message } from "../types/Messages";
-
 import React from "react";
+
+import { Message } from "src/types/Message";
 
 interface MessagesContainerProps {
   messages: Message[];
@@ -26,7 +26,7 @@ export class MessagesContainer extends React.Component<MessagesContainerProps> {
     }
 
     return (
-      <div id="messagesContainer" className="justify-content-start us-none overflow-hidden">
+      <div id="messages" className="justify-content-start us-none overflow-hidden">
         <h4>Messages</h4>
         {this.props.messages.slice(0, MessagesContainer.messageCount).map((msg, idx) => renderMessage(idx, msg))}
       </div>

@@ -1,4 +1,4 @@
-import * as Transformations from "./Transformations";
+import * as Transformations from "./Transformation";
 
 import { Game } from "../components/Game";
 

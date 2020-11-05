@@ -1,6 +1,6 @@
-import { BaseResource } from "../types/Resources";
-
 import React from "react";
+
+import { BaseResource } from "src/types/Resource";
 
 interface ResourceContainerProps<T extends typeof BaseResource> {
   resources: T[];

@@ -1,7 +1,7 @@
-import * as Conditions from "./Conditions";
-import * as Resources from "./Resources";
-import * as Actions from "./Actions";
-import * as Flags from "./Flags";
+import * as Conditions from "./Condition";
+import * as Resources from "./Resource";
+import * as Actions from "./Action";
+import * as Flags from "./Flag";
 
 interface Stats {
   timesUsed: number;

@@ -1,9 +1,9 @@
-import * as Flags from "../../types/Flags";
+import { ResourceContainer } from "src/components/ResourceContainer";
+import { StatsContainer } from "src/components/StatsContainer";
+import { MessagesContainer } from "src/components/MessageContainer";
+import { Game } from "src/components/Game";
 
-import { ResourceContainer } from "../ResourceContainer";
-import { StatsContainer } from "../StatsContainer";
-import { MessagesContainer } from "../MessagesContainer";
-import { Game } from "../Game";
+import * as Flags from "src/types/Flag";
 
 import { ModalButton } from "./Modal";
 

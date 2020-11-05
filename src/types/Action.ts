@@ -1,11 +1,13 @@
-import { BaseButton } from "./Buttons";
-import * as Flags from "./Flags";
-import { BaseResource } from "./Resources";
-import { Message } from "./Messages";
+import { Game } from "src/components/Game";
 
-import { Game } from "../components/Game";
-import { Condition } from "./Conditions";
-import { halfmoon } from "../util/HalfMoon";
+import { halfmoon } from "src/util/HalfMoon";
+
+import { BaseButton } from "./Button";
+import { BaseResource } from "./Resource";
+import { Message } from "./Message";
+import { Condition } from "./Condition";
+
+import * as Flags from "./Flag";
 
 export abstract class Action {
   abstract perform(model: Game): void;
