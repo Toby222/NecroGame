@@ -10,13 +10,13 @@ import * as Conditions from "../types/Conditions";
 
 import { halfmoon } from "../util/HalfMoon";
 
-import ButtonContainer from "./ButtonContainer";
-import SummoningContainer from "./SummoningContainer";
+import ButtonContainer from "./Tabs/MainControls/ButtonContainer";
+import SummoningContainer from "./Tabs/Summoning/SummoningContainer";
 
 import Sidebar from "./HalfMoon/Sidebar";
 import Modal from "./HalfMoon/Modal";
 
-import { version } from "../package.json";
+import { version } from "../../package.json";
 
 import React from "react";
 let mainLoop: NodeJS.Timeout;

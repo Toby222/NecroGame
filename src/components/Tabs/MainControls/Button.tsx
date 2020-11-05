@@ -1,8 +1,8 @@
-import { BaseButton } from "../types/Buttons";
-import { Game } from "./Game";
+import { BaseButton } from "../../../types/Buttons";
+import { Game } from "../../Game";
 
 import * as React from "react";
-import * as Flags from "../types/Flags";
+import * as Flags from "../../../types/Flags";
 
 interface ButtonProps {
   button: typeof BaseButton;

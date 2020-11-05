@@ -1,5 +1,5 @@
-import { BaseButton } from "../types/Buttons";
-import { Game } from "./Game";
+import { BaseButton } from "../../../types/Buttons";
+import { Game } from "../../Game";
 
 import * as React from "react";
 import { Button } from "./Button";
