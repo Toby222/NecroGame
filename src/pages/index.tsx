@@ -2,7 +2,7 @@ import { Game } from "../components/Game";
 
 import Head from "next/head";
 
-import * as React from "react";
+import React from "react";
 
 export default class NecroGame extends React.Component {
   render() {

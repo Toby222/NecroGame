@@ -1,8 +1,8 @@
-import { BaseButton } from "../../../types/Buttons";
-import { Game } from "../../Game";
+import { BaseButton } from "../types/Buttons";
+import { Game } from "./Game";
 
-import * as React from "react";
-import * as Flags from "../../../types/Flags";
+import React from "react";
+import * as Flags from "../types/Flags";
 
 interface ButtonProps {
   button: typeof BaseButton;
@@ -43,5 +43,3 @@ export class Button extends React.Component<ButtonProps> {
     return button;
   }
 }
-
-export default Button;

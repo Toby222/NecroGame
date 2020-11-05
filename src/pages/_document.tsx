@@ -1,8 +1,8 @@
-import * as React from "react";
+import React from "react";
 
 import Document, { Html, Head, Main, NextScript } from "next/document";
 
-// Custom document for data-set-preferred-theme-onload
+// Custom document for halfmoon properties
 // Otherwise standard
 export default class MyDocument extends Document {
   render() {

@@ -1,11 +1,11 @@
 import * as Flags from "../../types/Flags";
 
-import ResourceContainer from "../ResourceContainer";
-import StatsContainer from "../PlayerContainer";
-import MessagesContainer from "../MessagesContainer";
-import Game from "../Game";
+import { ResourceContainer } from "../ResourceContainer";
+import { StatsContainer } from "../StatsContainer";
+import { MessagesContainer } from "../MessagesContainer";
+import { Game } from "../Game";
 
-import Modal from "./Modal";
+import { ModalButton } from "./Modal";
 
 import React from "react";
 
@@ -19,9 +19,9 @@ export class Sidebar extends React.Component<SidebarProps> {
     return (
       <div id="sidebar" className="sidebar d-flex flex-column z-0">
         <div className="row flex-row">
-          <Modal display="button" className="col-auto" modalId="settings">
+          <ModalButton className="col-auto nf nf-cogs" modalId="settings">
             <i className="nf nf-cogs" />
-          </Modal>
+          </ModalButton>
           <button
             aria-label={game.flags.get(Flags.Paused.Instance) ? "resume" : "pause"}
             className={"btn btn-primary col-auto"}

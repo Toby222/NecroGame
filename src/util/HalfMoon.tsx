@@ -3,7 +3,7 @@
 // (badly) written into TS
 
 import ReactDOM from "react-dom";
-import * as React from "react";
+import React from "react";
 
 export class halfmoon {
   // Getting the required elements
