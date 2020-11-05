@@ -1,25 +1,25 @@
-import { Player } from "../types/Player";
-import { Time } from "../types/Time";
-import { Message } from "../types/Messages";
+import React from "react";
+import { version } from "package.json";
 
-import * as Flags from "../types/Flags";
-import * as Actions from "../types/Actions";
-import * as Buttons from "../types/Buttons";
-import * as Resources from "../types/Resources";
-import * as Conditions from "../types/Conditions";
+import { Player } from "src/types/Player";
+import { Time } from "src/types/Time";
+import { Message } from "src/types/Message";
 
-import { halfmoon } from "../util/HalfMoon";
+import * as Flags from "src/types/Flag";
+import * as Actions from "src/types/Action";
+import * as Buttons from "src/types/Button";
+import * as Resources from "src/types/Resource";
+import * as Conditions from "src/types/Condition";
 
+import { halfmoon } from "src/util/HalfMoon";
+
+import { TabLink } from "./Tabs/Tab";
 import { ControlsTab } from "./Tabs/Controls/ControlsTab";
 import { SummoningTab } from "./Tabs/Summoning/SummoningTab";
 
 import Sidebar from "./HalfMoon/Sidebar";
 import { Modal } from "./HalfMoon/Modal";
 
-import { version } from "../../package.json";
-
-import React from "react";
-import { TabLink } from "./Tabs/Tabs";
 let mainLoop: NodeJS.Timeout;
 
 export class Game extends React.Component {

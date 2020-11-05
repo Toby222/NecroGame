@@ -1,5 +1,6 @@
 import React from "react";
-import { Tab } from "../Tabs";
+
+import { Tab } from "src/components/Tabs/Tab";
 
 export class SummoningTab extends Tab {
   renderTab() {

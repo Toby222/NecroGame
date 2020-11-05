@@ -4,9 +4,10 @@
     "url": "git://github.com/Toby222/NecroGame.git"
   },
   "scripts": {
-    "dev": "next",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "prod": "yarn build && yarn start",
     "lint:eslint-strict": "yarn lint:eslint --max-warnings=0",
     "lint:eslint": "eslint src/**/*.{ts,tsx}",
     "lint:prettier": "prettier . --check",
@@ -17,23 +18,25 @@
     "fmt": "yarn format",
     "test": "tsc && yarn lint:eslint-strict && yarn lint:prettier"
   },
-  "devDependencies": {
+  "dependencies": {
     "@types/node": "^14.14.6",
     "@types/react": "^16.9.55",
     "@types/react-dom": "^16.9.9",
+    "next": "^10.0.1",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "typescript": "^4.0.5"
+  },
+  "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.6.1",
     "@typescript-eslint/parser": "^4.6.1",
     "eslint": "^7.12.1",
     "eslint-config-prettier": "^6.15.0",
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-react": "^7.21.5",
-    "next": "^10.0.1",
-    "prettier": "^2.1.2",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "typescript": "^4.0.5"
+    "prettier": "^2.1.2"
   },
-  "version": "0.0.5",
+  "version": "0.0.6",
   "eslintConfig": {
     "parser": "@typescript-eslint/parser",
     "parserOptions": {

@@ -1,8 +1,8 @@
-import { Game } from "../components/Game";
+import { Game } from "src/components/Game";
 
-import * as Buttons from "./Buttons";
-import * as Actions from "./Actions";
-import * as Resources from "./Resources";
+import * as Buttons from "./Button";
+import * as Actions from "./Action";
+import * as Resources from "./Resource";
 
 export abstract class Condition {
   abstract check(model: Game): boolean;

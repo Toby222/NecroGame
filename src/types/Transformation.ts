@@ -1,8 +1,8 @@
-import * as Resources from "./Resources";
-import * as Actions from "./Actions";
-import * as Flags from "./Flags";
-
 import { Game } from "../components/Game";
+
+import * as Resources from "./Resource";
+import * as Actions from "./Action";
+import * as Flags from "./Flag";
 
 export interface Transformation {
   /**

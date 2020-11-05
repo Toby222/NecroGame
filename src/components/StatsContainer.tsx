@@ -1,7 +1,7 @@
-import { Player } from "../types/Player";
-
 import React from "react";
-import { Time } from "../types/Time";
+
+import { Time } from "src/types/Time";
+import { Player } from "src/types/Player";
 
 interface StatsContainerProps {
   player: Player;

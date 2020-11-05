@@ -1,12 +1,13 @@
-import { BaseButton } from "../types/Buttons";
-import { Game } from "./Game";
-
 import React from "react";
-import * as Flags from "../types/Flags";
+
+import { BaseButton } from "src/types/Button";
+import * as Flags from "src/types/Flag";
+
+import { Game } from "./Game";
 
 interface ButtonProps {
   button: typeof BaseButton;
-  model: Game;
+  game: Game;
 }
 
 export class Button extends React.Component<ButtonProps> {
@@ -18,11 +19,11 @@ export class Button extends React.Component<ButtonProps> {
       <button
         className="btn position-relative"
         onClick={() => {
-          if (this.props.model.flags.get(Flags.Paused.Instance) ?? true) return;
-          this.props.model.performActions(...this.props.button.actions);
+          if (this.props.game.flags.get(Flags.Paused.Instance) ?? true) return;
+          this.props.game.performActions(...this.props.button.actions);
           this.props.button.currentCooldown = this.props.button.cooldown;
           this.props.button.stats.timesUsed++;
-          this.props.model.forceUpdate();
+          this.props.game.forceUpdate();
         }}
         disabled={this.props.button.currentCooldown !== 0 || !this.props.button.active}
       >

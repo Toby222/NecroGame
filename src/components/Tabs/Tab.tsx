@@ -1,14 +1,13 @@
 import React from "react";
-import { Game } from "../Game";
-import { ControlsTab } from "./Controls/ControlsTab";
-import { SummoningTab } from "./Summoning/SummoningTab";
+
+import { Game } from "src/components/Game";
 
 export interface TabProps {
   tabId: string;
   game: Game;
 }
 
-export abstract class Tab<TProps = {}> extends React.Component<TabProps & TProps> {
+export abstract class Tab<TProps = Record<string, unknown>> extends React.Component<TabProps & TProps> {
   abstract renderTab(): JSX.Element;
 
   render() {

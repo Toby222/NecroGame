@@ -28,8 +28,8 @@ body {
   padding-right: 10px;
 }
 
-div#messagesContainer > div.necro-message {
-  adding-bottom: 1.2rem;
+div#messages > div.necro-message {
+  padding-bottom: 1.2rem;
 }
 
 footer {
