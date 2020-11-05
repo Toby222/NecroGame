@@ -23,7 +23,7 @@ export class Sidebar extends React.Component<SidebarProps> {
           <button
             aria-label={game.flags.get(Flags.Paused.Instance) ? "resume" : "pause"}
             className={"btn btn-lg m-5 btn-primary btn-square col-auto nf nf-" + (game.flags.get(Flags.Paused.Instance) ? "play" : "pause")}
-            onClick={()=>game.togglePause()}
+            onClick={() => game.togglePause()}
           />
         </div>
         <div className="sidebar-divider row" />
