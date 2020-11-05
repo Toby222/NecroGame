@@ -7,7 +7,7 @@ export interface TabProps {
   game: Game;
 }
 
-export abstract class Tab<TProps extends {} = {}> extends React.Component<TabProps & TProps> {
+export abstract class Tab<TProps = Record<string, unknown>> extends React.Component<TabProps & TProps> {
   abstract renderTab(): JSX.Element;
 
   render() {
