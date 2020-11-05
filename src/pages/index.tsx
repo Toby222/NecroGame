@@ -2,7 +2,7 @@ import { Game } from "../components/Game";
 
 import Head from "next/head";
 
-import * as React from "react";
+import React from "react";
 
 export default class NecroGame extends React.Component {
   render() {
@@ -18,8 +18,6 @@ export default class NecroGame extends React.Component {
 
           <link rel="icon" href="favicon.svg" />
           <link rel="preload" href="/fonts/DaddyTimeMonoNerd.ttf" as="font" type="font/ttf" crossOrigin="anonymous" />
-          <link rel="stylesheet" type="text/css" href="/styles/halfmoon.min.css" />
-          <link rel="stylesheet" type="text/css" href="/styles/necro.css" />
           <title>NecroGame</title>
         </Head>
         <Game />

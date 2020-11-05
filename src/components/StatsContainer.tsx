@@ -1,6 +1,6 @@
 import { Player } from "../types/Player";
 
-import * as React from "react";
+import React from "react";
 import { Time } from "../types/Time";
 
 interface StatsContainerProps {
@@ -21,4 +21,3 @@ export class StatsContainer extends React.Component<StatsContainerProps> {
     );
   }
 }
-export default StatsContainer;

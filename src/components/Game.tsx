@@ -10,15 +10,16 @@ import * as Conditions from "../types/Conditions";
 
 import { halfmoon } from "../util/HalfMoon";
 
-import ButtonContainer from "./ButtonContainer";
-import SummoningContainer from "./SummoningContainer";
+import { ControlsTab } from "./Tabs/Controls/ControlsTab";
+import { SummoningTab } from "./Tabs/Summoning/SummoningTab";
 
 import Sidebar from "./HalfMoon/Sidebar";
-import Modal from "./HalfMoon/Modal";
+import { Modal } from "./HalfMoon/Modal";
 
-import { version } from "../package.json";
+import { version } from "../../package.json";
 
 import React from "react";
+import { TabLink } from "./Tabs/Tabs";
 let mainLoop: NodeJS.Timeout;
 
 export class Game extends React.Component {
@@ -43,7 +44,7 @@ export class Game extends React.Component {
     halfmoon.onDomContentLoaded();
     this.flags.set(Flags.Paused.Instance, false);
     mainLoop = setInterval(this.tick.bind(this), 1000);
-    this.setActiveTab("buttonContainer");
+    this.setActiveTab("controls");
   }
 
   // Basically destructor for order purposes
@@ -111,7 +112,7 @@ export class Game extends React.Component {
     }
   }
 
-  private switchTab(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+  switchTab(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     const targetID = event.currentTarget.getAttribute("data-tabid");
     if (!targetID) return console.warn(`Tried switching tabs without ID`);
     this.setActiveTab(targetID);
@@ -132,7 +133,7 @@ export class Game extends React.Component {
     return (
       <main>
         <div id="modals">
-          <Modal display="modal" modalId="settings">
+          <Modal modalId="settings">
             <h5 className="modal-title">Settings</h5>
             <button className="btn" onClick={halfmoon.toggleDarkMode}>
               Toggle Theme
@@ -144,15 +145,15 @@ export class Game extends React.Component {
           <Sidebar game={this} />
           <div className="content-wrapper">
             <nav className="tabs">
-              <button className="tablink btn" data-tabid="buttonContainer" onClick={(event) => this.switchTab(event)}>
+              <TabLink tabId="controls" game={this}>
                 Controls
-              </button>
-              <button className="tablink btn" data-tabid="summoningContainer" onClick={(event) => this.switchTab(event)}>
+              </TabLink>
+              <TabLink tabId="summoning" game={this}>
                 Summoning
-              </button>
+              </TabLink>
             </nav>
-            <ButtonContainer buttons={this.buttons} game={this} />
-            <SummoningContainer game={this} />
+            <ControlsTab tabId="controls" buttons={this.buttons} game={this} />
+            <SummoningTab tabId="summoning" game={this} />
           </div>
         </div>
         <footer className="z-10">
@@ -163,5 +164,3 @@ export class Game extends React.Component {
     );
   }
 }
-
-export default Game;

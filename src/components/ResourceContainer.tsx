@@ -1,6 +1,6 @@
 import { BaseResource } from "../types/Resources";
 
-import * as React from "react";
+import React from "react";
 
 interface ResourceContainerProps<T extends typeof BaseResource> {
   resources: T[];
@@ -27,7 +27,6 @@ export class ResourceContainer<T extends typeof BaseResource> extends React.Comp
               <></>
             )}
           </div>
-          {/*<div className="col-sm-3 text-right">{resource.delta > 0 ? `${Math.round(resource.delta * 100) / 100}/sec` : ''}</div>*/}
         </div>
       );
     }
@@ -43,4 +42,3 @@ export class ResourceContainer<T extends typeof BaseResource> extends React.Comp
     }
   }
 }
-export default ResourceContainer;
